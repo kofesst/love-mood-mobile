@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="LoveMoodTheme.LightBase" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:windowBackground">@color/splash_background_light</item>
+    </style>
+
+    <style name="LoveMoodTheme.DarkBase" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:windowBackground">@color/splash_background_dark</item>
+    </style>
+</resources>

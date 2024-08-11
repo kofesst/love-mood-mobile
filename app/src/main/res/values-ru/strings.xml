@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">LoveMood</string>
+
+    <string name="not_implemented_yet">В разработке</string>
+
+    <string name="errors__something_went_wrong">Что-то пошло не так</string>
+    <string name="errors__required_field">Необходимо заполнить</string>
+    <string name="errors__short_string">Слишком короткое значение</string>
+    <string name="errors__long_string">Слишком длинное значение</string>
+    <string name="errors__invalid_string_mask">Есть некорректные символы</string>
+    <string name="errors__invalid__date">Некорректная дата</string>
+    <string name="errors__too_early_date">Слишком ранняя дата</string>
+    <string name="errors__too_late_date">Слишком поздняя дата</string>
+
+    <string name="models__short_male_gender_name">Мужской</string>
+    <string name="models__short_female_gender_name">Женский</string>
+
+    <string name="dates__days_first_case">день</string>
+    <string name="dates__days_second_case">дня</string>
+    <string name="dates__days_third_case">дней</string>
+    <string name="dates__months_first_case">месяц</string>
+    <string name="dates__months_second_case">месяца</string>
+    <string name="dates__months_third_case">месяцев</string>
+    <string name="dates__years_first_case">год</string>
+    <string name="dates__years_second_case">года</string>
+    <string name="dates__years_third_case">лет</string>
+
+    <string name="screens__home__love_duration_section_label">Вы вместе</string>
+    <string name="screens__home__events_section_label">Следующее событие</string>
+    <string name="screens__home__moments_section_label">Ваши моменты</string>
+    <string name="screens__home__start_date_when_unit_are_empty">с сегодняшнего дня</string>
+
+    <string name="screens__user_profile_form__avatar_picker_label">Измените изображение своего профиля</string>
+    <string name="screens__user_profile_form__avatar_picker_action">Выбрать изображение</string>
+    <string name="screens__user_profile_form__username_field_label">Имя Вашего профиля</string>
+    <string name="screens__user_profile_form__username_field_placeholder">Кириллица, латиница и цифры</string>
+    <string name="screens__user_profile_form__gender_field_label">Ваш пол</string>
+    <string name="screens__user_profile_form__date_of_birth_field_label">Ваша дата рождения</string>
+    <string name="screens__user_profile_form__create_header_title">Добро пожаловать!</string>
+    <string name="screens__user_profile_form__create_header_subtitle">Для начала создайте собственный профиль. Это займет не больше минуты</string>
+    <string name="screens__user_profile_form__edit_header">Редактирование профиля</string>
+
+    <string name="screens__relationship_form__avatar_picker_label">Загрузите изображение партнера</string>
+    <string name="screens__relationship_form__avatar_picker_action">Выбрать изображение</string>
+    <string name="screens__relationship_form__username_field_label">Имя партнера</string>
+    <string name="screens__relationship_form__username_field_placeholder">Кириллица, латиница и цифры</string>
+    <string name="screens__relationship_form__gender_field_label">Пол партнера</string>
+    <string name="screens__relationship_form__date_of_birth_field_label">Дата рождения партнера</string>
+    <string name="screens__relationship_form__start_date_field_label">Дата начала отношений</string>
+    <string name="screens__relationship_form__create_header_title">Добавьте Ваши отношения</string>
+    <string name="screens__relationship_form__create_header_subtitle">И начните отслеживать самые счастливые моменты Вашей совместной жизни</string>
+    <string name="screens__relationship_form__edit_header">Редактирование отношений</string>
+</resources>

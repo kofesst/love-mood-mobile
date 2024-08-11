@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="LoveMoodTheme" parent="LoveMoodTheme.DarkBase">
+        <item name="android:windowSplashScreenBackground">@color/splash_background_dark</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_launcher</item>
+        <item name="postSplashScreenTheme">@style/LoveMoodTheme.DarkBase</item>
+    </style>
+</resources>

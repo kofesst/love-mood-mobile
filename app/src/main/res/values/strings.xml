@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">LoveMood</string>
+
+    <string name="not_implemented_yet">Not implemented yet</string>
+
+    <string name="errors__something_went_wrong">Something went wrong</string>
+    <string name="errors__required_field">This is a required field</string>
+    <string name="errors__short_string">Value is too short</string>
+    <string name="errors__long_string">Value is too long</string>
+    <string name="errors__invalid_string_mask">Value has incorrect symbols</string>
+    <string name="errors__invalid__date">Invalid date</string>
+    <string name="errors__too_early_date">Date is too early</string>
+    <string name="errors__too_late_date">Date is too late</string>
+
+    <string name="models__short_male_gender_name">Male</string>
+    <string name="models__short_female_gender_name">Female</string>
+
+    <string name="dates__days_first_case">day</string>
+    <string name="dates__days_second_case">days</string>
+    <string name="dates__days_third_case">days</string>
+    <string name="dates__months_first_case">month</string>
+    <string name="dates__months_second_case">months</string>
+    <string name="dates__months_third_case">months</string>
+    <string name="dates__years_first_case">year</string>
+    <string name="dates__years_second_case">years</string>
+    <string name="dates__years_third_case">years</string>
+
+    <string name="screens__home__love_duration_section_label">You\'ve been in love for</string>
+    <string name="screens__home__events_section_label">Next event</string>
+    <string name="screens__home__moments_section_label">Your moments</string>
+    <string name="screens__home__start_date_when_unit_are_empty">from today</string>
+
+    <string name="screens__user_profile_form__avatar_picker_label">Set your profile picture</string>
+    <string name="screens__user_profile_form__avatar_picker_action">Select image</string>
+    <string name="screens__user_profile_form__username_field_label">Your profile username</string>
+    <string name="screens__user_profile_form__username_field_placeholder">Cyrillic, latin and digits</string>
+    <string name="screens__user_profile_form__gender_field_label">Your gender</string>
+    <string name="screens__user_profile_form__date_of_birth_field_label">Your date of birth</string>
+    <string name="screens__user_profile_form__create_header_title">Greetings!</string>
+    <string name="screens__user_profile_form__create_header_subtitle">Firstly let\'s create your profile. It won\'t take long</string>
+    <string name="screens__user_profile_form__edit_header">Editing profile</string>
+
+    <string name="screens__relationship_form__avatar_picker_label">Set your partner profile picture</string>
+    <string name="screens__relationship_form__avatar_picker_action">Select image</string>
+    <string name="screens__relationship_form__username_field_label">Partner\'s username</string>
+    <string name="screens__relationship_form__username_field_placeholder">Cyrillic, latin and digits</string>
+    <string name="screens__relationship_form__gender_field_label">Partner\'s gender</string>
+    <string name="screens__relationship_form__date_of_birth_field_label">Partners\'s date of birth</string>
+    <string name="screens__relationship_form__start_date_field_label">Relationship start date</string>
+    <string name="screens__relationship_form__create_header_title">Add your relationship</string>
+    <string name="screens__relationship_form__create_header_subtitle">And start tracking the happiest moments of your life together</string>
+    <string name="screens__relationship_form__edit_header">Editing relationship</string>
+</resources>
