@@ -28,6 +28,10 @@ data class AppState(
         }
     }
 
+    fun navigateUp() {
+        navHostController.navigateUp()
+    }
+
     fun navigate(
         appScreen: AppScreen,
         clearBackStack: Boolean = false,

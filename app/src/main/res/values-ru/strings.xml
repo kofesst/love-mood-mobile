@@ -2,6 +2,7 @@
     <string name="app_name">LoveMood</string>
 
     <string name="not_implemented_yet">В разработке</string>
+    <string name="app_version">Версия: %app_version%</string>
 
     <string name="errors__something_went_wrong">Что-то пошло не так</string>
     <string name="errors__required_field">Необходимо заполнить</string>
@@ -14,6 +15,9 @@
 
     <string name="models__short_male_gender_name">Мужской</string>
     <string name="models__short_female_gender_name">Женский</string>
+
+    <string name="todos__status__in_develop">в разработке</string>
+    <string name="todos__status__released">добавлено в версии %app_version%</string>
 
     <string name="dates__days_first_case">день</string>
     <string name="dates__days_second_case">дня</string>

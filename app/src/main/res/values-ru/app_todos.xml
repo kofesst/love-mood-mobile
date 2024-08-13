@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="todos__events_title">
+        Совместные события
+    </string>
+    <string name="todos__events_description">
+        Стандартные события в отношениях (годовщина отношений,
+        день рождения одного из партнёров), а также возможность
+        добавлять собственные события в отношениях (ежемесячные, ежегодные).
+    </string>
+
+    <string name="todos__memories_title">
+        Воспоминания
+    </string>
+    <string name="todos__memories_description">
+        Возможность добавлять обычные фотографии,
+        а также фотографии, привязанные к какой-либо дате
+        (например, празднование Нового года).
+    </string>
+</resources>

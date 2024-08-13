@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="todos__events_title">
+        Relationship events
+    </string>
+    <string name="todos__events_description">
+        Default relationship events (relationship anniversary,
+        birthday of one of the partners). Also the ability to
+        add own custom relationship events (monthly, yearly).
+    </string>
+
+    <string name="todos__memories_title">
+        Memories
+    </string>
+    <string name="todos__memories_description">
+        Ability to add regular photos of partners,
+        and also photos tied to a specific date
+        (for example, New Year\'s celebration).
+    </string>
+</resources>

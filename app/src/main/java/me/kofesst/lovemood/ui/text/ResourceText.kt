@@ -2,13 +2,13 @@ package me.kofesst.lovemood.ui.text
 
 import android.content.Context
 import androidx.annotation.StringRes
-import me.kofesst.lovemood.core.text.AppTextHolder
+import me.kofesst.lovemood.core.text.TextWithPlaceholders
 
 class ResourceText(
     @StringRes private val resId: Int,
     private val context: Context
-) : AppTextHolder {
-    override fun string(vararg args: Any): String {
+) : TextWithPlaceholders {
+    override fun string(): String {
         return context.getString(resId)
     }
 }
