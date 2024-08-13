@@ -43,6 +43,9 @@ import me.kofesst.lovemood.core.ui.components.action.PanelButtonDefaults
 import me.kofesst.lovemood.core.ui.components.lottie.LottieFile
 import me.kofesst.lovemood.core.ui.components.lottie.LottieSize
 import me.kofesst.lovemood.core.ui.utils.ByteArrayImage
+import me.kofesst.lovemood.core.ui.utils.mergeWithStatusBar
+import me.kofesst.lovemood.core.ui.utils.navigationBarPadding
+import me.kofesst.lovemood.core.ui.utils.statusBarPadding
 import me.kofesst.lovemood.presentation.app.LocalAppState
 import me.kofesst.lovemood.presentation.app.LocalMainActivity
 import me.kofesst.lovemood.presentation.app.LocalShimmer
@@ -57,9 +60,6 @@ import me.kofesst.lovemood.ui.RelationshipAvatars
 import me.kofesst.lovemood.ui.async.AsyncValue
 import me.kofesst.lovemood.ui.async.asyncValueContent
 import me.kofesst.lovemood.ui.async.requiredAsyncValueContent
-import me.kofesst.lovemood.ui.mergeWithStatusBar
-import me.kofesst.lovemood.ui.navigationBarPadding
-import me.kofesst.lovemood.ui.statusBarPadding
 import me.kofesst.lovemood.ui.theme.WithShimmerEffect
 
 @Composable

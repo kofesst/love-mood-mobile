@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import me.kofesst.lovemood.core.ui.components.scaffold.AppScaffold
 import me.kofesst.lovemood.features.date.DateTimePattern
 import me.kofesst.lovemood.presentation.app.LocalAppState
 import me.kofesst.lovemood.presentation.app.LocalDateTimePattern
@@ -22,7 +23,6 @@ import me.kofesst.lovemood.presentation.app.LocalMainActivity
 import me.kofesst.lovemood.presentation.app.LocalUserSettings
 import me.kofesst.lovemood.presentation.app.rememberAppState
 import me.kofesst.lovemood.presentation.navigation.AppNavHost
-import me.kofesst.lovemood.presentation.scaffold.AppScaffold
 import me.kofesst.lovemood.ui.text.dictionary.AppDictionary
 import me.kofesst.lovemood.ui.theme.LoveMoodMobileTheme
 import me.kofesst.lovemood.ui.theme.WithShimmerTheme

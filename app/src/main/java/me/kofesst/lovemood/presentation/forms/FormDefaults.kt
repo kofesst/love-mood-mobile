@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.flowWithLifecycle
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
+import me.kofesst.lovemood.core.ui.utils.alsoStatusBar
 import me.kofesst.lovemood.presentation.app.LocalAppState
-import me.kofesst.lovemood.ui.alsoStatusBar
 
 /**
  * Верхняя панель формы с кнопкой отправки.

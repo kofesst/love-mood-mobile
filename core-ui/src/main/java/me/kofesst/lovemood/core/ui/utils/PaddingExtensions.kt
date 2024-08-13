@@ -1,4 +1,4 @@
-package me.kofesst.lovemood.ui
+package me.kofesst.lovemood.core.ui.utils
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets

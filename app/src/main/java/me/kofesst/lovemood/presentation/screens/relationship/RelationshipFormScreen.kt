@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import me.kofesst.lovemood.core.ui.utils.alsoNavBar
 import me.kofesst.lovemood.presentation.app.LocalAppState
 import me.kofesst.lovemood.presentation.app.LocalDictionary
 import me.kofesst.lovemood.presentation.forms.FormMethod
@@ -27,7 +28,6 @@ import me.kofesst.lovemood.presentation.forms.relationship.RelationshipFormActio
 import me.kofesst.lovemood.presentation.forms.relationship.RelationshipFormViewModel
 import me.kofesst.lovemood.presentation.forms.relationship.relationshipFormContent
 import me.kofesst.lovemood.presentation.navigation.AppNavigation
-import me.kofesst.lovemood.ui.alsoNavBar
 
 @Composable
 fun RelationshipFormScreen(
