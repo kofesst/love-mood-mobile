@@ -16,11 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -61,6 +57,7 @@ import me.kofesst.lovemood.ui.RelationshipAvatars
 import me.kofesst.lovemood.ui.async.AsyncValue
 import me.kofesst.lovemood.ui.async.asyncValueContent
 import me.kofesst.lovemood.ui.async.requiredAsyncValueContent
+import me.kofesst.lovemood.ui.mergeWithStatusBar
 import me.kofesst.lovemood.ui.navigationBarPadding
 import me.kofesst.lovemood.ui.statusBarPadding
 import me.kofesst.lovemood.ui.theme.WithShimmerEffect
@@ -186,18 +183,12 @@ private fun RelationshipScreenHeader(
     onEditProfileClick: () -> Unit,
     onEditRelationshipClick: () -> Unit
 ) {
-    ScreenHeaderContainer(modifier) {
+    ScreenHeaderContainer(modifier = modifier) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(statusBarPadding()),
+            modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
-            ScreenHeaderTitleLayout(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp)
-            ) {
+            ScreenHeaderTitleLayout(modifier = Modifier.fillMaxWidth()) {
                 RelationshipScreenHeaderTitle(relationship)
             }
             Row(
@@ -266,10 +257,10 @@ private fun RowScope.RelationshipScreenHeaderTitle(
 private fun ProfileScreenHeader(
     modifier: Modifier = Modifier,
     profile: Profile,
-    onEditProfileClick: () -> Unit,
+    onEditProfileClick: () -> Unit
 ) {
-    ScreenHeaderContainer(modifier) {
-        ScreenHeaderTitleLayout {
+    ScreenHeaderContainer(modifier = modifier) {
+        ScreenHeaderTitleLayout(modifier = Modifier.fillMaxWidth()) {
             ByteArrayImage(
                 content = profile.avatarContent,
                 placeholder = {
@@ -310,7 +301,7 @@ private fun ProfileScreenHeader(
 
 @Composable
 private fun ShimmerScreenHeader(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     ScreenHeaderContainer(
         modifier = modifier
@@ -343,19 +334,11 @@ private fun ScreenHeaderTitleLayout(
     content: @Composable RowScope.() -> Unit
 ) {
     Row(
-        modifier = modifier.padding(statusBarPadding()),
+        modifier = modifier.padding(20.dp.mergeWithStatusBar()),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         content()
-        IconButton(
-            onClick = {}
-        ) {
-            Icon(
-                imageVector = Icons.Rounded.MoreVert,
-                contentDescription = null
-            )
-        }
     }
 }
 
