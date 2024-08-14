@@ -15,6 +15,7 @@
     <string name="errors__invalid__date">Invalid date</string>
     <string name="errors__too_early_date">Date is too early</string>
     <string name="errors__too_late_date">Date is too late</string>
+    <string name="errors__invalid_form_values">Some fields have errors</string>
 
     <string name="models__short_male_gender_name">Male</string>
     <string name="models__short_female_gender_name">Female</string>

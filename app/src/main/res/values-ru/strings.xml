@@ -15,6 +15,7 @@
     <string name="errors__invalid__date">Некорректная дата</string>
     <string name="errors__too_early_date">Слишком ранняя дата</string>
     <string name="errors__too_late_date">Слишком поздняя дата</string>
+    <string name="errors__invalid_form_values">Некоторые поля содержат ошибку</string>
 
     <string name="models__short_male_gender_name">Мужской</string>
     <string name="models__short_female_gender_name">Женский</string>

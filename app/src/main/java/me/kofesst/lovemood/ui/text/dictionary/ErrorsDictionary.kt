@@ -1,7 +1,6 @@
 package me.kofesst.lovemood.ui.text.dictionary
 
 import android.content.Context
-import androidx.compose.runtime.Composable
 import me.kofesst.lovemood.R
 import me.kofesst.lovemood.core.text.AppTextHolder
 import me.kofesst.lovemood.features.validation.operations.InvalidDateError
@@ -12,9 +11,10 @@ import me.kofesst.lovemood.features.validation.operations.ShortValueError
 import me.kofesst.lovemood.features.validation.operations.TooEarlyDateError
 import me.kofesst.lovemood.features.validation.operations.TooLateDateError
 import me.kofesst.lovemood.features.validation.operations.ValidationError
-import me.kofesst.lovemood.presentation.app.LocalDictionary
+import me.kofesst.lovemood.presentation.forms.InvalidFormValuesException
 import me.kofesst.lovemood.ui.text.ResourceText
 
+@Suppress("MemberVisibilityCanBePrivate")
 class ErrorsDictionary(appContext: Context) {
     val somethingWentWrong = ResourceText(
         R.string.errors__something_went_wrong, appContext
@@ -43,6 +43,17 @@ class ErrorsDictionary(appContext: Context) {
         R.string.errors__too_late_date, appContext
     )
 
+    val invalidFormValues = ResourceText(
+        R.string.errors__invalid_form_values, appContext
+    )
+
+    fun fromError(error: Throwable): AppTextHolder {
+        return when (error) {
+            is InvalidFormValuesException -> invalidFormValues
+            else -> somethingWentWrong
+        }
+    }
+
     fun fromValidationError(error: ValidationError): AppTextHolder {
         return when (error) {
             is RequiredFieldError -> requiredField
@@ -57,11 +68,6 @@ class ErrorsDictionary(appContext: Context) {
             else -> somethingWentWrong
         }
     }
-}
-
-@Composable
-fun ValidationError.textHolder() = with(LocalDictionary.current) {
-    textHolder(this.errors)
 }
 
 fun ValidationError.textHolder(dictionary: ErrorsDictionary) =

@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import me.kofesst.lovemood.core.ui.utils.alsoStatusBar
 import me.kofesst.lovemood.presentation.app.LocalAppState
+import me.kofesst.lovemood.presentation.app.LocalDictionary
 
 /**
  * Верхняя панель формы с кнопкой отправки.
@@ -114,6 +115,7 @@ fun <Model : Any> FormResultsListener(
 ) {
     val appState = LocalAppState.current
     val lifecycleOwner = LocalLifecycleOwner.current
+    val errorsDictionary = LocalDictionary.current.errors
     LaunchedEffect(Unit) {
         resultsFlow
             .flowWithLifecycle(lifecycleOwner.lifecycle)
@@ -121,7 +123,7 @@ fun <Model : Any> FormResultsListener(
                 when (formResult) {
                     is FormResult.Failed -> {
                         appState.showSnackbar(
-                            message = formResult.cause.toString()
+                            message = errorsDictionary.fromError(formResult.cause).string()
                         )
                         onFailedResult(formResult.cause)
                     }
