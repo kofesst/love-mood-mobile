@@ -41,8 +41,6 @@ data class AsyncValue<T : Any>(
         }
     }
 
-    fun requireValue() = value!!
-
     enum class LoadStatus {
         Idle, Loading, Loaded, Failed
     }
