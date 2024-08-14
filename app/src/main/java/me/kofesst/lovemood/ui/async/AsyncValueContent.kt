@@ -36,7 +36,7 @@ fun <T : Any> LazyListScope.asyncValueContent(
     onFailed: LazyListScope.(Throwable?) -> Unit = defaultFailedContent,
     onLoaded: LazyListScope.(T?) -> Unit
 ) {
-    if (asyncValue.status != AsyncValue.LoadStatus.Loaded && asyncValue.value != null) {
+    if (asyncValue.status != AsyncValue.LoadStatus.Loaded && asyncValue.hasLoadedBefore) {
         val loadedValue = asyncValue.value
         onLoaded(loadedValue)
     } else {

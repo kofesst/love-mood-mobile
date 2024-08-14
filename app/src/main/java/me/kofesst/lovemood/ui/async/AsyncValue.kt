@@ -10,9 +10,10 @@ import kotlinx.coroutines.flow.flow
 data class AsyncValue<T : Any>(
     val value: T? = null,
     val error: Exception? = null,
-    val status: LoadStatus = LoadStatus.Idle
+    val status: LoadStatus = LoadStatus.Idle,
+    val hasLoadedBefore: Boolean = false
 ) {
-    suspend inline fun load(
+    inline fun load(
         crossinline block: suspend () -> T?
     ): Flow<AsyncValue<T>> = flow {
         emit(copy(status = LoadStatus.Loading))
@@ -23,7 +24,8 @@ data class AsyncValue<T : Any>(
                 copy(
                     value = loadedValue,
                     error = null,
-                    status = LoadStatus.Loaded
+                    status = LoadStatus.Loaded,
+                    hasLoadedBefore = true
                 )
             )
         } catch (unhandled: Exception) {
@@ -32,7 +34,8 @@ data class AsyncValue<T : Any>(
                 copy(
                     value = null,
                     error = unhandled,
-                    status = LoadStatus.Failed
+                    status = LoadStatus.Failed,
+                    hasLoadedBefore = true
                 )
             )
         }
