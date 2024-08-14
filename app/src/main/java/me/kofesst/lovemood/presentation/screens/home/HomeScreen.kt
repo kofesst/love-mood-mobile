@@ -435,7 +435,8 @@ private fun NoRelationshipContent(
         Text(
             text = "Вы не добавили отношения",
             style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.Normal
+            fontWeight = FontWeight.Normal,
+            textAlign = TextAlign.Center
         )
         Button(
             modifier = Modifier.fillMaxWidth(),
