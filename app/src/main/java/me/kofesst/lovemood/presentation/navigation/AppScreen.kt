@@ -8,7 +8,12 @@ import androidx.navigation.NavBackStackEntry
 /**
  * Базовое представление экрана.
  */
-abstract class AppScreen(baseRoute: String) {
+abstract class AppScreen(private val baseRoute: String) {
+    /**
+     * Список аргументов экрана.
+     */
+    open val arguments: List<AppScreenArgument<*>> = emptyList()
+
     /**
      * Путь навигации, созданный из базового пути, переданного в
      * конструкторе класса и списка аргументов [arguments].
@@ -27,32 +32,26 @@ abstract class AppScreen(baseRoute: String) {
      * AppScreen(baseRoute).route = "profile/form/{continue_route}?id={id}"
      *
      * ```
-     *
-     * Возвращает строку - шаблон пути навигации к экрану.
      */
-    val route: String = buildString {
-        append(baseRoute)
+    val route: String
+        get() = buildString {
+            append(baseRoute)
 
-        val nonNullArguments = arguments.filter { it.defaultValue == null }
-        val nullableArguments = arguments.filter { it.defaultValue != null }
+            val nonNullArguments = arguments.filter { it.defaultValue == null }
+            val nullableArguments = arguments.filter { it.defaultValue != null }
 
-        nonNullArguments.forEach { argument ->
-            append("/{${argument.name}}")
+            nonNullArguments.forEach { argument ->
+                append("/{${argument.name}}")
+            }
+            if (nullableArguments.isNotEmpty()) {
+                append("?")
+                append(
+                    nullableArguments.joinToString(separator = "&") { argument ->
+                        "${argument.name}={${argument.name}}"
+                    }
+                )
+            }
         }
-        if (nullableArguments.isNotEmpty()) {
-            append("?")
-            append(
-                nullableArguments.joinToString(separator = "&") { argument ->
-                    "${argument.name}={${argument.name}}"
-                }
-            )
-        }
-    }
-
-    /**
-     * Список аргументов экрана.
-     */
-    open val arguments: List<AppScreenArgument<*>> = emptyList()
 
     /**
      * Контент экрана.

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -23,6 +24,8 @@ import me.kofesst.lovemood.presentation.app.LocalMainActivity
 import me.kofesst.lovemood.presentation.app.LocalUserSettings
 import me.kofesst.lovemood.presentation.app.rememberAppState
 import me.kofesst.lovemood.presentation.navigation.AppNavHost
+import me.kofesst.lovemood.presentation.navigation.AppNavigation
+import me.kofesst.lovemood.presentation.navigation.BottomBarScreenItem
 import me.kofesst.lovemood.ui.text.dictionary.AppDictionary
 import me.kofesst.lovemood.ui.theme.LoveMoodMobileTheme
 import me.kofesst.lovemood.ui.theme.WithShimmerTheme
@@ -63,10 +66,29 @@ class MainActivity : ComponentActivity() {
                         LocalDateTimePattern provides dateTimePattern,
                         LocalDictionary provides appDictionary
                     ) {
+                        val currentScreen by appState.currentScreenState
+                        val bottomBarScreens = remember {
+                            AppNavigation.getBottomBarScreens(this@MainActivity)
+                        }
+                        val currentBottomBarItem = remember(currentScreen) {
+                            bottomBarScreens.firstOrNull { item -> item.destination == currentScreen }
+                        }
                         AppScaffold(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .imePadding()
+                                .imePadding(),
+                            snackbarHostState = appState.snackbarHostState,
+                            selectedBottomBarItem = currentBottomBarItem,
+                            bottomBarItems = bottomBarScreens,
+                            onBottomBarItemClick = { item ->
+                                val screenItem = item as BottomBarScreenItem
+                                if (currentScreen != screenItem.destination) {
+                                    appState.navigate(
+                                        appScreen = screenItem.destination,
+                                        clearBackStack = true
+                                    )
+                                }
+                            }
                         ) { modifier ->
                             AppNavHost(
                                 modifier = modifier,
