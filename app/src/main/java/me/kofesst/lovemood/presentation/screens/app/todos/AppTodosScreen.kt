@@ -18,56 +18,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import me.kofesst.lovemood.core.ui.utils.mergeWithStatusBar
 import me.kofesst.lovemood.core.ui.utils.navigationBarPadding
 import me.kofesst.lovemood.presentation.app.LocalAppState
 import me.kofesst.lovemood.presentation.app.LocalDictionary
-import me.kofesst.lovemood.presentation.app.rememberAppState
 import me.kofesst.lovemood.presentation.screens.app.AppScreenHeader
-import me.kofesst.lovemood.ui.text.dictionary.AppDictionary
 import me.kofesst.lovemood.ui.text.dictionary.uiText
-import me.kofesst.lovemood.ui.theme.LoveMoodMobileTheme
-
-@Preview(showBackground = true)
-@Composable
-private fun LightAppTodosScreenPreview() {
-    LoveMoodMobileTheme(darkTheme = false) {
-        CompositionLocalProvider(
-            LocalDictionary provides AppDictionary(LocalContext.current),
-            LocalAppState provides rememberAppState()
-        ) {
-            Surface(Modifier.fillMaxSize()) {
-                AppTodosScreen(modifier = Modifier.fillMaxSize())
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun DarkAppTodosScreenPreview() {
-    LoveMoodMobileTheme(darkTheme = true) {
-        CompositionLocalProvider(
-            LocalDictionary provides AppDictionary(LocalContext.current),
-            LocalAppState provides rememberAppState()
-        ) {
-            Surface(Modifier.fillMaxSize()) {
-                AppTodosScreen(modifier = Modifier.fillMaxSize())
-            }
-        }
-    }
-}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
