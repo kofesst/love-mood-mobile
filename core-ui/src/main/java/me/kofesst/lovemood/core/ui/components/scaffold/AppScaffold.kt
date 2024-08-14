@@ -1,17 +1,22 @@
 package me.kofesst.lovemood.core.ui.components.scaffold
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun AppScaffold(
     modifier: Modifier = Modifier,
+    bottomBarSettings: AppBottomBarSettings,
     selectedBottomBarItem: BottomBarItem?,
     bottomBarItems: List<BottomBarItem>,
     onBottomBarItemClick: (BottomBarItem) -> Unit,
@@ -20,9 +25,11 @@ fun AppScaffold(
 ) {
     Scaffold(
         modifier = modifier,
+        contentWindowInsets = WindowInsets(0.dp),
         bottomBar = {
             AppBottomBar(
                 modifier = Modifier.fillMaxWidth(),
+                settings = bottomBarSettings,
                 selected = selectedBottomBarItem,
                 items = bottomBarItems,
                 onItemClick = onBottomBarItemClick
@@ -37,8 +44,10 @@ fun AppScaffold(
     ) { innerPadding ->
         content(
             Modifier
-                .fillMaxSize()
                 .consumeWindowInsets(innerPadding)
+                .padding(innerPadding)
+                .fillMaxSize()
+                .animateContentSize()
         )
     }
 }

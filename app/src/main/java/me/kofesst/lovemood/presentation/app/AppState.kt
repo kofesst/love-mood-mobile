@@ -8,9 +8,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -26,9 +24,6 @@ data class AppState(
     val coroutineScope: CoroutineScope,
     val snackbarHostState: SnackbarHostState
 ) {
-    val backStackEntryState: State<NavBackStackEntry?>
-        @Composable get() = navHostController.currentBackStackEntryAsState()
-
     private val screensFlow: Flow<AppScreen?>
         get() = navHostController.currentBackStackEntryFlow
             .map { backStackEntry ->

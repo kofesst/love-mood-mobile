@@ -26,51 +26,50 @@ object AppBottomBarDefaults {
 
     @Composable
     fun layout(
-        layoutPadding: PaddingValues = PaddingValues(
-            start = 20.dp,
-            end = 20.dp,
-            top = 0.dp,
-            bottom = 10.dp
-        ) mergeWith navigationBarPadding(),
         containerPadding: PaddingValues = PaddingValues(
+            horizontal = 24.dp,
+            vertical = 16.dp
+        ) mergeWith navigationBarPadding(),
+        containerHorizontalArrangement: Arrangement.Horizontal = Arrangement.spacedBy(
+            space = 20.dp,
+            alignment = Alignment.Start
+        ),
+        containerVerticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
+        itemPadding: PaddingValues = PaddingValues(
             horizontal = 16.dp,
             vertical = 8.dp
         ),
-        containerHorizontalArrangement: Arrangement.Horizontal = Arrangement.spacedBy(8.dp),
-        containerVerticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
-        itemPadding: PaddingValues = PaddingValues(
-            horizontal = 8.dp,
-            vertical = 4.dp
+        itemHorizontalArrangement: Arrangement.Horizontal = Arrangement.spacedBy(
+            space = 8.dp,
+            alignment = Alignment.Start
         ),
-        itemHorizontalAlignment: Alignment.Horizontal = Alignment.CenterHorizontally,
-        itemVerticalArrangement: Arrangement.Vertical = Arrangement.spacedBy(4.dp)
+        itemVerticalAlignment: Alignment.Vertical = Alignment.CenterVertically
     ) = AppBottomBarLayout(
-        layoutPadding = layoutPadding,
         containerPadding = containerPadding,
         containerHorizontalArrangement = containerHorizontalArrangement,
         containerVerticalAlignment = containerVerticalAlignment,
         itemPadding = itemPadding,
-        itemHorizontalAlignment = itemHorizontalAlignment,
-        itemVerticalArrangement = itemVerticalArrangement
+        itemHorizontalArrangement = itemHorizontalArrangement,
+        itemVerticalAlignment = itemVerticalAlignment
     )
 
     @Composable
     fun colors(
-        tonalElevation: Dp = 3.dp,
-        shadowElevation: Dp = 3.dp,
+        tonalElevation: Dp = 6.dp,
+        shadowElevation: Dp = 6.dp,
         container: Color = MaterialTheme.colorScheme.surfaceVariant,
+        itemContainer: Color = MaterialTheme.colorScheme.surfaceVariant,
         icon: Color = MaterialTheme.colorScheme.onSurfaceVariant,
-        text: Color = MaterialTheme.colorScheme.onSurfaceVariant,
-        indicator: Color = MaterialTheme.colorScheme.primary,
-        selectedIcon: Color = MaterialTheme.colorScheme.tertiary,
-        selectedText: Color = MaterialTheme.colorScheme.tertiary
+        selectedItemContainer: Color = MaterialTheme.colorScheme.primaryContainer,
+        selectedIcon: Color = MaterialTheme.colorScheme.onPrimaryContainer,
+        selectedText: Color = MaterialTheme.colorScheme.onPrimaryContainer
     ) = AppBottomBarColors(
         tonalElevation = tonalElevation,
         shadowElevation = shadowElevation,
         container = container,
+        itemContainer = itemContainer,
         icon = icon,
-        text = text,
-        indicator = indicator,
+        selectedItemContainer = selectedItemContainer,
         selectedIcon = selectedIcon,
         selectedText = selectedText
     )
@@ -86,22 +85,21 @@ object AppBottomBarDefaults {
 }
 
 class AppBottomBarLayout(
-    val layoutPadding: PaddingValues,
     val containerPadding: PaddingValues,
     val containerHorizontalArrangement: Arrangement.Horizontal,
     val containerVerticalAlignment: Alignment.Vertical,
     val itemPadding: PaddingValues,
-    val itemHorizontalAlignment: Alignment.Horizontal,
-    val itemVerticalArrangement: Arrangement.Vertical
+    val itemHorizontalArrangement: Arrangement.Horizontal,
+    val itemVerticalAlignment: Alignment.Vertical
 )
 
 class AppBottomBarColors(
     val tonalElevation: Dp,
     val shadowElevation: Dp,
     val container: Color,
+    val itemContainer: Color,
     val icon: Color,
-    val text: Color,
-    val indicator: Color,
+    val selectedItemContainer: Color,
     val selectedIcon: Color,
     val selectedText: Color
 )

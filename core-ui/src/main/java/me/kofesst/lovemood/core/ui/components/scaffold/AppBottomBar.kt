@@ -1,8 +1,20 @@
 package me.kofesst.lovemood.core.ui.components.scaffold
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.FiniteAnimationSpec
+import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.updateTransition
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,9 +23,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
@@ -34,6 +47,8 @@ open class BottomBarItem(
 /**
  * Нижняя панель приложения.
  *
+ * [settings] - настройки панели.
+ *
  * [selected] - выбранный элемент.
  *
  * [items] - элементы панели.
@@ -44,6 +59,7 @@ open class BottomBarItem(
 @Composable
 fun AppBottomBar(
     modifier: Modifier = Modifier,
+    settings: AppBottomBarSettings,
     selected: BottomBarItem?,
     items: List<BottomBarItem>,
     iconSize: Dp = AppBottomBarDefaults.iconSize,
@@ -53,34 +69,77 @@ fun AppBottomBar(
     shapes: AppBottomBarShapes = AppBottomBarDefaults.shapes(),
     onItemClick: (BottomBarItem) -> Unit
 ) {
-    Box(
-        modifier = modifier.fillMaxWidth(),
-        contentAlignment = Alignment.Center
+    AnimatedVisibility(
+        modifier = modifier,
+        visible = settings.isVisible,
+        enter = getEnterBarExpandAnim(),
+        exit = getExitBarExpandAnim()
     ) {
-        Surface(
-            modifier = Modifier.padding(layout.layoutPadding),
-            color = colors.container,
-            shape = shapes.container,
-            tonalElevation = colors.tonalElevation,
-            shadowElevation = colors.shadowElevation
+        AppBottomBarContent(
+            modifier = Modifier.fillMaxWidth(),
+            selected = selected,
+            items = items,
+            iconSize = iconSize,
+            titleStyle = titleStyle,
+            layout = layout,
+            colors = colors,
+            shapes = shapes,
+            onItemClick = onItemClick
+        )
+    }
+}
+
+private const val BAR_EXPAND_ANIM_DURATION = 200
+
+private fun <T : Any> getBarExpandTransitionSpec(): FiniteAnimationSpec<T> {
+    return tween(durationMillis = BAR_EXPAND_ANIM_DURATION)
+}
+
+private fun getEnterBarExpandAnim(): EnterTransition {
+    return slideInVertically(getBarExpandTransitionSpec()) { it * 2 }
+}
+
+private fun getExitBarExpandAnim(): ExitTransition {
+    return slideOutVertically(getBarExpandTransitionSpec()) { it * 2 }
+}
+
+@Composable
+fun AppBottomBarContent(
+    modifier: Modifier = Modifier,
+    selected: BottomBarItem?,
+    items: List<BottomBarItem>,
+    iconSize: Dp = AppBottomBarDefaults.iconSize,
+    titleStyle: TextStyle = AppBottomBarDefaults.titleStyle,
+    layout: AppBottomBarLayout = AppBottomBarDefaults.layout(),
+    colors: AppBottomBarColors = AppBottomBarDefaults.colors(),
+    shapes: AppBottomBarShapes = AppBottomBarDefaults.shapes(),
+    onItemClick: (BottomBarItem) -> Unit
+) {
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        color = colors.container,
+        shape = shapes.container,
+        tonalElevation = colors.tonalElevation,
+        shadowElevation = colors.shadowElevation
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(layout.containerPadding),
+            horizontalArrangement = layout.containerHorizontalArrangement,
+            verticalAlignment = layout.containerVerticalAlignment
         ) {
-            Row(
-                modifier = Modifier.padding(layout.containerPadding),
-                horizontalArrangement = layout.containerHorizontalArrangement,
-                verticalAlignment = layout.containerVerticalAlignment
-            ) {
-                items.forEach { item ->
-                    AppBottomBarItem(
-                        item = item,
-                        isSelected = selected == item,
-                        iconSize = iconSize,
-                        titleStyle = titleStyle,
-                        layout = layout,
-                        colors = colors,
-                        shapes = shapes,
-                        onClick = { onItemClick(item) }
-                    )
-                }
+            items.forEach { item ->
+                AppBottomBarItem(
+                    item = item,
+                    isSelected = selected == item,
+                    iconSize = iconSize,
+                    titleStyle = titleStyle,
+                    layout = layout,
+                    colors = colors,
+                    shapes = shapes,
+                    onClick = { onItemClick(item) }
+                )
             }
         }
     }
@@ -107,28 +166,95 @@ fun AppBottomBarItem(
     shapes: AppBottomBarShapes = AppBottomBarDefaults.shapes(),
     onClick: () -> Unit
 ) {
-    Box(
-        modifier = modifier
-            .clip(shapes.item)
-            .clickable(onClick = onClick)
+    val selectedState = remember { MutableTransitionState(initialState = isSelected) }
+    selectedState.targetState = isSelected
+
+    val transition = updateTransition(selectedState, label = "bbi_expanded_transition")
+    val containerColor by transition.animateColor(
+        transitionSpec = { getItemExpandAnimSpec() },
+        label = "bbi_container_color"
+    ) { isExpanded ->
+        if (isExpanded) colors.selectedItemContainer else colors.itemContainer
+    }
+    val iconColor by transition.animateColor(
+        transitionSpec = { getItemExpandAnimSpec() },
+        label = "bbi_icon_color"
+    ) { isExpanded ->
+        if (isExpanded) colors.selectedIcon else colors.icon
+    }
+    AppBottomBarItemContent(
+        modifier = modifier,
+        item = item,
+        selectedState = selectedState,
+        containerColor = containerColor,
+        iconColor = iconColor,
+        iconSize = iconSize,
+        titleStyle = titleStyle,
+        layout = layout,
+        colors = colors,
+        shapes = shapes,
+        onClick = onClick
+    )
+}
+
+@Composable
+private fun AppBottomBarItemContent(
+    modifier: Modifier = Modifier,
+    item: BottomBarItem,
+    selectedState: MutableTransitionState<Boolean>,
+    containerColor: Color,
+    iconColor: Color,
+    iconSize: Dp = AppBottomBarDefaults.iconSize,
+    titleStyle: TextStyle = AppBottomBarDefaults.titleStyle,
+    layout: AppBottomBarLayout = AppBottomBarDefaults.layout(),
+    colors: AppBottomBarColors = AppBottomBarDefaults.colors(),
+    shapes: AppBottomBarShapes = AppBottomBarDefaults.shapes(),
+    onClick: () -> Unit
+) {
+    Surface(
+        modifier = modifier.animateContentSize(),
+        shape = shapes.item,
+        color = containerColor,
+        onClick = onClick
     ) {
-        Column(
-            modifier = Modifier.padding(layout.itemPadding),
-            horizontalAlignment = layout.itemHorizontalAlignment,
-            verticalArrangement = layout.itemVerticalArrangement
+        Row(
+            modifier = Modifier
+                .padding(layout.itemPadding)
+                .animateContentSize(),
+            horizontalArrangement = layout.itemHorizontalArrangement,
+            verticalAlignment = layout.itemVerticalAlignment
         ) {
             Icon(
                 modifier = Modifier.size(iconSize),
                 imageVector = item.icon,
-                contentDescription = item.title.string(),
-                tint = if (isSelected) colors.selectedIcon else colors.icon
+                contentDescription = null,
+                tint = iconColor
             )
-            Text(
-                text = item.title.string(),
-                style = titleStyle.copy(
-                    color = if (isSelected) colors.selectedText else colors.text
+            AnimatedVisibility(
+                visibleState = selectedState,
+                enter = getEnterTextExpandTransition(),
+                exit = getExitTextExpandTransition()
+            ) {
+                Text(
+                    text = item.title.string(),
+                    style = titleStyle,
+                    color = colors.selectedText
                 )
-            )
+            }
         }
     }
+}
+
+private const val ITEM_EXPAND_ANIM_DURATION = 200
+
+private fun <T : Any> getItemExpandAnimSpec(): FiniteAnimationSpec<T> {
+    return tween(durationMillis = ITEM_EXPAND_ANIM_DURATION)
+}
+
+private fun getEnterTextExpandTransition(): EnterTransition {
+    return fadeIn(getItemExpandAnimSpec()) + slideInHorizontally(getItemExpandAnimSpec()) { -it }
+}
+
+private fun getExitTextExpandTransition(): ExitTransition {
+    return fadeOut(getItemExpandAnimSpec()) + slideOutHorizontally(animationSpec = getItemExpandAnimSpec()) { -it }
 }
