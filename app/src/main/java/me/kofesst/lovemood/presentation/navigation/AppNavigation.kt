@@ -19,14 +19,14 @@ object AppNavigation {
      *
      * Возвращает:
      *
-     * Если профиля нет - [ProfileForm.buildRoute].
+     * Если профиля нет - [ProfileForm.route].
      *
-     * Если профиль есть - [Home.buildRoute].
+     * Если профиль есть - [Home.route].
      */
     fun getStartDestination(userHasProfile: Boolean) = when (userHasProfile) {
         true -> Home
         false -> ProfileForm
-    }.buildRoute()
+    }.route
 
     /**
      * Список всех экранов приложения
@@ -56,9 +56,7 @@ object AppNavigation {
     /**
      * Экран формы создания/редактирования профиля.
      */
-    object ProfileForm : AppScreen() {
-        override val baseRoute: String = "profile/form"
-
+    object ProfileForm : AppScreen(baseRoute = "profile/form") {
         val editingProfileIdArgument = IntArgument(name = "id", defaultValue = -1)
         override val arguments: List<AppScreenArgument<*>> = listOf(
             editingProfileIdArgument
@@ -80,9 +78,7 @@ object AppNavigation {
     /**
      * Экран формы создания/редактирования отношений.
      */
-    object RelationshipForm : AppScreen() {
-        override val baseRoute: String = "relationship/form"
-
+    object RelationshipForm : AppScreen(baseRoute = "relationship/form") {
         val editingRelationshipIdArgument = IntArgument(name = "id", defaultValue = -1)
         override val arguments: List<AppScreenArgument<*>> = listOf(
             editingRelationshipIdArgument

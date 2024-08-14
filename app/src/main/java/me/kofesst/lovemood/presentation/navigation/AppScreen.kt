@@ -8,11 +8,46 @@ import androidx.navigation.NavBackStackEntry
 /**
  * Базовое представление экрана.
  */
-abstract class AppScreen {
+abstract class AppScreen(baseRoute: String) {
     /**
-     * Базовый путь навигации к экрану.
+     * Путь навигации, созданный из базового пути, переданного в
+     * конструкторе класса и списка аргументов [arguments].
+     *
+     * Например:
+     *
+     * ```
+     *
+     * baseRoute = "profile/form"
+     *
+     * arguments = [
+     *     Arg(name = "id", defaultValue = -1),
+     *     Arg(name = "continue_route", defaultValue = null)
+     * ]
+     *
+     * AppScreen(baseRoute).route = "profile/form/{continue_route}?id={id}"
+     *
+     * ```
+     *
+     * Возвращает строку - шаблон пути навигации к экрану.
      */
-    abstract val baseRoute: String
+    val route: String = buildString {
+        append(baseRoute)
+
+        val nonNullArguments = arguments.filter { it.defaultValue == null }
+        val nullableArguments = arguments.filter { it.defaultValue != null }
+
+        nonNullArguments.forEach { argument ->
+            append("/{${argument.name}}")
+        }
+        if (nullableArguments.isNotEmpty()) {
+            append("?")
+            append(
+                nullableArguments.joinToString(separator = "&") { argument ->
+                    "${argument.name}={${argument.name}}"
+                }
+            )
+        }
+    }
 
     /**
      * Список аргументов экрана.
@@ -66,7 +101,7 @@ abstract class AppScreen {
     }
 
     /**
-     * Создаёт путь из базового пути [baseRoute] и списка аргументов [arguments].
+     * Создаёт путь навигации к экрану, добавляя значения аргументов [arguments].
      *
      * Например:
      *
@@ -79,48 +114,7 @@ abstract class AppScreen {
      *     Arg(name = "continue_route", defaultValue = null)
      * ]
      *
-     * AppScreen.buildRoute() = "profile/form/{continue_route}?id={id}"
-     *
-     * ```
-     *
-     * Возвращает строку - шаблон пути навигации к экрану.
-     */
-    fun buildRoute(): String {
-        return buildString {
-            append(baseRoute)
-
-            val nonNullArguments = arguments.filter { it.defaultValue == null }
-            val nullableArguments = arguments.filter { it.defaultValue != null }
-
-            nonNullArguments.forEach { argument ->
-                append("/{${argument.name}}")
-            }
-            if (nullableArguments.isNotEmpty()) {
-                append("?")
-                append(
-                    nullableArguments.joinToString(separator = "&") { argument ->
-                        "${argument.name}={${argument.name}}"
-                    }
-                )
-            }
-        }
-    }
-
-    /**
-     * Создаёт путь навигации к экрану, добавляя аргументы [arguments].
-     *
-     * Например:
-     *
-     * ```
-     *
-     * baseRoute = "profile/form"
-     *
-     * arguments = [
-     *     Arg(name = "id", defaultValue = -1),
-     *     Arg(name = "continue_route", defaultValue = null)
-     * ]
-     *
-     * AppScreen.buildRoute() = "profile/form/{continue_route}?id={id}"
+     * AppScreen(baseRoute).route = "profile/form/{continue_route}?id={id}"
      *
      * argumentValues = [
      *     Arg(name = "continue_route", defaultValue = null) to "home"
@@ -135,7 +129,6 @@ abstract class AppScreen {
      * Возвращает строку - путь навигации к экрану.
      */
     fun withArgs(vararg argumentValues: Pair<AppScreenArgument<*>, Any>): String {
-        val route = buildRoute()
         val routeWithValues = argumentValues.fold(route) { acc, (argument, value) ->
             acc.replace("{${argument.name}}", value.toString(), ignoreCase = true)
         }

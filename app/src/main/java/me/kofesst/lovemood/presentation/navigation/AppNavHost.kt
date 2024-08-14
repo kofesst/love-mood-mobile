@@ -49,7 +49,7 @@ private fun NavGraphBuilder.buildScreen(
     appScreen: AppScreen
 ) {
     composable(
-        route = appScreen.buildRoute(),
+        route = appScreen.route,
         arguments = appScreen.arguments.asComposeArguments()
     ) { navBackStackEntry ->
         appScreen.ComposableContent(baseModifier, navBackStackEntry)
