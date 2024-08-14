@@ -4,6 +4,9 @@
     <string name="not_implemented_yet">Not implemented yet</string>
     <string name="app_version">Version: %app_version%</string>
 
+    <string name="bottom_bar__home_title">Home</string>
+    <string name="bottom_bar__app_todos_title">About app</string>
+
     <string name="errors__something_went_wrong">Something went wrong</string>
     <string name="errors__required_field">This is a required field</string>
     <string name="errors__short_string">Value is too short</string>

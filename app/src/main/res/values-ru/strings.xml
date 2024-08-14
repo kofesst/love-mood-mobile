@@ -4,6 +4,9 @@
     <string name="not_implemented_yet">В разработке</string>
     <string name="app_version">Версия: %app_version%</string>
 
+    <string name="bottom_bar__home_title">Главная</string>
+    <string name="bottom_bar__app_todos_title">Приложение</string>
+
     <string name="errors__something_went_wrong">Что-то пошло не так</string>
     <string name="errors__required_field">Необходимо заполнить</string>
     <string name="errors__short_string">Слишком короткое значение</string>
