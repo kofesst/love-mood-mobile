@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="LoveMoodTheme" parent="LoveMoodTheme.LightBase">
-        <item name="android:windowBackground">@color/splash_background_light</item>
+    <style name="LoveMoodTheme.Splash" parent="LoveMoodTheme.SplashBase">
+        <item name="windowSplashScreenBackground">@color/splash_background_light</item>
     </style>
 </resources>

@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <style name="LoveMoodTheme" parent="LoveMoodTheme.LightBase">
-        <item name="android:windowSplashScreenBackground">@color/splash_background_light</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_launcher</item>
-        <item name="postSplashScreenTheme">@style/LoveMoodTheme.LightBase</item>
-    </style>
+<!--    <style name="LoveMoodTheme" parent="Theme.Material3.Light.NoActionBar" />-->
 </resources>
