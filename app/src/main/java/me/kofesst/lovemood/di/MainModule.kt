@@ -8,6 +8,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import me.kofesst.lovemood.core.usecases.AppUseCases
 import me.kofesst.lovemood.core.usecases.datastore.DataStoreUseCases
+import me.kofesst.lovemood.core.usecases.models.PhotoMemoryUseCases
 import me.kofesst.lovemood.core.usecases.models.ProfileUseCases
 import me.kofesst.lovemood.core.usecases.models.RelationshipEventUseCases
 import me.kofesst.lovemood.core.usecases.models.RelationshipUseCases
@@ -31,12 +32,14 @@ object MainModule {
         profileUseCases: ProfileUseCases,
         relationshipUseCases: RelationshipUseCases,
         relationshipEventUseCases: RelationshipEventUseCases,
+        photoMemoryUseCases: PhotoMemoryUseCases,
         dataStoreUseCases: DataStoreUseCases
     ): AppUseCases {
         return AppUseCases(
             profile = profileUseCases,
             relationship = relationshipUseCases,
             relationshipEvents = relationshipEventUseCases,
+            memories = photoMemoryUseCases,
             dataStore = dataStoreUseCases
         )
     }

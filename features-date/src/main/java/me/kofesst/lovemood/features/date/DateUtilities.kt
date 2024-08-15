@@ -3,6 +3,7 @@ package me.kofesst.lovemood.features.date
 import android.content.Context
 import java.time.Instant
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
@@ -49,6 +50,15 @@ data class DateTimePattern internal constructor(
 }
 
 /**
+ * Создаёт дату (с временем) из текущего количества миллисекунд.
+ */
+val Long.localDateTime: LocalDateTime
+    get() = Instant
+        .ofEpochMilli(this)
+        .atZone(ZoneId.systemDefault())
+        .toLocalDateTime()
+
+/**
  * Создаёт дату (без времени) из текущего количества миллисекунд.
  */
 val Long.localDate: LocalDate
@@ -56,6 +66,15 @@ val Long.localDate: LocalDate
         .ofEpochMilli(this)
         .atZone(ZoneId.systemDefault())
         .toLocalDate()
+
+/**
+ * Миллисекунды даты и времени.
+ */
+val LocalDateTime.epochMillis: Long
+    get() = this
+        .atZone(ZoneId.systemDefault())
+        .toInstant()
+        .toEpochMilli()
 
 /**
  * Миллисекунды даты.

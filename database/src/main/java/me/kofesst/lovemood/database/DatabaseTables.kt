@@ -29,4 +29,13 @@ object DatabaseTables {
         const val MONTH_COLUMN = "month_value"
         const val RELATIONSHIP_ID_COLUMN = "relationship_id"
     }
+
+    object PhotoMemories {
+        const val TABLE_NAME = "photo_memories"
+
+        const val ID_COLUMN = "id_memory"
+        const val CONTENT_COLUMN = "photo_content"
+        const val ADDED_DATE_TIME_COLUMN = "added_at"
+        const val LINKED_DATE_COLUMN = "linked_date"
+    }
 }
