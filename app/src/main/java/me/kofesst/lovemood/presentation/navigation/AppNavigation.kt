@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavBackStackEntry
 import me.kofesst.lovemood.R
 import me.kofesst.lovemood.core.text.AppTextHolder
+import me.kofesst.lovemood.presentation.screens.app.AboutAppScreen
 import me.kofesst.lovemood.presentation.screens.app.todos.AppTodosScreen
 import me.kofesst.lovemood.presentation.screens.home.HomeScreen
 import me.kofesst.lovemood.presentation.screens.profile.UserProfileFormScreen
@@ -85,13 +86,23 @@ object AppNavigation {
         }
     }
 
-    object AppTodosScreen : AppMainScreen(baseRoute = "app/todos") {
+    object AboutAppScreen : AppMainScreen(baseRoute = "app") {
         override val bottomBarIcon: ImageVector
             get() = Icons.Outlined.Android
 
         override val bottomBarTitleProducer: (Context) -> AppTextHolder
-            get() = { context -> ResourceText(R.string.bottom_bar__app_todos_title, context) }
+            get() = { context -> ResourceText(R.string.bottom_bar__app_title, context) }
 
+        @Composable
+        override fun ComposableContent(
+            modifier: Modifier,
+            navBackStackEntry: NavBackStackEntry
+        ) {
+            AboutAppScreen(modifier)
+        }
+    }
+
+    object AppTodosScreen : AppScreen(baseRoute = "app/todos") {
         @Composable
         override fun ComposableContent(
             modifier: Modifier,
@@ -125,6 +136,7 @@ object AppNavigation {
         Home,
         ProfileForm,
         RelationshipForm,
+        AboutAppScreen,
         AppTodosScreen
     )
 

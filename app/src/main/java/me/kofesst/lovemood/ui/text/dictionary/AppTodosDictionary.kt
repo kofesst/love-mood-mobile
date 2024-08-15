@@ -8,6 +8,12 @@ import me.kofesst.lovemood.presentation.screens.app.todos.AppTodo
 import me.kofesst.lovemood.ui.text.ResourceText
 
 class AppTodosDictionary(appContext: Context) {
+    val appSettingsTitle = ResourceText(
+        R.string.todos__app_settings_title, appContext
+    )
+    val appSettingsDescription = ResourceText(
+        R.string.todos__app_settings_description, appContext
+    )
     val eventsTitle = ResourceText(
         R.string.todos__events_title, appContext
     )
