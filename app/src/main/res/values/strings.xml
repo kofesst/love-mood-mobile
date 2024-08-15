@@ -66,11 +66,11 @@
 
     <string name="screen__app__about_app_title">About app</string>
     <string name="screen__app__app_todos_screen_title">App developing</string>
-    <string name="screen__app__app_settings_card_title">App settings</string>
-    <string name="screen__app__app_settings_card_text">Customize application for yourself (developing)</string>
+    <string name="screen__app__app_settings_card_title">App settings (developing)</string>
+    <string name="screen__app__app_settings_card_text">Customize application for yourself</string>
     <string name="screen__app__app_todos_card_title">App developing</string>
     <string name="screen__app__app_todos_card_text">See how the application will develop in the future</string>
-    <string name="screen__app__app_version_history_card_title">App version history</string>
+    <string name="screen__app__app_version_history_card_title">App version history (developing)</string>
     <string name="screen__app__app_version_history_card_text">Track the application\'s development history</string>
     <string name="screen__app__todo_status">Status: %todo_status%</string>
 </resources>

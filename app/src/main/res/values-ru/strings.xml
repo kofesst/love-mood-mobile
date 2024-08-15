@@ -66,11 +66,11 @@
 
     <string name="screen__app__about_app_title">Приложение</string>
     <string name="screen__app__app_todos_screen_title">План разработки</string>
-    <string name="screen__app__app_settings_card_title">Настройки приложения</string>
-    <string name="screen__app__app_settings_card_text">Настройте приложение под себя (в разработке)</string>
+    <string name="screen__app__app_settings_card_title">Настройки приложения\n(в разработке)</string>
+    <string name="screen__app__app_settings_card_text">Настройте приложение под себя</string>
     <string name="screen__app__app_todos_card_title">План разработки приложения</string>
     <string name="screen__app__app_todos_card_text">Посмотрите, как будет развиваться приложение в будущем</string>
-    <string name="screen__app__app_version_history_card_title">История версий</string>
+    <string name="screen__app__app_version_history_card_title">История версий\n(в разработке)</string>
     <string name="screen__app__app_version_history_card_text">Отслеживайте историю развития приложения</string>
     <string name="screen__app__todo_status">Статус: %todo_status%</string>
 </resources>
