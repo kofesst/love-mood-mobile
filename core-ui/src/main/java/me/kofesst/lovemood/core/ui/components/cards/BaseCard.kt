@@ -30,6 +30,41 @@ fun BaseCard(
     label: String? = null,
     headerContent: (@Composable () -> Unit)? = null,
     backgroundImagePainter: Painter?,
+    onClick: () -> Unit,
+    bodyContent: @Composable ColumnScope.() -> Unit
+) {
+    Surface(
+        modifier = modifier,
+        color = colors.container,
+        contentColor = colors.mainContent,
+        shape = containerShape,
+        onClick = onClick
+    ) {
+        CardContent(
+            modifier = Modifier.fillMaxWidth(),
+            colors = colors,
+            layout = layout,
+            dimensions = dimensions,
+            styles = styles,
+            label = label,
+            headerContent = headerContent,
+            backgroundImagePainter = backgroundImagePainter,
+            bodyContent = bodyContent
+        )
+    }
+}
+
+@Composable
+fun BaseCard(
+    modifier: Modifier = Modifier,
+    containerShape: Shape = BaseCardDefaults.containerShape,
+    colors: BaseCardColors = BaseCardDefaults.colors(),
+    layout: BaseCardLayout = BaseCardDefaults.layout(),
+    dimensions: BaseCardDimensions = BaseCardDefaults.dimensions(),
+    styles: BaseCardStyles = BaseCardDefaults.styles(),
+    label: String? = null,
+    headerContent: (@Composable () -> Unit)? = null,
+    backgroundImagePainter: Painter?,
     bodyContent: @Composable ColumnScope.() -> Unit
 ) {
     Surface(
@@ -77,7 +112,13 @@ private fun CardContent(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(layout.bodyPadding),
+                    .padding(layout.bodyPadding)
+                    .then(
+                        if (backgroundImagePainter == null) Modifier
+                        else {
+                            Modifier.padding(end = dimensions.backgroundImageWidth)
+                        }
+                    ),
                 horizontalAlignment = layout.bodyHorizontalAlignment,
                 verticalArrangement = layout.bodyVerticalArrangement
             ) {

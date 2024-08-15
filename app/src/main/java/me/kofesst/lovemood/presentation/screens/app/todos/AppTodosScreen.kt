@@ -21,12 +21,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import me.kofesst.lovemood.core.ui.components.cards.BaseCard
 import me.kofesst.lovemood.core.ui.utils.mergeWithStatusBar
 import me.kofesst.lovemood.core.ui.utils.navigationBarPadding
 import me.kofesst.lovemood.presentation.app.LocalAppState
 import me.kofesst.lovemood.presentation.app.LocalDictionary
 import me.kofesst.lovemood.presentation.app.dictionary
-import me.kofesst.lovemood.presentation.screens.app.AppScreenCard
 import me.kofesst.lovemood.presentation.screens.app.AppScreenHeader
 import me.kofesst.lovemood.ui.text.dictionary.uiText
 
@@ -97,17 +97,18 @@ private fun AppTodoItem(
     modifier: Modifier = Modifier,
     item: AppTodo
 ) {
-    AppScreenCard(
+    BaseCard(
         modifier = modifier,
-        title = item.title.string(),
-        text = item.description.string(),
-        footer = {
-            Text(
-                text = dictionary.screens.app.todoStatus.string(
-                    "%todo_status%" to item.status.uiText
-                ),
-                style = MaterialTheme.typography.bodyMedium
+        label = item.title.string(),
+        backgroundImagePainter = null
+    ) {
+        Text(
+            text = item.description.string()
+        )
+        Text(
+            text = dictionary.screens.app.todoStatus.string(
+                "%todo_status%" to item.status.uiText
             )
-        }
-    )
+        )
+    }
 }
