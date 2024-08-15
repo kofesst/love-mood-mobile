@@ -17,4 +17,11 @@
         and also photos tied to a specific date
         (for example, New Year\'s celebration).
     </string>
+    <string name="todos__app_settings_title">
+        App settings
+    </string>
+    <string name="todos__app_settings_description">
+        Ability to change app theme, languange, to manage app data
+        (also with ability to delete current user profile)
+    </string>
 </resources>

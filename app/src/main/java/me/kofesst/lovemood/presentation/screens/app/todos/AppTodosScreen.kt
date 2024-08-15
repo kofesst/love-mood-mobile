@@ -2,14 +2,12 @@ package me.kofesst.lovemood.presentation.screens.app.todos
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBackIos
 import androidx.compose.material3.Icon
@@ -21,15 +19,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import me.kofesst.lovemood.core.ui.utils.mergeWithStatusBar
 import me.kofesst.lovemood.core.ui.utils.navigationBarPadding
 import me.kofesst.lovemood.presentation.app.LocalAppState
 import me.kofesst.lovemood.presentation.app.LocalDictionary
+import me.kofesst.lovemood.presentation.app.dictionary
+import me.kofesst.lovemood.presentation.screens.app.AppScreenCard
 import me.kofesst.lovemood.presentation.screens.app.AppScreenHeader
 import me.kofesst.lovemood.ui.text.dictionary.uiText
 
@@ -87,7 +84,7 @@ private fun ScreenTopBar(
                 )
             }
             Text(
-                text = "План разработки",
+                text = dictionary.screens.app.appTodosScreenTitle.string(),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
@@ -100,37 +97,17 @@ private fun AppTodoItem(
     modifier: Modifier = Modifier,
     item: AppTodo
 ) {
-    Surface(
+    AppScreenCard(
         modifier = modifier,
-        color = MaterialTheme.colorScheme.surfaceVariant,
-        contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-        shape = RoundedCornerShape(20.dp)
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
+        title = item.title.string(),
+        text = item.description.string(),
+        footer = {
             Text(
-                text = item.title.string(),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
-            )
-            Text(
-                text = item.description.string(),
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Normal
-            )
-            Text(
-                text = buildAnnotatedString {
-                    withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                        append("Статус: ")
-                    }
-                    append(item.status.uiText)
-                }
+                text = dictionary.screens.app.todoStatus.string(
+                    "%todo_status%" to item.status.uiText
+                ),
+                style = MaterialTheme.typography.bodyMedium
             )
         }
-    }
+    )
 }

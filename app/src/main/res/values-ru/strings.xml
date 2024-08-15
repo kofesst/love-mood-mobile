@@ -5,7 +5,7 @@
     <string name="app_version">Версия: %app_version%</string>
 
     <string name="bottom_bar__home_title">Главная</string>
-    <string name="bottom_bar__app_todos_title">Приложение</string>
+    <string name="bottom_bar__app_title">Приложение</string>
 
     <string name="errors__something_went_wrong">Что-то пошло не так</string>
     <string name="errors__required_field">Необходимо заполнить</string>
@@ -63,4 +63,14 @@
     <string name="screens__relationship_form__create_header_title">Добавьте Ваши отношения</string>
     <string name="screens__relationship_form__create_header_subtitle">И начните отслеживать самые счастливые моменты Вашей совместной жизни</string>
     <string name="screens__relationship_form__edit_header">Редактирование отношений</string>
+
+    <string name="screen__app__about_app_title">Приложение</string>
+    <string name="screen__app__app_todos_screen_title">План разработки</string>
+    <string name="screen__app__app_settings_card_title">Настройки приложения</string>
+    <string name="screen__app__app_settings_card_text">Настройте приложение под себя (в разработке)</string>
+    <string name="screen__app__app_todos_card_title">План разработки приложения</string>
+    <string name="screen__app__app_todos_card_text">Посмотрите, как будет развиваться приложение в будущем</string>
+    <string name="screen__app__app_version_history_card_title">История версий</string>
+    <string name="screen__app__app_version_history_card_text">Отслеживайте историю развития приложения</string>
+    <string name="screen__app__todo_status">Статус: %todo_status%</string>
 </resources>

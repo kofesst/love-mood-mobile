@@ -5,7 +5,7 @@
     <string name="app_version">Version: %app_version%</string>
 
     <string name="bottom_bar__home_title">Home</string>
-    <string name="bottom_bar__app_todos_title">About app</string>
+    <string name="bottom_bar__app_title">About app</string>
 
     <string name="errors__something_went_wrong">Something went wrong</string>
     <string name="errors__required_field">This is a required field</string>
@@ -63,4 +63,14 @@
     <string name="screens__relationship_form__create_header_title">Add your relationship</string>
     <string name="screens__relationship_form__create_header_subtitle">And start tracking the happiest moments of your life together</string>
     <string name="screens__relationship_form__edit_header">Editing relationship</string>
+
+    <string name="screen__app__about_app_title">About app</string>
+    <string name="screen__app__app_todos_screen_title">App developing</string>
+    <string name="screen__app__app_settings_card_title">App settings</string>
+    <string name="screen__app__app_settings_card_text">Customize application for yourself (developing)</string>
+    <string name="screen__app__app_todos_card_title">App developing</string>
+    <string name="screen__app__app_todos_card_text">See how the application will develop in the future</string>
+    <string name="screen__app__app_version_history_card_title">App version history</string>
+    <string name="screen__app__app_version_history_card_text">Track the application\'s development history</string>
+    <string name="screen__app__todo_status">Status: %todo_status%</string>
 </resources>
