@@ -11,45 +11,49 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import me.kofesst.lovemood.R
 import me.kofesst.lovemood.core.models.Relationship
-import me.kofesst.lovemood.core.text.AppTextHolder
-import me.kofesst.lovemood.presentation.app.LocalDictionary
+import me.kofesst.lovemood.core.ui.components.cards.BaseCard
+import me.kofesst.lovemood.core.ui.components.cards.BaseCardDefaults
+import me.kofesst.lovemood.presentation.app.dictionary
 import me.kofesst.lovemood.ui.LargeNotImplementedText
 import me.kofesst.lovemood.ui.NormalNotImplementedText
 
-object MomentsSection : HomeScreenSection() {
-    override val labelHolder: AppTextHolder
-        @Composable get() = LocalDictionary.current.screens.home.momentsSectionLabel
+@Composable
+fun MomentsSection(
+    modifier: Modifier = Modifier,
+    relationship: Relationship
+) {
+    BaseCard(
+        modifier = modifier,
+        colors = BaseCardDefaults.colors(
+            backgroundImageTint = Color(0xFFEC99A8)
+        ),
+        backgroundImagePainter = painterResource(R.drawable.ic_love_camera),
+        label = dictionary.screens.home.momentsSectionLabel.string(),
+        headerContent = { SectionHeader() }
+    ) {
+        NormalNotImplementedText()
+    }
+}
 
-    override val backgroundImagePainter: Painter
-        @Composable get() = painterResource(R.drawable.ic_love_camera)
-
-    override val backgroundImageTint: Color
-        @Composable get() = Color(0xFFEC99A8)
-
-    override val headerContent: @Composable (Modifier, Relationship?) -> Unit
-        get() = { _, _ ->
-            Box(
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.primaryContainer)
-                    .fillMaxWidth()
-                    .height(100.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                CompositionLocalProvider(
-                    LocalContentColor provides MaterialTheme.colorScheme.onPrimaryContainer
-                ) {
-                    LargeNotImplementedText()
-                }
-            }
+@Composable
+private fun SectionHeader(
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .background(MaterialTheme.colorScheme.primaryContainer)
+            .fillMaxWidth()
+            .height(100.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        CompositionLocalProvider(
+            LocalContentColor provides MaterialTheme.colorScheme.onPrimaryContainer
+        ) {
+            LargeNotImplementedText()
         }
-
-    override val bodyContent: @Composable (Modifier, Relationship?) -> Unit
-        get() = { _, _ ->
-            NormalNotImplementedText()
-        }
+    }
 }

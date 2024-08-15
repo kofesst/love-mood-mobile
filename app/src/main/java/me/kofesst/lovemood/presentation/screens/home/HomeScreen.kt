@@ -372,8 +372,9 @@ private fun LazyListScope.buildShimmerBody() {
     repeat(3) {
         item(key = "section_$it") {
             ShimmerSection(
-                modifier = Modifier.fillMaxWidth(),
-                relationship = null
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
             )
         }
     }
@@ -384,7 +385,9 @@ private fun LazyListScope.buildBody(
 ) {
     item(key = "love_duration_section") {
         LoveDurationSection(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp),
             relationship = relationship
         )
     }
