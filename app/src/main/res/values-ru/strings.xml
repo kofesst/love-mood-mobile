@@ -37,6 +37,11 @@
     <string name="screens__home__events_section_label">Следующее событие</string>
     <string name="screens__home__moments_section_label">Ваши моменты</string>
     <string name="screens__home__start_date_when_unit_are_empty">с сегодняшнего дня</string>
+    <string name="screens__home__edit_profile_action">Редактировать профиль</string>
+    <string name="screens__home__edit_relationship_action">Редактировать отношения</string>
+    <string name="screens__home__user_and_partner">%user_username% и %partner_username%</string>
+    <string name="screens__home__no_relationship_title">Вы не добавили отношения</string>
+    <string name="screens__home__add_relationship_action">Добавить вторую половинку</string>
 
     <string name="screens__user_profile_form__avatar_picker_label">Измените изображение своего профиля</string>
     <string name="screens__user_profile_form__avatar_picker_action">Выбрать изображение</string>

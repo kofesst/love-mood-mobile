@@ -27,11 +27,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.valentinilk.shimmer.shimmer
@@ -49,6 +46,7 @@ import me.kofesst.lovemood.core.ui.utils.statusBarPadding
 import me.kofesst.lovemood.presentation.app.LocalAppState
 import me.kofesst.lovemood.presentation.app.LocalMainActivity
 import me.kofesst.lovemood.presentation.app.LocalShimmer
+import me.kofesst.lovemood.presentation.app.dictionary
 import me.kofesst.lovemood.presentation.navigation.AppNavigation
 import me.kofesst.lovemood.presentation.screens.home.sections.EventsSection
 import me.kofesst.lovemood.presentation.screens.home.sections.LoveDurationSection
@@ -199,7 +197,7 @@ private fun RelationshipScreenHeader(
             ) {
                 PanelButton(
                     modifier = Modifier.weight(1.0f),
-                    action = "Редактировать профиль",
+                    action = dictionary.screens.home.editProfileAction.string(),
                     onClick = onEditProfileClick,
                     defaults = PanelButtonDefaults.defaults(
                         clip = PanelButtonDefaults.Clip.BottomStart,
@@ -212,7 +210,7 @@ private fun RelationshipScreenHeader(
                 )
                 PanelButton(
                     modifier = Modifier.weight(1.0f),
-                    action = "Редактировать отношения",
+                    action = dictionary.screens.home.editRelationshipAction.string(),
                     onClick = onEditRelationshipClick,
                     defaults = PanelButtonDefaults.defaults(
                         clip = PanelButtonDefaults.Clip.BottomEnd,
@@ -238,15 +236,10 @@ private fun RowScope.RelationshipScreenHeaderTitle(
     )
     Text(
         modifier = Modifier.weight(1.0f),
-        text = buildAnnotatedString {
-            withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                append("Вы")
-            }
-            append(" и ")
-            withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                append(relationship.partnerProfile.username)
-            }
-        },
+        text = dictionary.screens.home.userAndPartner.string(
+            "%user_username%" to relationship.userProfile.username,
+            "%partner_username%" to relationship.partnerProfile.username
+        ),
         style = MaterialTheme.typography.titleLarge,
         fontWeight = FontWeight.Normal,
         textAlign = TextAlign.Center
@@ -290,7 +283,7 @@ private fun ProfileScreenHeader(
                     onClick = onEditProfileClick
                 ) {
                     Text(
-                        text = "Редактировать профиль",
+                        text = dictionary.screens.home.editProfileAction.string(),
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }
@@ -433,7 +426,7 @@ private fun NoRelationshipContent(
             dynamicProperties = LottieResources.SadHeart.dynamicProperties(userGender)
         )
         Text(
-            text = "Вы не добавили отношения",
+            text = dictionary.screens.home.noRelationshipTitle.string(),
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Normal,
             textAlign = TextAlign.Center
@@ -443,7 +436,7 @@ private fun NoRelationshipContent(
             onClick = onCreateRelationshipClick
         ) {
             Text(
-                text = "Добавить вторую половинку",
+                text = dictionary.screens.home.addRelationshipAction.string(),
                 style = MaterialTheme.typography.bodyLarge
             )
         }

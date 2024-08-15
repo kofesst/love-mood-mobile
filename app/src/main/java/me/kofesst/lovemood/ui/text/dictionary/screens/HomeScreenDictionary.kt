@@ -17,4 +17,20 @@ class HomeScreenDictionary(appContext: Context) {
     val startDateWhenUnitsAreEmpty = ResourceText(
         R.string.screens__home__start_date_when_unit_are_empty, appContext
     )
+
+    val userAndPartner = ResourceText(
+        R.string.screens__home__user_and_partner, appContext
+    )
+    val editProfileAction = ResourceText(
+        R.string.screens__home__edit_profile_action, appContext
+    )
+    val editRelationshipAction = ResourceText(
+        R.string.screens__home__edit_relationship_action, appContext
+    )
+    val noRelationshipTitle = ResourceText(
+        R.string.screens__home__no_relationship_title, appContext
+    )
+    val addRelationshipAction = ResourceText(
+        R.string.screens__home__add_relationship_action, appContext
+    )
 }

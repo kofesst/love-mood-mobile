@@ -1,5 +1,6 @@
 package me.kofesst.lovemood.presentation.app
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import com.valentinilk.shimmer.Shimmer
@@ -7,6 +8,9 @@ import me.kofesst.lovemood.core.models.UserSettings
 import me.kofesst.lovemood.features.date.DateTimePattern
 import me.kofesst.lovemood.presentation.main.MainActivity
 import me.kofesst.lovemood.ui.text.dictionary.AppDictionary
+
+val dictionary
+    @Composable get() = LocalDictionary.current
 
 val LocalMainActivity = staticCompositionLocalOf<MainActivity> {
     error("MainActivity is not provided")

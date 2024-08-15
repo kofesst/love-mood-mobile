@@ -37,6 +37,11 @@
     <string name="screens__home__events_section_label">Next event</string>
     <string name="screens__home__moments_section_label">Your moments</string>
     <string name="screens__home__start_date_when_unit_are_empty">from today</string>
+    <string name="screens__home__edit_profile_action">Edit your profile</string>
+    <string name="screens__home__edit_relationship_action">Edit relationship</string>
+    <string name="screens__home__user_and_partner">%user_username% and %partner_username%</string>
+    <string name="screens__home__no_relationship_title">You didn\'t add your relationship</string>
+    <string name="screens__home__add_relationship_action">Add love partner</string>
 
     <string name="screens__user_profile_form__avatar_picker_label">Set your profile picture</string>
     <string name="screens__user_profile_form__avatar_picker_action">Select image</string>
