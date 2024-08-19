@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LoveMood</string>
+    <string name="app_name" translatable="false">Love Mood</string>
 
     <string name="not_implemented_yet">Not implemented yet</string>
     <string name="app_version">Version: %app_version%</string>
@@ -67,6 +67,14 @@
     <string name="screens__relationship_form__create_header_title">Add your relationship</string>
     <string name="screens__relationship_form__create_header_subtitle">And start tracking the happiest moments of your life together</string>
     <string name="screens__relationship_form__edit_header">Editing relationship</string>
+
+    <string name="screens__memories_list__screen_title">Your memories</string>
+    <string name="screens__memories_list__memories_calendar_card_label">Memories calendar</string>
+    <string name="screens__memories_list__memories_calendar_card_text">
+        Look at each of your memories as calendar and try to fill each day
+    </string>
+    <string name="screens__memories_list__open_memories_calendar_action">Open calendar</string>
+    <string name="screens__memories_list__add_new_memory_action">Add memory</string>
 
     <string name="screens__memory_form__photo_picker_label">Load a memory photo</string>
     <string name="screens__memory_form__photo_picker_action">Select image</string>

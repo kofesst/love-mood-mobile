@@ -1,12 +1,6 @@
 package me.kofesst.lovemood.presentation.screens.memory.list
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
-import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -16,13 +10,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.AddCircleOutline
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -42,9 +34,12 @@ import me.kofesst.lovemood.app.AppDestinations
 import me.kofesst.lovemood.core.models.PhotoMemory
 import me.kofesst.lovemood.core.ui.components.cards.BaseCard
 import me.kofesst.lovemood.core.ui.components.cards.BaseCardDefaults
+import me.kofesst.lovemood.core.ui.components.scaffold.NavigateUpIconButton
 import me.kofesst.lovemood.core.ui.components.scaffold.SmallAppTopBar
+import me.kofesst.lovemood.core.ui.transitions.softHorizontalSlide
 import me.kofesst.lovemood.core.ui.utils.ByteArrayImage
 import me.kofesst.lovemood.presentation.app.LocalAppState
+import me.kofesst.lovemood.presentation.app.dictionary
 import me.kofesst.lovemood.presentation.screens.memory.calendar.hasAssociated
 import me.kofesst.lovemood.ui.async.requiredAsyncValueContent
 
@@ -54,15 +49,29 @@ object MemoriesListScreen : AppScreen() {
         modifier: Modifier,
         navBackStackEntry: NavBackStackEntry
     ) {
+        val appState = LocalAppState.current
         val viewModel = hiltViewModel<MemoriesViewModel>(viewModelStoreOwner = navBackStackEntry)
         LaunchedEffect(Unit) {
             viewModel.loadMemories()
+            updateTopBar {
+                SmallAppTopBar(
+                    modifier = Modifier.fillMaxWidth(),
+                    leftContent = {
+                        NavigateUpIconButton { appState.navigateUp() }
+                    },
+                    mainContent = {
+                        Text(
+                            text = dictionary.screens.memoriesList.screenTitle.string(),
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                    }
+                )
+            }
         }
 
         Content(modifier, viewModel)
     }
 
-    @OptIn(ExperimentalFoundationApi::class)
     @Composable
     private fun Content(
         modifier: Modifier = Modifier,
@@ -75,9 +84,6 @@ object MemoriesListScreen : AppScreen() {
             verticalArrangement = Arrangement.spacedBy(20.dp),
             contentPadding = PaddingValues(all = 20.dp)
         ) {
-            stickyHeader(key = "screen_header") {
-                ScreenHeader(onBackClick = appState::navigateUp)
-            }
             requiredAsyncValueContent(
                 asyncValue = asyncMemories,
                 onLoaded = { memories ->
@@ -113,43 +119,16 @@ object MemoriesListScreen : AppScreen() {
     }
 
     @Composable
-    private fun ScreenHeader(
-        modifier: Modifier = Modifier,
-        onBackClick: () -> Unit
-    ) {
-        SmallAppTopBar(
-            modifier = modifier,
-            leftContent = {
-                IconButton(onClick = onBackClick) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                        contentDescription = null
-                    )
-                }
-            },
-            mainContent = {
-                Text(
-                    text = "Ваши воспоминания",
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-        )
-    }
-
-    @Composable
     private fun MemoriesCalendarCard(
         modifier: Modifier = Modifier,
         hasAssociatedMemories: Boolean,
         onShowClick: () -> Unit
     ) {
+        val dictionary = dictionary.screens.memoriesList
         AnimatedContent(
             label = "memories_calendar_card",
             targetState = hasAssociatedMemories,
-            transitionSpec = {
-                // todo move into constant
-                (fadeIn() + scaleIn()).togetherWith(fadeOut() + scaleOut())
-            }
+            transitionSpec = { softHorizontalSlide }
         ) { isCardVisible ->
             if (isCardVisible) {
                 BaseCard(
@@ -158,14 +137,14 @@ object MemoriesListScreen : AppScreen() {
                     colors = BaseCardDefaults.colors(
                         backgroundImageTint = Color(0xFFFF94E8)
                     ),
-                    label = "Календарь воспоминаний"
+                    label = dictionary.memoriesCalendarCardLabel.string()
                 ) {
-                    Text(text = "Посмотрите каждое ваше воспоминание в виде календаря и постарайтесь заполнить каждый день")
-                    Button(
+                    Text(text = dictionary.memoriesCalendarCardText.string())
+                    TextButton(
                         modifier = Modifier.fillMaxWidth(),
                         onClick = onShowClick
                     ) {
-                        Text(text = "Открыть календарь")
+                        Text(text = dictionary.openMemoriesCalendarAction.string())
                     }
                 }
             }
@@ -177,6 +156,7 @@ object MemoriesListScreen : AppScreen() {
         modifier: Modifier = Modifier,
         onAddClick: () -> Unit
     ) {
+        val dictionary = dictionary.screens.memoriesList
         BaseCard(
             modifier = modifier,
             backgroundImagePainter = null,
@@ -193,7 +173,7 @@ object MemoriesListScreen : AppScreen() {
                     tint = MaterialTheme.colorScheme.primary
                 )
                 Text(
-                    text = "Добавить момент",
+                    text = dictionary.addNewMemoryAction.string(),
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Normal,
                     color = MaterialTheme.colorScheme.primary,

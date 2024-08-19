@@ -1,18 +1,14 @@
 package me.kofesst.lovemood.presentation.screens.memory.calendar
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -29,6 +25,7 @@ import me.kofesst.lovemood.core.ui.components.calendar.CalendarCellDefaults
 import me.kofesst.lovemood.core.ui.components.calendar.CalendarDayCell
 import me.kofesst.lovemood.core.ui.components.calendar.CalendarDayCellContainer
 import me.kofesst.lovemood.core.ui.components.calendar.LazyCalendarColumn
+import me.kofesst.lovemood.core.ui.components.scaffold.NavigateUpIconButton
 import me.kofesst.lovemood.core.ui.components.scaffold.SmallAppTopBar
 import me.kofesst.lovemood.core.ui.utils.ByteArrayImage
 import me.kofesst.lovemood.core.ui.utils.alsoNavBar
@@ -51,6 +48,23 @@ object MemoriesCalendarScreen : AppScreen() {
         navBackStackEntry: NavBackStackEntry
     ) {
         val appState = LocalAppState.current
+        LaunchedEffect(Unit) {
+            updateTopBar {
+                SmallAppTopBar(
+                    modifier = Modifier.fillMaxWidth(),
+                    leftContent = {
+                        NavigateUpIconButton { appState.navigateUp() }
+                    },
+                    mainContent = {
+                        Text(
+                            text = dictionary.screens.memoriesCalendar.screenTitle.string(),
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                    }
+                )
+            }
+        }
+
         val parentBackStackEntry = remember(navBackStackEntry) {
             appState.navHostController.getBackStackEntry(
                 route = AppDestinations.Memories.List.route
@@ -60,7 +74,7 @@ object MemoriesCalendarScreen : AppScreen() {
         Content(modifier, viewModel)
     }
 
-    @OptIn(ExperimentalLayoutApi::class, ExperimentalFoundationApi::class)
+    @OptIn(ExperimentalLayoutApi::class)
     @Composable
     private fun Content(
         modifier: Modifier = Modifier,
@@ -91,36 +105,6 @@ object MemoriesCalendarScreen : AppScreen() {
                         date = date
                     )
                 }
-            },
-            buildBeforeCalendar = {
-                stickyHeader(key = "screen_header") {
-                    ScreenHeader()
-                }
-            }
-        )
-    }
-
-    @Composable
-    private fun ScreenHeader(
-        modifier: Modifier = Modifier,
-    ) {
-        val dictionary = dictionary.screens.memoriesCalendar
-        val appState = LocalAppState.current
-        SmallAppTopBar(
-            modifier = modifier.fillMaxWidth(),
-            leftContent = {
-                IconButton(onClick = { appState.navigateUp() }) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                        contentDescription = null
-                    )
-                }
-            },
-            mainContent = {
-                Text(
-                    text = dictionary.screenTitle.string(),
-                    style = MaterialTheme.typography.titleLarge
-                )
             }
         )
     }

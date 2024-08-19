@@ -1,14 +1,14 @@
 package me.kofesst.lovemood.presentation.screens.app
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -20,7 +20,7 @@ import me.kofesst.lovemood.R
 import me.kofesst.lovemood.app.AppDestinations
 import me.kofesst.lovemood.core.ui.components.cards.BaseCard
 import me.kofesst.lovemood.core.ui.components.cards.BaseCardDefaults
-import me.kofesst.lovemood.core.ui.utils.mergeWithStatusBar
+import me.kofesst.lovemood.core.ui.components.scaffold.SmallAppTopBar
 import me.kofesst.lovemood.presentation.app.LocalAppState
 import me.kofesst.lovemood.presentation.app.dictionary
 
@@ -30,23 +30,34 @@ object AboutAppScreen : AppScreen() {
         modifier: Modifier,
         navBackStackEntry: NavBackStackEntry
     ) {
-        Box(
-            modifier = modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(20.dp.mergeWithStatusBar()),
-                verticalArrangement = Arrangement.spacedBy(20.dp)
-            ) {
-                AppScreenHeader()
+        val appState = LocalAppState.current
+        LaunchedEffect(Unit) {
+            updateTopBar {
+                SmallAppTopBar(
+                    modifier = Modifier.fillMaxWidth(),
+                    mainContent = {
+                        Text(
+                            text = dictionary.screens.app.aboutAppTitle.string(),
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                    }
+                )
+            }
+        }
 
-                val appState = LocalAppState.current
-                SettingsCard {}
+        LazyColumn(
+            modifier = modifier.fillMaxSize(),
+            contentPadding = PaddingValues(all = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp)
+        ) {
+            item(key = "settings_card") {
+                SettingsCard { }
+            }
+            item(key = "todos_card") {
                 TodosCard { appState.navigate(AppDestinations.App.Todos) }
-                VersionHistoryCard {}
+            }
+            item(key = "version_history_card") {
+                VersionHistoryCard { }
             }
         }
     }

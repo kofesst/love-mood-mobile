@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">LoveMood</string>
-
     <string name="not_implemented_yet">В разработке</string>
     <string name="app_version">Версия: %app_version%</string>
 
@@ -65,6 +63,14 @@
     <string name="screens__relationship_form__create_header_title">Добавьте Ваши отношения</string>
     <string name="screens__relationship_form__create_header_subtitle">И начните отслеживать самые счастливые моменты Вашей совместной жизни</string>
     <string name="screens__relationship_form__edit_header">Редактирование отношений</string>
+
+    <string name="screens__memories_list__screen_title">Ваши воспоминания</string>
+    <string name="screens__memories_list__memories_calendar_card_label">Календарь воспоминаний</string>
+    <string name="screens__memories_list__memories_calendar_card_text">
+        Посмотрите каждое ваше воспоминание в виде календаря и постарайтесь заполнить каждый день
+    </string>
+    <string name="screens__memories_list__open_memories_calendar_action">Открыть календарь</string>
+    <string name="screens__memories_list__add_new_memory_action">Добавить воспоминание</string>
 
     <string name="screens__memory_form__photo_picker_label">Загрузите воспоминание</string>
     <string name="screens__memory_form__photo_picker_action">Выбрать изображение</string>

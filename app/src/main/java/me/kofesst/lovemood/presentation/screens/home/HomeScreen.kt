@@ -1,10 +1,10 @@
 package me.kofesst.lovemood.presentation.screens.home
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -45,7 +45,6 @@ import me.kofesst.lovemood.core.ui.components.lottie.LottieFile
 import me.kofesst.lovemood.core.ui.components.lottie.LottieSize
 import me.kofesst.lovemood.core.ui.utils.ByteArrayImage
 import me.kofesst.lovemood.core.ui.utils.mergeWithStatusBar
-import me.kofesst.lovemood.core.ui.utils.navigationBarPadding
 import me.kofesst.lovemood.core.ui.utils.statusBarPadding
 import me.kofesst.lovemood.presentation.app.LocalAppState
 import me.kofesst.lovemood.presentation.app.LocalMainActivity
@@ -90,7 +89,7 @@ object HomeScreen : AppScreen() {
         WithShimmerEffect {
             LazyColumn(
                 modifier = modifier.fillMaxSize(),
-                contentPadding = navigationBarPadding(),
+                contentPadding = PaddingValues(all = 20.dp),
                 verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
                 buildAsyncHeader(
@@ -108,7 +107,6 @@ object HomeScreen : AppScreen() {
 
     //region Screen header
 
-    @OptIn(ExperimentalFoundationApi::class)
     private fun LazyListScope.buildAsyncHeader(
         asyncProfile: AsyncValue<Profile>,
         asyncRelationship: AsyncValue<Relationship>
@@ -154,7 +152,6 @@ object HomeScreen : AppScreen() {
         )
     }
 
-    @OptIn(ExperimentalFoundationApi::class)
     private fun LazyListScope.buildProfileHeader(
         asyncProfile: AsyncValue<Profile>
     ) {
@@ -379,17 +376,13 @@ object HomeScreen : AppScreen() {
                 } else {
                     item(key = LOVE_DURATION_SECTION_KEY) {
                         LoveDurationSection(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 20.dp),
+                            modifier = Modifier.fillMaxWidth(),
                             relationship = relationship
                         )
                     }
                     item(key = EVENTS_SECTION_KEY) {
                         EventsSection(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 20.dp),
+                            modifier = Modifier.fillMaxWidth(),
                             relationship = relationship
                         )
                     }
@@ -402,23 +395,17 @@ object HomeScreen : AppScreen() {
     private fun LazyListScope.buildShimmerBody() {
         item(key = LOVE_DURATION_SECTION_KEY) {
             ShimmerSection(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
+                modifier = Modifier.fillMaxWidth(),
             )
         }
         item(key = EVENTS_SECTION_KEY) {
             ShimmerSection(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
+                modifier = Modifier.fillMaxWidth(),
             )
         }
         item(key = MEMORIES_SECTION_KEY) {
             ShimmerSection(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }
@@ -431,9 +418,7 @@ object HomeScreen : AppScreen() {
             onLoading = {
                 item(key = MEMORIES_SECTION_KEY) {
                     ShimmerSection(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 20.dp)
+                        modifier = Modifier.fillMaxWidth()
                     )
                 }
             },
@@ -441,9 +426,7 @@ object HomeScreen : AppScreen() {
                 item(key = MEMORIES_SECTION_KEY) {
                     val appState = LocalAppState.current
                     MemoriesSection(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 20.dp),
+                        modifier = Modifier.fillMaxWidth(),
                         memories = memories,
                         onAddMemoryClick = {
                             appState.navigate(AppDestinations.Forms.Memory)

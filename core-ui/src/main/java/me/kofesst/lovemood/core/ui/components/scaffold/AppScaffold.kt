@@ -13,7 +13,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import me.kofesst.lovemood.core.ui.transitions.topBarAnimatedTransition
+import me.kofesst.lovemood.core.ui.transitions.fadeTransition
 
 typealias ComposableContent = @Composable () -> Unit
 
@@ -35,7 +35,7 @@ fun AppScaffold(
             AnimatedContent(
                 targetState = topBar,
                 label = "top_bar",
-                transitionSpec = { topBarAnimatedTransition }
+                transitionSpec = { fadeTransition }
             ) { topBarContent ->
                 topBarContent()
             }
