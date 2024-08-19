@@ -11,8 +11,6 @@ import me.kofesst.lovemood.R
 import me.kofesst.lovemood.app.dictionary
 import me.kofesst.lovemood.core.models.PhotoMemory
 import me.kofesst.lovemood.core.ui.components.cards.BaseCard
-import me.kofesst.lovemood.core.ui.components.cards.BaseCardDefaults
-import me.kofesst.lovemood.presentation.app.dictionary
 
 @Composable
 fun MemoriesSection(

@@ -67,7 +67,7 @@ object MemoriesCalendarScreen : AppScreen() {
 
         val parentBackStackEntry = remember(navBackStackEntry) {
             appState.navHostController.getBackStackEntry(
-                route = AppDestinations.Memories.List.route
+                route = AppDestinations.Memories.All.route
             )
         }
         val viewModel = hiltViewModel<MemoriesViewModel>(viewModelStoreOwner = parentBackStackEntry)
@@ -95,9 +95,19 @@ object MemoriesCalendarScreen : AppScreen() {
                     associatedMemories.byDate(date)
                 }
                 if (dayMemories.isNotEmpty()) {
+                    val appState = LocalAppState.current
                     DayCellWithMemory(
                         date = date,
-                        memory = dayMemories.first()
+                        memory = dayMemories.first(),
+                        onClick = {
+                            appState.navigate(
+                                destination = AppDestinations.Memories.Daily,
+                                argumentValues = arrayOf(
+                                    AppDestinations.Memories.Daily.dateArgument
+                                            to date
+                                )
+                            )
+                        }
                     )
                 } else {
                     CalendarDayCell(
@@ -113,12 +123,13 @@ object MemoriesCalendarScreen : AppScreen() {
     private fun DayCellWithMemory(
         modifier: Modifier = Modifier,
         date: LocalDate,
-        memory: PhotoMemory
+        memory: PhotoMemory,
+        onClick: () -> Unit
     ) {
         CalendarDayCellContainer(
             modifier = modifier,
             defaults = ScreenCalendarDayCellsDefaults,
-            onClick = {}
+            onClick = onClick
         ) {
             ByteArrayImage(
                 content = memory.photoContent,

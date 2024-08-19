@@ -10,11 +10,13 @@ import me.kofesst.android.lovemood.navigation.AppMainDestination
 import me.kofesst.android.lovemood.navigation.AppScreen
 import me.kofesst.android.lovemood.navigation.DestinationArgument
 import me.kofesst.android.lovemood.navigation.IntArgument
+import me.kofesst.android.lovemood.navigation.LocalDateArgument
 import me.kofesst.lovemood.core.text.AppTextHolder
 import me.kofesst.lovemood.presentation.screens.app.AboutAppScreen
 import me.kofesst.lovemood.presentation.screens.app.todos.AppTodosScreen
 import me.kofesst.lovemood.presentation.screens.home.HomeScreen
 import me.kofesst.lovemood.presentation.screens.memory.calendar.MemoriesCalendarScreen
+import me.kofesst.lovemood.presentation.screens.memory.calendar.daily.DailyMemoriesScreen
 import me.kofesst.lovemood.presentation.screens.memory.form.MemoryFormScreen
 import me.kofesst.lovemood.presentation.screens.memory.list.MemoriesListScreen
 import me.kofesst.lovemood.presentation.screens.profile.UserProfileFormScreen
@@ -24,7 +26,7 @@ object AppDestinations {
     val All
         get() = listOf(
             Home,
-            Memories.List, Memories.Calendar,
+            Memories.All, Memories.Calendar, Memories.Daily,
             App.About, App.Todos,
             Forms.UserProfile, Forms.Relationship, Forms.Memory
         )
@@ -43,12 +45,21 @@ object AppDestinations {
     }
 
     object Memories {
-        object List : AppDestination(baseRoute = "memories") {
+        object All : AppDestination(baseRoute = "memories") {
             override val screen: AppScreen get() = MemoriesListScreen
         }
 
         object Calendar : AppDestination(baseRoute = "memories/calendar") {
             override val screen: AppScreen get() = MemoriesCalendarScreen
+        }
+
+        object Daily : AppDestination(baseRoute = "memories/calendar/daily") {
+            val dateArgument = LocalDateArgument(name = "date")
+
+            override val arguments: List<DestinationArgument<*>>
+                get() = listOf(dateArgument)
+
+            override val screen: AppScreen get() = DailyMemoriesScreen
         }
     }
 

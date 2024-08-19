@@ -5,6 +5,8 @@ import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 /**
  * Класс аргумента любого экрана.
@@ -32,6 +34,12 @@ abstract class DestinationArgument<ValueType : Any> {
      * из набора аргументов [Bundle].
      */
     protected abstract val valueFromBundleProducer: (Bundle) -> ValueType?
+
+    /**
+     * Преобразовывает значение аргумента для его
+     * последующей записи в набор аргументов.
+     */
+    open fun prepareForBundle(value: Any?): Any? = value
 
     /**
      * Получает значение аргумента из стека навигации.
@@ -86,6 +94,47 @@ class IntArgument(
 ) : DestinationArgument<Int>() {
     override val navType: NavType<*> = NavType.IntType
     override val valueFromBundleProducer: (Bundle) -> Int? = { it.getInt(name) }
+}
+
+/**
+ * Реализация аргумента экрана со значением типа [LocalDate].
+ */
+class LocalDateArgument(
+    override val name: String,
+    override val defaultValue: LocalDate = LocalDate.now()
+) : DestinationArgument<LocalDate>() {
+    override val navType: NavType<*> = LocalDateType
+    override val valueFromBundleProducer: (Bundle) -> LocalDate? = { LocalDateType[it, name] }
+
+    override fun prepareForBundle(value: Any?): Any? {
+        val date = value as? LocalDate ?: return null
+        return LocalDateType.SaverFormatter.format(date)
+    }
+
+    private object LocalDateType : NavType<LocalDate>(
+        isNullableAllowed = false
+    ) {
+        const val DATE_SAVER_PATTERN = "dd.MM.yyyy"
+        val SaverFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern(DATE_SAVER_PATTERN)
+
+        override fun get(bundle: Bundle, key: String): LocalDate? {
+            val valueString = bundle.getString(key) ?: return null
+            return this.parseValue(valueString)
+        }
+
+        override fun parseValue(value: String): LocalDate {
+            return try {
+                LocalDate.parse(value, SaverFormatter)
+            } catch (_: Exception) {
+                LocalDate.now()
+            }
+        }
+
+        override fun put(bundle: Bundle, key: String, value: LocalDate) {
+            val valueString = SaverFormatter.format(value)
+            bundle.putString(key, valueString)
+        }
+    }
 }
 
 /**

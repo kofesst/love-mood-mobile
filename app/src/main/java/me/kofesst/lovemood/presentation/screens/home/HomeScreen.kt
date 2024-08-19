@@ -429,7 +429,7 @@ object HomeScreen : AppScreen() {
                             appState.navigate(AppDestinations.Forms.Memory)
                         },
                         onViewAllClick = {
-                            appState.navigate(AppDestinations.Memories.List)
+                            appState.navigate(AppDestinations.Memories.All)
                         }
                     )
                 }

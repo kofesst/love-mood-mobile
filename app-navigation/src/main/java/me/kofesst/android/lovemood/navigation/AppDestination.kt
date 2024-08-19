@@ -87,7 +87,7 @@ abstract class AppDestination(
      */
     fun withArgs(vararg argumentValues: Pair<DestinationArgument<*>, Any>): String {
         val routeWithValues = argumentValues.fold(route) { acc, (argument, value) ->
-            acc.replace("{${argument.name}}", value.toString(), ignoreCase = true)
+            acc.replace("{${argument.name}}", argument.prepareForBundle(value).toString(), ignoreCase = true)
         }
         val routeWithDefaultValues = arguments.fold(routeWithValues) { acc, argument ->
             acc.replace("{${argument.name}}", argument.defaultValue?.toString() ?: "")
