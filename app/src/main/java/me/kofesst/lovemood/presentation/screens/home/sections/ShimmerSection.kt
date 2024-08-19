@@ -17,8 +17,7 @@ fun ShimmerSection(
         BaseCard(
             modifier = modifier
                 .height(150.dp)
-                .shimmer(LocalShimmer.current),
-            backgroundImagePainter = null
+                .shimmer(LocalShimmer.current)
         ) {}
     }
 }

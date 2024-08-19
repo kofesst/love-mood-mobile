@@ -10,8 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavBackStackEntry
@@ -19,7 +17,6 @@ import me.kofesst.android.lovemood.navigation.AppScreen
 import me.kofesst.lovemood.R
 import me.kofesst.lovemood.app.AppDestinations
 import me.kofesst.lovemood.core.ui.components.cards.BaseCard
-import me.kofesst.lovemood.core.ui.components.cards.BaseCardDefaults
 import me.kofesst.lovemood.core.ui.components.scaffold.SmallAppTopBar
 import me.kofesst.lovemood.presentation.app.LocalAppState
 import me.kofesst.lovemood.presentation.app.dictionary
@@ -70,9 +67,6 @@ object AboutAppScreen : AppScreen() {
         BaseCard(
             modifier = modifier,
             backgroundImagePainter = painterResource(R.drawable.ic_gear),
-            colors = BaseCardDefaults.colors(
-                backgroundImageTint = Color(0xFFFECCC0)
-            ),
             label = dictionary.screens.app.appSettingsCardTitle.string(),
             onClick = onClick
         ) {
@@ -89,16 +83,7 @@ object AboutAppScreen : AppScreen() {
     ) {
         BaseCard(
             modifier = modifier,
-            backgroundImagePainter = painterResource(R.drawable.ic_todo_note),
-            colors = BaseCardDefaults.colors(
-                backgroundImageTint = Color(0xFFC9FFEA)
-            ),
-            dimensions = BaseCardDefaults.dimensions(
-                backgroundImageOffsetRatio = Offset(
-                    x = 16f,
-                    y = 2f
-                )
-            ),
+            backgroundImagePainter = painterResource(R.drawable.ic_todo),
             label = dictionary.screens.app.appTodosCardTitle.string(),
             onClick = onClick
         ) {
@@ -115,17 +100,7 @@ object AboutAppScreen : AppScreen() {
     ) {
         BaseCard(
             modifier = modifier,
-            backgroundImagePainter = painterResource(R.drawable.ic_history),
-            colors = BaseCardDefaults.colors(
-                backgroundImageTint = Color(0xFFDAA1FF)
-            ),
-            dimensions = BaseCardDefaults.dimensions(
-                backgroundImageRotationDegrees = 0f,
-                backgroundImageOffsetRatio = Offset(
-                    x = 5f,
-                    y = 5f
-                )
-            ),
+            backgroundImagePainter = painterResource(R.drawable.ic_puzzle),
             label = dictionary.screens.app.appVersionHistoryCardTitle.string(),
             onClick = onClick
         ) {
