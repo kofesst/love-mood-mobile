@@ -23,6 +23,6 @@ class AppTodosRepository(dictionary: AppTodosDictionary) {
     private val memoriesTodo = AppTodo(
         title = dictionary.memoriesTitle,
         description = dictionary.memoriesDescription,
-        status = AppTodo.Status.InDevelop
+        status = AppTodo.Status.Released(appVersion = "0.0.2")
     )
 }

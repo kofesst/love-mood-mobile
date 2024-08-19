@@ -1,11 +1,6 @@
 <resources>
-    <string name="app_name">LoveMood</string>
-
     <string name="not_implemented_yet">В разработке</string>
     <string name="app_version">Версия: %app_version%</string>
-
-    <string name="bottom_bar__home_title">Главная</string>
-    <string name="bottom_bar__app_title">Приложение</string>
 
     <string name="errors__something_went_wrong">Что-то пошло не так</string>
     <string name="errors__required_field">Необходимо заполнить</string>
@@ -33,6 +28,7 @@
     <string name="dates__years_second_case">года</string>
     <string name="dates__years_third_case">лет</string>
 
+    <string name="screens__home__bottom_bar_title">Главная</string>
     <string name="screens__home__love_duration_section_label">Вы вместе</string>
     <string name="screens__home__events_section_label">Следующее событие</string>
     <string name="screens__home__memories_section_label">Воспоминания</string>
@@ -68,6 +64,14 @@
     <string name="screens__relationship_form__create_header_subtitle">И начните отслеживать самые счастливые моменты Вашей совместной жизни</string>
     <string name="screens__relationship_form__edit_header">Редактирование отношений</string>
 
+    <string name="screens__memories_list__screen_title">Ваши воспоминания</string>
+    <string name="screens__memories_list__memories_calendar_card_label">Календарь воспоминаний</string>
+    <string name="screens__memories_list__memories_calendar_card_text">
+        Посмотрите каждое ваше воспоминание в виде календаря и постарайтесь заполнить каждый день
+    </string>
+    <string name="screens__memories_list__open_memories_calendar_action">Открыть календарь</string>
+    <string name="screens__memories_list__add_new_memory_action">Добавить воспоминание</string>
+
     <string name="screens__memory_form__photo_picker_label">Загрузите воспоминание</string>
     <string name="screens__memory_form__photo_picker_action">Выбрать изображение</string>
     <string name="screens__memory_form__is_associated_to_date_label">Воспоминание связано с датой</string>
@@ -78,6 +82,7 @@
 
     <string name="screens__memories_calendar__screen_title">Календарь воспоминаний</string>
 
+    <string name="screens__app__bottom_bar_title">Приложение</string>
     <string name="screen__app__about_app_title">Приложение</string>
     <string name="screen__app__app_todos_screen_title">План разработки</string>
     <string name="screen__app__app_settings_card_title">Настройки приложения\n(в разработке)</string>

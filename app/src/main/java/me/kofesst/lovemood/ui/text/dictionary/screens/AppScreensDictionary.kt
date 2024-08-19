@@ -5,6 +5,9 @@ import me.kofesst.lovemood.R
 import me.kofesst.lovemood.ui.text.ResourceText
 
 class AppScreensDictionary(appContext: Context) {
+    val bottomBarTitle = ResourceText(
+        R.string.screens__app__bottom_bar_title, appContext
+    )
     val aboutAppTitle = ResourceText(
         R.string.screen__app__about_app_title, appContext
     )
@@ -26,7 +29,7 @@ class AppScreensDictionary(appContext: Context) {
     val appVersionHistoryCardText = ResourceText(
         R.string.screen__app__app_version_history_card_text, appContext
     )
-    
+
     val appTodosScreenTitle = ResourceText(
         R.string.screen__app__app_todos_screen_title, appContext
     )

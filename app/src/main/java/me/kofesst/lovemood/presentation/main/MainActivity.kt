@@ -17,6 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import me.kofesst.android.lovemood.navigation.AppDestination
+import me.kofesst.android.lovemood.navigation.AppMainDestination
+import me.kofesst.android.lovemood.navigation.AppNavHost
+import me.kofesst.lovemood.app.AppDestinations
 import me.kofesst.lovemood.core.models.UserSettings
 import me.kofesst.lovemood.core.ui.components.scaffold.AppScaffold
 import me.kofesst.lovemood.features.date.DateTimePattern
@@ -26,11 +30,6 @@ import me.kofesst.lovemood.presentation.app.LocalDictionary
 import me.kofesst.lovemood.presentation.app.LocalMainActivity
 import me.kofesst.lovemood.presentation.app.LocalUserSettings
 import me.kofesst.lovemood.presentation.app.rememberAppState
-import me.kofesst.lovemood.presentation.navigation.AppMainScreen
-import me.kofesst.lovemood.presentation.navigation.AppNavHost
-import me.kofesst.lovemood.presentation.navigation.AppNavigation
-import me.kofesst.lovemood.presentation.navigation.AppScreen
-import me.kofesst.lovemood.presentation.navigation.BottomBarScreenItem
 import me.kofesst.lovemood.ui.text.dictionary.AppDictionary
 import me.kofesst.lovemood.ui.theme.LoveMoodMobileTheme
 import me.kofesst.lovemood.ui.theme.WithShimmerTheme
@@ -103,36 +102,46 @@ class MainActivity : ComponentActivity() {
         userSettings: UserSettings?
     ) {
         val appState = LocalAppState.current
-        val currentScreen by appState.currentScreenState
-        NavigationListener(currentScreen)
+        val currentDestination by appState.currentDestinationState
+        NavigationListener(currentDestination)
 
-        val bottomBarScreens = remember {
-            AppNavigation.getBottomBarScreens(this@MainActivity)
-        }
-        val currentBottomBarItem = remember(currentScreen) {
-            bottomBarScreens.firstOrNull { item -> item.destination == currentScreen }
+        val topBarContent = currentDestination?.screen?.topBarContentState
+        val bottomBarScreens = remember { AppDestinations.Main }
+        val currentBottomBarItem = remember(currentDestination) {
+            bottomBarScreens.firstOrNull { item -> item == currentDestination }
         }
         AppScaffold(
             modifier = modifier,
             snackbarHostState = appState.snackbarHostState,
+            topBar = topBarContent?.value ?: {},
             isBottomBarVisible = _bottomBarVisibleState.value,
             selectedBottomBarItem = currentBottomBarItem,
             bottomBarItems = bottomBarScreens,
             onBottomBarItemClick = { item ->
-                val screenItem = item as BottomBarScreenItem
-                if (currentScreen != screenItem.destination) {
+                val destination = item as AppDestination
+                if (currentDestination != destination) {
                     appState.navigate(
-                        appScreen = screenItem.destination,
+                        destination = destination,
                         clearBackStack = true
                     )
                 }
             }
         ) { childModifier ->
             if (userSettings != null) {
+                val appDestinations = remember { AppDestinations.All }
+                val startDestination = remember(userSettings) {
+                    if (userSettings.userProfileId != null) {
+                        AppDestinations.Home
+                    } else {
+                        AppDestinations.Forms.UserProfile
+                    }
+                }
                 AppNavHost(
                     modifier = childModifier,
-                    baseModifier = Modifier.fillMaxSize(),
-                    userHasProfile = userSettings.userProfileId != null
+                    screensModifier = Modifier.fillMaxSize(),
+                    navHostController = appState.navHostController,
+                    startDestination = startDestination,
+                    destinationsList = appDestinations
                 )
             }
         }
@@ -140,11 +149,11 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     private fun NavigationListener(
-        currentScreen: AppScreen?
+        currentDestination: AppDestination?
     ) {
-        LaunchedEffect(currentScreen) {
-            when (currentScreen) {
-                is AppMainScreen -> expandBottomBar()
+        LaunchedEffect(currentDestination) {
+            when (currentDestination) {
+                is AppMainDestination -> expandBottomBar()
                 else -> hideBottomBar()
             }
         }
