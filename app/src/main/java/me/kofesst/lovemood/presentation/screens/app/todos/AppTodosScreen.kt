@@ -21,6 +21,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavBackStackEntry
+import me.kofesst.android.lovemood.navigation.AppScreen
 import me.kofesst.lovemood.core.ui.components.cards.BaseCard
 import me.kofesst.lovemood.core.ui.utils.mergeWithStatusBar
 import me.kofesst.lovemood.core.ui.utils.navigationBarPadding
@@ -30,85 +32,88 @@ import me.kofesst.lovemood.presentation.app.dictionary
 import me.kofesst.lovemood.presentation.screens.app.AppScreenHeader
 import me.kofesst.lovemood.ui.text.dictionary.uiText
 
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun AppTodosScreen(
-    modifier: Modifier = Modifier
-) {
-    val dictionary = LocalDictionary.current
-    val todoItems = remember(dictionary) { AppTodosRepository(dictionary.todos).all }
-
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(20.dp),
-        contentPadding = navigationBarPadding()
+object AppTodosScreen : AppScreen() {
+    @OptIn(ExperimentalFoundationApi::class)
+    @Composable
+    override fun ScreenContent(
+        modifier: Modifier,
+        navBackStackEntry: NavBackStackEntry
     ) {
-        stickyHeader(key = "screen_top_bar") {
-            ScreenTopBar(modifier = Modifier.fillMaxWidth())
-        }
-        item(key = "screen_header") {
-            AppScreenHeader(modifier = Modifier.fillMaxWidth())
-        }
-        items(todoItems, key = { "todo_item__${it.title}" }) { todoItem ->
-            AppTodoItem(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
-                item = todoItem
-            )
-        }
-    }
-}
+        val dictionary = LocalDictionary.current
+        val todoItems = remember(dictionary) { AppTodosRepository(dictionary.todos).all }
 
-@Composable
-private fun ScreenTopBar(
-    modifier: Modifier = Modifier
-) {
-    Surface(
-        modifier = modifier,
-        color = MaterialTheme.colorScheme.background,
-        contentColor = MaterialTheme.colorScheme.onBackground
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp.mergeWithStatusBar()),
-            horizontalArrangement = Arrangement.spacedBy(20.dp),
-            verticalAlignment = Alignment.CenterVertically
+        LazyColumn(
+            modifier = modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            contentPadding = navigationBarPadding()
         ) {
-            val appState = LocalAppState.current
-            IconButton(onClick = appState::navigateUp) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Rounded.ArrowBackIos,
-                    contentDescription = null
+            stickyHeader(key = "screen_top_bar") {
+                ScreenTopBar(modifier = Modifier.fillMaxWidth())
+            }
+            item(key = "screen_header") {
+                AppScreenHeader(modifier = Modifier.fillMaxWidth())
+            }
+            items(todoItems, key = { "todo_item__${it.title}" }) { todoItem ->
+                AppTodoItem(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    item = todoItem
                 )
             }
-            Text(
-                text = dictionary.screens.app.appTodosScreenTitle.string(),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
-            )
         }
     }
-}
 
-@Composable
-private fun AppTodoItem(
-    modifier: Modifier = Modifier,
-    item: AppTodo
-) {
-    BaseCard(
-        modifier = modifier,
-        label = item.title.string(),
-        backgroundImagePainter = null
+    @Composable
+    private fun ScreenTopBar(
+        modifier: Modifier = Modifier
     ) {
-        Text(
-            text = item.description.string()
-        )
-        Text(
-            text = dictionary.screens.app.todoStatus.string(
-                "%todo_status%" to item.status.uiText
+        Surface(
+            modifier = modifier,
+            color = MaterialTheme.colorScheme.background,
+            contentColor = MaterialTheme.colorScheme.onBackground
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp.mergeWithStatusBar()),
+                horizontalArrangement = Arrangement.spacedBy(20.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                val appState = LocalAppState.current
+                IconButton(onClick = appState::navigateUp) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Rounded.ArrowBackIos,
+                        contentDescription = null
+                    )
+                }
+                Text(
+                    text = dictionary.screens.app.appTodosScreenTitle.string(),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        }
+    }
+
+    @Composable
+    private fun AppTodoItem(
+        modifier: Modifier = Modifier,
+        item: AppTodo
+    ) {
+        BaseCard(
+            modifier = modifier,
+            label = item.title.string(),
+            backgroundImagePainter = null
+        ) {
+            Text(
+                text = item.description.string()
             )
-        )
+            Text(
+                text = dictionary.screens.app.todoStatus.string(
+                    "%todo_status%" to item.status.uiText
+                )
+            )
+        }
     }
 }

@@ -31,7 +31,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavBackStackEntry
 import com.valentinilk.shimmer.shimmer
+import me.kofesst.android.lovemood.navigation.AppScreen
+import me.kofesst.lovemood.app.AppDestinations
 import me.kofesst.lovemood.core.models.Gender
 import me.kofesst.lovemood.core.models.PhotoMemory
 import me.kofesst.lovemood.core.models.Profile
@@ -48,7 +51,6 @@ import me.kofesst.lovemood.presentation.app.LocalAppState
 import me.kofesst.lovemood.presentation.app.LocalMainActivity
 import me.kofesst.lovemood.presentation.app.LocalShimmer
 import me.kofesst.lovemood.presentation.app.dictionary
-import me.kofesst.lovemood.presentation.navigation.AppNavigation
 import me.kofesst.lovemood.presentation.screens.home.sections.EventsSection
 import me.kofesst.lovemood.presentation.screens.home.sections.LoveDurationSection
 import me.kofesst.lovemood.presentation.screens.home.sections.MemoriesSection
@@ -62,430 +64,439 @@ import me.kofesst.lovemood.ui.async.asyncValueContent
 import me.kofesst.lovemood.ui.async.requiredAsyncValueContent
 import me.kofesst.lovemood.ui.theme.WithShimmerEffect
 
-@Composable
-fun HomeScreen(
-    modifier: Modifier = Modifier
-) {
-    val mainActivity = LocalMainActivity.current
-    val viewModel = hiltViewModel<HomeViewModel>(viewModelStoreOwner = mainActivity)
-    LaunchedEffect(Unit) {
-        viewModel.loadData()
-    }
-
-    val asyncProfile by viewModel.userProfileState
-    val asyncRelationship by viewModel.relationshipState
-    val asyncMemories by viewModel.memoriesState
-    WithShimmerEffect {
-        LazyColumn(
-            modifier = modifier.fillMaxSize(),
-            contentPadding = navigationBarPadding(),
-            verticalArrangement = Arrangement.spacedBy(20.dp)
-        ) {
-            buildAsyncHeader(
-                asyncProfile = asyncProfile,
-                asyncRelationship = asyncRelationship
-            )
-            buildBody(
-                userProfile = asyncProfile.value,
-                asyncRelationship = asyncRelationship,
-                asyncMemories = asyncMemories
-            )
+object HomeScreen : AppScreen() {
+    @Composable
+    override fun ScreenContent(
+        modifier: Modifier,
+        navBackStackEntry: NavBackStackEntry
+    ) {
+        val mainActivity = LocalMainActivity.current
+        val viewModel = hiltViewModel<HomeViewModel>(viewModelStoreOwner = mainActivity)
+        LaunchedEffect(Unit) {
+            viewModel.loadData()
         }
+
+        Content(modifier, viewModel)
     }
-}
 
-//region Screen header
-
-@OptIn(ExperimentalFoundationApi::class)
-private fun LazyListScope.buildAsyncHeader(
-    asyncProfile: AsyncValue<Profile>,
-    asyncRelationship: AsyncValue<Relationship>
-) {
-    asyncValueContent(
-        asyncValue = asyncRelationship,
-        onLoading = {
-            stickyHeader(key = "screen_header") {
-                ShimmerScreenHeader(
-                    modifier = Modifier.fillMaxWidth()
+    @Composable
+    private fun Content(
+        modifier: Modifier = Modifier,
+        viewModel: HomeViewModel
+    ) {
+        val asyncProfile by viewModel.userProfileState
+        val asyncRelationship by viewModel.relationshipState
+        val asyncMemories by viewModel.memoriesState
+        WithShimmerEffect {
+            LazyColumn(
+                modifier = modifier.fillMaxSize(),
+                contentPadding = navigationBarPadding(),
+                verticalArrangement = Arrangement.spacedBy(20.dp)
+            ) {
+                buildAsyncHeader(
+                    asyncProfile = asyncProfile,
+                    asyncRelationship = asyncRelationship
+                )
+                buildBody(
+                    userProfile = asyncProfile.value,
+                    asyncRelationship = asyncRelationship,
+                    asyncMemories = asyncMemories
                 )
             }
-        },
-        onLoaded = { relationship ->
-            if (relationship == null) {
-                buildProfileHeader(asyncProfile)
-            } else {
-                stickyHeader(key = "screen_header") {
+        }
+    }
+
+    //region Screen header
+
+    @OptIn(ExperimentalFoundationApi::class)
+    private fun LazyListScope.buildAsyncHeader(
+        asyncProfile: AsyncValue<Profile>,
+        asyncRelationship: AsyncValue<Relationship>
+    ) {
+        asyncValueContent(
+            asyncValue = asyncRelationship,
+            onLoading = {
+                updateTopBar {
+                    ShimmerScreenHeader(Modifier.fillMaxWidth())
+                }
+            },
+            onLoaded = { relationship ->
+                if (relationship == null) {
+                    buildProfileHeader(asyncProfile)
+                } else {
+                    updateTopBar {
+                        val appState = LocalAppState.current
+                        RelationshipScreenHeader(
+                            modifier = Modifier.fillMaxWidth(),
+                            relationship = relationship,
+                            onEditProfileClick = {
+                                appState.navigate(
+                                    destination = AppDestinations.Forms.UserProfile,
+                                    argumentValues = arrayOf(
+                                        AppDestinations.Forms.UserProfile.editingIdArgument
+                                                to relationship.userProfile.id
+                                    )
+                                )
+                            },
+                            onEditRelationshipClick = {
+                                appState.navigate(
+                                    destination = AppDestinations.Forms.Relationship,
+                                    argumentValues = arrayOf(
+                                        AppDestinations.Forms.Relationship.editingIdArgument
+                                                to relationship.id
+                                    )
+                                )
+                            }
+                        )
+                    }
+                }
+            }
+        )
+    }
+
+    @OptIn(ExperimentalFoundationApi::class)
+    private fun LazyListScope.buildProfileHeader(
+        asyncProfile: AsyncValue<Profile>
+    ) {
+        requiredAsyncValueContent(
+            asyncValue = asyncProfile,
+            onLoading = {
+                updateTopBar {
+                    ShimmerScreenHeader(
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            },
+            onLoaded = { profile ->
+                updateTopBar {
                     val appState = LocalAppState.current
-                    RelationshipScreenHeader(
+                    ProfileScreenHeader(
                         modifier = Modifier.fillMaxWidth(),
-                        relationship = relationship,
+                        profile = profile,
                         onEditProfileClick = {
                             appState.navigate(
-                                appScreen = AppNavigation.ProfileForm,
+                                destination = AppDestinations.Forms.UserProfile,
                                 argumentValues = arrayOf(
-                                    AppNavigation.ProfileForm.editingProfileIdArgument
-                                            to relationship.userProfile.id
-                                )
-                            )
-                        },
-                        onEditRelationshipClick = {
-                            appState.navigate(
-                                appScreen = AppNavigation.RelationshipForm,
-                                argumentValues = arrayOf(
-                                    AppNavigation.RelationshipForm.editingRelationshipIdArgument
-                                            to relationship.id
+                                    AppDestinations.Forms.UserProfile.editingIdArgument
+                                            to profile.id
                                 )
                             )
                         }
                     )
                 }
             }
-        }
-    )
-}
-
-@OptIn(ExperimentalFoundationApi::class)
-private fun LazyListScope.buildProfileHeader(
-    asyncProfile: AsyncValue<Profile>
-) {
-    requiredAsyncValueContent(
-        asyncValue = asyncProfile,
-        onLoading = {
-            stickyHeader(key = "screen_header") {
-                ShimmerScreenHeader(
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-        },
-        onLoaded = { profile ->
-
-            stickyHeader(key = "screen_header") {
-                val appState = LocalAppState.current
-                ProfileScreenHeader(
-                    modifier = Modifier.fillMaxWidth(),
-                    profile = profile,
-                    onEditProfileClick = {
-                        appState.navigate(
-                            appScreen = AppNavigation.ProfileForm,
-                            argumentValues = arrayOf(
-                                AppNavigation.ProfileForm.editingProfileIdArgument to profile.id
-                            )
-                        )
-                    }
-                )
-            }
-        }
-    )
-}
-
-@Composable
-private fun RelationshipScreenHeader(
-    modifier: Modifier = Modifier,
-    relationship: Relationship,
-    onEditProfileClick: () -> Unit,
-    onEditRelationshipClick: () -> Unit
-) {
-    ScreenHeaderContainer(modifier = modifier) {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(20.dp)
-        ) {
-            ScreenHeaderTitleLayout(modifier = Modifier.fillMaxWidth()) {
-                RelationshipScreenHeaderTitle(relationship)
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(IntrinsicSize.Min),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                PanelButton(
-                    modifier = Modifier.weight(1.0f),
-                    action = dictionary.screens.home.editProfileAction.string(),
-                    onClick = onEditProfileClick,
-                    defaults = PanelButtonDefaults.defaults(
-                        clip = PanelButtonDefaults.Clip.BottomStart,
-                        textStyle = MaterialTheme.typography.bodyLarge
-                    )
-                )
-                VerticalDivider(
-                    modifier = Modifier.fillMaxHeight(fraction = 0.7f),
-                    thickness = 2.dp
-                )
-                PanelButton(
-                    modifier = Modifier.weight(1.0f),
-                    action = dictionary.screens.home.editRelationshipAction.string(),
-                    onClick = onEditRelationshipClick,
-                    defaults = PanelButtonDefaults.defaults(
-                        clip = PanelButtonDefaults.Clip.BottomEnd,
-                        textStyle = MaterialTheme.typography.bodyLarge
-                    )
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun RowScope.RelationshipScreenHeaderTitle(
-    relationship: Relationship
-) {
-    RelationshipAvatars(
-        relationship = relationship,
-        imageModifier = Modifier.border(
-            width = 3.dp,
-            color = MaterialTheme.colorScheme.surfaceVariant,
-            shape = CircleShape
         )
-    )
-    Text(
-        modifier = Modifier.weight(1.0f),
-        text = dictionary.screens.home.userAndPartner.string(
-            "%user_username%" to relationship.userProfile.username,
-            "%partner_username%" to relationship.partnerProfile.username
-        ),
-        style = MaterialTheme.typography.titleLarge,
-        fontWeight = FontWeight.Normal,
-        textAlign = TextAlign.Center
-    )
-}
+    }
 
-@Composable
-private fun ProfileScreenHeader(
-    modifier: Modifier = Modifier,
-    profile: Profile,
-    onEditProfileClick: () -> Unit
-) {
-    ScreenHeaderContainer(modifier = modifier) {
-        ScreenHeaderTitleLayout(modifier = Modifier.fillMaxWidth()) {
-            ByteArrayImage(
-                content = profile.avatarContent,
-                placeholder = {
-                    AvatarPlaceholder(
-                        gender = profile.gender,
-                        size = 72.dp
-                    )
-                },
-                size = 72.dp
-            )
+    @Composable
+    private fun RelationshipScreenHeader(
+        modifier: Modifier = Modifier,
+        relationship: Relationship,
+        onEditProfileClick: () -> Unit,
+        onEditRelationshipClick: () -> Unit
+    ) {
+        ScreenHeaderContainer(modifier = modifier) {
             Column(
-                modifier = Modifier.weight(1.0f),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(
-                    space = 10.dp,
-                    alignment = Alignment.CenterVertically
-                )
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
-                Text(
-                    text = profile.username,
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Normal,
-                    textAlign = TextAlign.Center
-                )
-                TextButton(
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = onEditProfileClick
+                ScreenHeaderTitleLayout(modifier = Modifier.fillMaxWidth()) {
+                    RelationshipScreenHeaderTitle(relationship)
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(IntrinsicSize.Min),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = dictionary.screens.home.editProfileAction.string(),
-                        style = MaterialTheme.typography.bodyLarge
+                    PanelButton(
+                        modifier = Modifier.weight(1.0f),
+                        action = dictionary.screens.home.editProfileAction.string(),
+                        onClick = onEditProfileClick,
+                        defaults = PanelButtonDefaults.defaults(
+                            clip = PanelButtonDefaults.Clip.BottomStart,
+                            textStyle = MaterialTheme.typography.bodyLarge
+                        )
+                    )
+                    VerticalDivider(
+                        modifier = Modifier.fillMaxHeight(fraction = 0.7f),
+                        thickness = 2.dp
+                    )
+                    PanelButton(
+                        modifier = Modifier.weight(1.0f),
+                        action = dictionary.screens.home.editRelationshipAction.string(),
+                        onClick = onEditRelationshipClick,
+                        defaults = PanelButtonDefaults.defaults(
+                            clip = PanelButtonDefaults.Clip.BottomEnd,
+                            textStyle = MaterialTheme.typography.bodyLarge
+                        )
                     )
                 }
             }
         }
     }
-}
 
-@Composable
-private fun ShimmerScreenHeader(
-    modifier: Modifier = Modifier
-) {
-    ScreenHeaderContainer(
-        modifier = modifier
-            .height(statusBarPadding().calculateTopPadding() + 150.dp)
-            .shimmer(LocalShimmer.current),
-        content = {}
-    )
-}
-
-@Composable
-private fun ScreenHeaderContainer(
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
-) {
-    Surface(
-        modifier = modifier,
-        color = MaterialTheme.colorScheme.surfaceVariant,
-        contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-        shadowElevation = 5.dp,
-        tonalElevation = 3.dp,
-        shape = RoundedCornerShape(20.dp)
+    @Composable
+    private fun RowScope.RelationshipScreenHeaderTitle(
+        relationship: Relationship
     ) {
-        content()
-    }
-}
-
-@Composable
-private fun ScreenHeaderTitleLayout(
-    modifier: Modifier = Modifier,
-    content: @Composable RowScope.() -> Unit
-) {
-    Row(
-        modifier = modifier.padding(20.dp.mergeWithStatusBar()),
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        content()
-    }
-}
-
-//endregion
-
-//region Body content
-private fun LazyListScope.buildBody(
-    userProfile: Profile?,
-    asyncRelationship: AsyncValue<Relationship>,
-    asyncMemories: AsyncValuesList<PhotoMemory>
-) {
-    asyncValueContent(
-        asyncValue = asyncRelationship,
-        onLoading = {
-            buildShimmerBody()
-        },
-        onLoaded = { relationship ->
-            if (relationship == null) {
-                item {
-                    val appState = LocalAppState.current
-                    NoRelationshipContent(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(40.dp),
-                        onCreateRelationshipClick = {
-                            appState.navigate(appScreen = AppNavigation.RelationshipForm)
-                        },
-                        userGender = userProfile?.gender ?: Gender.Male
-                    )
-                }
-            } else {
-                item(key = LOVE_DURATION_SECTION_KEY) {
-                    LoveDurationSection(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 20.dp),
-                        relationship = relationship
-                    )
-                }
-                item(key = EVENTS_SECTION_KEY) {
-                    EventsSection(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 20.dp),
-                        relationship = relationship
-                    )
-                }
-                buildMemories(asyncMemories)
-            }
-        }
-    )
-}
-
-private fun LazyListScope.buildShimmerBody() {
-    item(key = LOVE_DURATION_SECTION_KEY) {
-        ShimmerSection(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp)
-        )
-    }
-    item(key = EVENTS_SECTION_KEY) {
-        ShimmerSection(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp)
-        )
-    }
-    item(key = MEMORIES_SECTION_KEY) {
-        ShimmerSection(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp)
-        )
-    }
-}
-
-private fun LazyListScope.buildMemories(
-    asyncMemories: AsyncValuesList<PhotoMemory>
-) {
-    requiredAsyncValueContent(
-        asyncValue = asyncMemories,
-        onLoading = {
-            item(key = MEMORIES_SECTION_KEY) {
-                ShimmerSection(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
-                )
-            }
-        },
-        onLoaded = { memories ->
-            item(key = MEMORIES_SECTION_KEY) {
-                val appState = LocalAppState.current
-                MemoriesSection(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp),
-                    memories = memories,
-                    onAddMemoryClick = {
-                        appState.navigate(AppNavigation.MemoryForm)
-                    },
-                    onViewAllClick = {
-                        appState.navigate(AppNavigation.MemoriesScreen)
-                    }
-                )
-            }
-        }
-    )
-}
-
-private const val LOVE_DURATION_SECTION_KEY = "love_duration_section"
-private const val EVENTS_SECTION_KEY = "events_section"
-private const val MEMORIES_SECTION_KEY = "memories_section"
-
-@Composable
-private fun NoRelationshipContent(
-    modifier: Modifier = Modifier,
-    onCreateRelationshipClick: () -> Unit,
-    userGender: Gender
-) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(
-            space = 20.dp,
-            alignment = Alignment.CenterVertically
-        )
-    ) {
-        LottieFile(
-            resource = LottieResources.SadHeart.resource(),
-            size = LottieSize.Maximized,
-            dynamicProperties = LottieResources.SadHeart.dynamicProperties(userGender)
+        RelationshipAvatars(
+            relationship = relationship,
+            imageModifier = Modifier.border(
+                width = 3.dp,
+                color = MaterialTheme.colorScheme.surfaceVariant,
+                shape = CircleShape
+            )
         )
         Text(
-            text = dictionary.screens.home.noRelationshipTitle.string(),
-            style = MaterialTheme.typography.headlineMedium,
+            modifier = Modifier.weight(1.0f),
+            text = dictionary.screens.home.userAndPartner.string(
+                "%user_username%" to relationship.userProfile.username,
+                "%partner_username%" to relationship.partnerProfile.username
+            ),
+            style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Normal,
             textAlign = TextAlign.Center
         )
-        Button(
-            modifier = Modifier.fillMaxWidth(),
-            onClick = onCreateRelationshipClick
+    }
+
+    @Composable
+    private fun ProfileScreenHeader(
+        modifier: Modifier = Modifier,
+        profile: Profile,
+        onEditProfileClick: () -> Unit
+    ) {
+        ScreenHeaderContainer(modifier = modifier) {
+            ScreenHeaderTitleLayout(modifier = Modifier.fillMaxWidth()) {
+                ByteArrayImage(
+                    content = profile.avatarContent,
+                    placeholder = {
+                        AvatarPlaceholder(
+                            gender = profile.gender,
+                            size = 72.dp
+                        )
+                    },
+                    size = 72.dp
+                )
+                Column(
+                    modifier = Modifier.weight(1.0f),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(
+                        space = 10.dp,
+                        alignment = Alignment.CenterVertically
+                    )
+                ) {
+                    Text(
+                        text = profile.username,
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontWeight = FontWeight.Normal,
+                        textAlign = TextAlign.Center
+                    )
+                    TextButton(
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = onEditProfileClick
+                    ) {
+                        Text(
+                            text = dictionary.screens.home.editProfileAction.string(),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun ShimmerScreenHeader(
+        modifier: Modifier = Modifier
+    ) {
+        ScreenHeaderContainer(
+            modifier = modifier
+                .height(statusBarPadding().calculateTopPadding() + 150.dp)
+                .shimmer(LocalShimmer.current),
+            content = {}
+        )
+    }
+
+    @Composable
+    private fun ScreenHeaderContainer(
+        modifier: Modifier = Modifier,
+        content: @Composable () -> Unit
+    ) {
+        Surface(
+            modifier = modifier,
+            color = MaterialTheme.colorScheme.surfaceVariant,
+            contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            shadowElevation = 5.dp,
+            tonalElevation = 3.dp,
+            shape = RoundedCornerShape(20.dp)
         ) {
-            Text(
-                text = dictionary.screens.home.addRelationshipAction.string(),
-                style = MaterialTheme.typography.bodyLarge
+            content()
+        }
+    }
+
+    @Composable
+    private fun ScreenHeaderTitleLayout(
+        modifier: Modifier = Modifier,
+        content: @Composable RowScope.() -> Unit
+    ) {
+        Row(
+            modifier = modifier.padding(20.dp.mergeWithStatusBar()),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            content()
+        }
+    }
+
+//endregion
+
+    //region Body content
+    private fun LazyListScope.buildBody(
+        userProfile: Profile?,
+        asyncRelationship: AsyncValue<Relationship>,
+        asyncMemories: AsyncValuesList<PhotoMemory>
+    ) {
+        asyncValueContent(
+            asyncValue = asyncRelationship,
+            onLoading = {
+                buildShimmerBody()
+            },
+            onLoaded = { relationship ->
+                if (relationship == null) {
+                    item {
+                        val appState = LocalAppState.current
+                        NoRelationshipContent(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(40.dp),
+                            onCreateRelationshipClick = {
+                                appState.navigate(AppDestinations.Forms.Relationship)
+                            },
+                            userGender = userProfile?.gender ?: Gender.Male
+                        )
+                    }
+                } else {
+                    item(key = LOVE_DURATION_SECTION_KEY) {
+                        LoveDurationSection(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 20.dp),
+                            relationship = relationship
+                        )
+                    }
+                    item(key = EVENTS_SECTION_KEY) {
+                        EventsSection(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 20.dp),
+                            relationship = relationship
+                        )
+                    }
+                    buildMemories(asyncMemories)
+                }
+            }
+        )
+    }
+
+    private fun LazyListScope.buildShimmerBody() {
+        item(key = LOVE_DURATION_SECTION_KEY) {
+            ShimmerSection(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+            )
+        }
+        item(key = EVENTS_SECTION_KEY) {
+            ShimmerSection(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+            )
+        }
+        item(key = MEMORIES_SECTION_KEY) {
+            ShimmerSection(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
             )
         }
     }
-}
+
+    private fun LazyListScope.buildMemories(
+        asyncMemories: AsyncValuesList<PhotoMemory>
+    ) {
+        requiredAsyncValueContent(
+            asyncValue = asyncMemories,
+            onLoading = {
+                item(key = MEMORIES_SECTION_KEY) {
+                    ShimmerSection(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp)
+                    )
+                }
+            },
+            onLoaded = { memories ->
+                item(key = MEMORIES_SECTION_KEY) {
+                    val appState = LocalAppState.current
+                    MemoriesSection(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp),
+                        memories = memories,
+                        onAddMemoryClick = {
+                            appState.navigate(AppDestinations.Forms.Memory)
+                        },
+                        onViewAllClick = {
+                            appState.navigate(AppDestinations.Memories.List)
+                        }
+                    )
+                }
+            }
+        )
+    }
+
+    private const val LOVE_DURATION_SECTION_KEY = "love_duration_section"
+    private const val EVENTS_SECTION_KEY = "events_section"
+    private const val MEMORIES_SECTION_KEY = "memories_section"
+
+    @Composable
+    private fun NoRelationshipContent(
+        modifier: Modifier = Modifier,
+        onCreateRelationshipClick: () -> Unit,
+        userGender: Gender
+    ) {
+        Column(
+            modifier = modifier,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(
+                space = 20.dp,
+                alignment = Alignment.CenterVertically
+            )
+        ) {
+            LottieFile(
+                resource = LottieResources.SadHeart.resource(),
+                size = LottieSize.Maximized,
+                dynamicProperties = LottieResources.SadHeart.dynamicProperties(userGender)
+            )
+            Text(
+                text = dictionary.screens.home.noRelationshipTitle.string(),
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.Normal,
+                textAlign = TextAlign.Center
+            )
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = onCreateRelationshipClick
+            ) {
+                Text(
+                    text = dictionary.screens.home.addRelationshipAction.string(),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+        }
+    }
 
 //endregion
+}

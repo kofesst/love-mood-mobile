@@ -5,6 +5,9 @@ import me.kofesst.lovemood.R
 import me.kofesst.lovemood.ui.text.ResourceText
 
 class HomeScreenDictionary(appContext: Context) {
+    val bottomBarTitle = ResourceText(
+        R.string.screens__home__bottom_bar_title, appContext
+    )
     val loveDurationSectionLabel = ResourceText(
         R.string.screens__home__love_duration_section_label, appContext
     )

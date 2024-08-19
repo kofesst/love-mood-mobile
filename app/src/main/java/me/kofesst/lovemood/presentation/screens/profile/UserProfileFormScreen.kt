@@ -16,6 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavBackStackEntry
+import me.kofesst.android.lovemood.navigation.AppScreen
+import me.kofesst.lovemood.app.AppDestinations
 import me.kofesst.lovemood.core.ui.utils.alsoNavBar
 import me.kofesst.lovemood.presentation.app.LocalAppState
 import me.kofesst.lovemood.presentation.app.LocalDictionary
@@ -26,94 +29,108 @@ import me.kofesst.lovemood.presentation.forms.formSubmitHeader
 import me.kofesst.lovemood.presentation.forms.profile.ProfileFormAction
 import me.kofesst.lovemood.presentation.forms.profile.UserProfileFormViewModel
 import me.kofesst.lovemood.presentation.forms.profile.profileFormContent
-import me.kofesst.lovemood.presentation.navigation.AppNavigation
 
-@Composable
-fun UserProfileFormScreen(
-    modifier: Modifier = Modifier,
-    editingProfileId: Int
-) {
-    val viewModel = hiltViewModel<UserProfileFormViewModel>()
-    LaunchedEffect(editingProfileId) {
-        viewModel.prepareForm(editingModelId = editingProfileId)
-    }
-    val appState = LocalAppState.current
-    FormResultsListener(
-        resultsFlow = viewModel.resultsFlow,
-        onSuccessResult = {
-            appState.navigate(appScreen = AppNavigation.Home)
-        }
-    )
-
-    val screenDictionary = LocalDictionary.current.screens.userProfileForm
-    val form by viewModel.formState.collectAsState()
-    LazyColumn(
-        modifier = modifier,
-        contentPadding = PaddingValues(20.dp).alsoNavBar(),
-        verticalArrangement = Arrangement.spacedBy(30.dp),
+object UserProfileFormScreen : AppScreen() {
+    @Composable
+    override fun ScreenContent(
+        modifier: Modifier,
+        navBackStackEntry: NavBackStackEntry
     ) {
-        formSubmitHeader(
-            forms = arrayOf(form),
-            onSubmit = {
-                viewModel.handleFormAction(
-                    ProfileFormAction.SubmitClicked
-                )
+        val profileId = rememberArgument(
+            argument = AppDestinations.Forms.UserProfile.editingIdArgument,
+            navBackStackEntry = navBackStackEntry
+        ).takeIf { it > 0 }
+        val viewModel = hiltViewModel<UserProfileFormViewModel>()
+        LaunchedEffect(profileId) {
+            viewModel.prepareForm(editingModelId = profileId)
+        }
+        
+        Content(modifier, viewModel)
+    }
+
+    @Composable
+    private fun Content(
+        modifier: Modifier = Modifier,
+        viewModel: UserProfileFormViewModel
+    ) {
+        val appState = LocalAppState.current
+        FormResultsListener(
+            resultsFlow = viewModel.resultsFlow,
+            onSuccessResult = {
+                appState.navigate(AppDestinations.Home)
             }
         )
-        item(key = "screen_header") {
-            ScreenHeader(
-                modifier = Modifier.fillMaxWidth(),
-                formMethod = viewModel.formMethod
+
+        val screenDictionary = LocalDictionary.current.screens.userProfileForm
+        val form by viewModel.formState.collectAsState()
+        LazyColumn(
+            modifier = modifier,
+            contentPadding = PaddingValues(20.dp).alsoNavBar(),
+            verticalArrangement = Arrangement.spacedBy(30.dp),
+        ) {
+            formSubmitHeader(
+                forms = arrayOf(form),
+                onSubmit = {
+                    viewModel.handleFormAction(
+                        ProfileFormAction.SubmitClicked
+                    )
+                }
+            )
+            item(key = "screen_header") {
+                ScreenHeader(
+                    modifier = Modifier.fillMaxWidth(),
+                    formMethod = viewModel.formMethod
+                )
+            }
+            buildFormLayout(
+                viewModels = arrayOf(viewModel),
+                loadingContent = {
+                    item {
+                        CircularProgressIndicator()
+                    }
+                },
+                content = {
+                    profileFormContent(
+                        dictionary = screenDictionary.formDictionary,
+                        form = form,
+                        onFormAction = viewModel::handleFormAction
+                    )
+                }
             )
         }
-        buildFormLayout(
-            viewModels = arrayOf(viewModel),
-            loadingContent = {
-                item {
-                    CircularProgressIndicator()
-                }
-            },
-            content = {
-                profileFormContent(
-                    dictionary = screenDictionary.formDictionary,
-                    form = form,
-                    onFormAction = viewModel::handleFormAction
-                )
-            }
-        )
     }
-}
 
-@Composable
-private fun ScreenHeader(
-    modifier: Modifier = Modifier,
-    formMethod: FormMethod
-) {
-    val screenDictionary = LocalDictionary.current.screens.userProfileForm
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(20.dp)
+    @Composable
+    private fun ScreenHeader(
+        modifier: Modifier = Modifier,
+        formMethod: FormMethod
     ) {
-        when (formMethod) {
-            FormMethod.CreatingNewModel -> {
-                Text(
-                    text = screenDictionary.createHeaderTitle.string(),
-                    style = MaterialTheme.typography.headlineLarge,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = screenDictionary.createHeaderSubtitle.string(),
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Normal
-                )
-            }
+        val screenDictionary = LocalDictionary.current.screens.userProfileForm
+        Column(
+            modifier = modifier,
+            verticalArrangement = Arrangement.spacedBy(20.dp)
+        ) {
+            when (formMethod) {
+                FormMethod.CreatingNewModel -> {
+                    Text(
+                        text = screenDictionary.createHeaderTitle.string(),
+                        style = MaterialTheme.typography.headlineLarge,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = screenDictionary.createHeaderSubtitle.string(),
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Normal
+                    )
+                }
 
-            FormMethod.EditingOldModel -> {
-                Text(
-                    text = screenDictionary.editHeader.string(),
-                    style = MaterialTheme.typography.headlineLarge,
-                    fontWeight = FontWeight.Bold
-                )
+                FormMethod.EditingOldModel -> {
+                    Text(
+                        text = screenDictionary.editHeader.string(),
+                        style = MaterialTheme.typography.headlineLarge,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
         }
     }

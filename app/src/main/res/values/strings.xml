@@ -4,8 +4,8 @@
     <string name="not_implemented_yet">Not implemented yet</string>
     <string name="app_version">Version: %app_version%</string>
 
-    <string name="bottom_bar__home_title">Home</string>
-    <string name="bottom_bar__app_title">About app</string>
+    <string name="screens__home__bottom_bar_title">Home</string>
+    <string name="screens__app__bottom_bar_title">About app</string>
 
     <string name="errors__something_went_wrong">Something went wrong</string>
     <string name="errors__required_field">This is a required field</string>

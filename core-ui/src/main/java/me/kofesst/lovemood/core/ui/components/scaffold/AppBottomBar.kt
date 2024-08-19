@@ -35,14 +35,14 @@ import me.kofesst.lovemood.core.text.AppTextHolder
 /**
  * Информация элемента нижней панели приложения.
  *
- * [title] - текст элемента.
+ * [titleProducer] - текст элемента.
  *
  * [icon] - иконка элемента.
  */
-open class BottomBarItem(
-    val title: AppTextHolder,
+interface BottomBarItem {
+    val titleProducer: @Composable () -> AppTextHolder
     val icon: ImageVector
-)
+}
 
 /**
  * Нижняя панель приложения.
@@ -236,7 +236,7 @@ private fun AppBottomBarItemContent(
                 exit = getExitTextExpandTransition()
             ) {
                 Text(
-                    text = item.title.string(),
+                    text = item.titleProducer().string(),
                     style = titleStyle,
                     color = colors.selectedText
                 )

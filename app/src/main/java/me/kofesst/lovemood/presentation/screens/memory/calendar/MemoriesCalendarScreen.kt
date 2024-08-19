@@ -22,6 +22,8 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
+import me.kofesst.android.lovemood.navigation.AppScreen
+import me.kofesst.lovemood.app.AppDestinations
 import me.kofesst.lovemood.core.models.PhotoMemory
 import me.kofesst.lovemood.core.ui.components.calendar.CalendarCellDefaults
 import me.kofesst.lovemood.core.ui.components.calendar.CalendarDayCell
@@ -33,109 +35,116 @@ import me.kofesst.lovemood.core.ui.utils.alsoNavBar
 import me.kofesst.lovemood.core.ui.utils.alsoStatusBar
 import me.kofesst.lovemood.presentation.app.LocalAppState
 import me.kofesst.lovemood.presentation.app.dictionary
-import me.kofesst.lovemood.presentation.navigation.AppNavigation
 import me.kofesst.lovemood.presentation.screens.memory.list.MemoriesViewModel
 import java.time.LocalDate
 
-private val ScreenCalendarDayCellsDefaults: CalendarCellDefaults
-    @Composable get() = CalendarCellDefaults.defaults(
-        containerColor = Color.Transparent,
-        contentColor = Color.White
-    )
-
-@OptIn(ExperimentalLayoutApi::class, ExperimentalFoundationApi::class)
-@Composable
-fun MemoriesCalendarScreen(
-    modifier: Modifier = Modifier,
-    navBackStackEntry: NavBackStackEntry
-) {
-    val appState = LocalAppState.current
-    val parentBackStackEntry = remember(navBackStackEntry) {
-        appState.navHostController.getBackStackEntry(
-            route = AppNavigation.MemoriesScreen.route
+object MemoriesCalendarScreen : AppScreen() {
+    private val ScreenCalendarDayCellsDefaults: CalendarCellDefaults
+        @Composable get() = CalendarCellDefaults.defaults(
+            containerColor = Color.Transparent,
+            contentColor = Color.White
         )
-    }
-    val viewModel = hiltViewModel<MemoriesViewModel>(
-        viewModelStoreOwner = parentBackStackEntry
-    )
-    val asyncMemories by viewModel.memoriesState
-    val associatedMemories = remember(asyncMemories) {
-        asyncMemories.value?.associated() ?: emptyList()
-    }
-    LazyCalendarColumn(
-        modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(20.dp)
-            .alsoNavBar()
-            .alsoStatusBar(),
-        verticalArrangement = Arrangement.spacedBy(space = 20.dp),
-        dayCellContent = { date ->
-            val dayMemories = remember(associatedMemories) {
-                associatedMemories.byDate(date)
-            }
-            if (dayMemories.isNotEmpty()) {
-                DayCellWithMemory(
-                    date = date,
-                    memory = dayMemories.first()
-                )
-            } else {
-                CalendarDayCell(
-                    defaults = ScreenCalendarDayCellsDefaults,
-                    date = date
-                )
-            }
-        },
-        buildBeforeCalendar = {
-            stickyHeader(key = "screen_header") {
-                ScreenHeader()
-            }
-        }
-    )
-}
 
-@Composable
-private fun ScreenHeader(
-    modifier: Modifier = Modifier,
-) {
-    val dictionary = dictionary.screens.memoriesCalendar
-    val appState = LocalAppState.current
-    SmallAppTopBar(
-        modifier = modifier.fillMaxWidth(),
-        leftContent = {
-            IconButton(onClick = { appState.navigateUp() }) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                    contentDescription = null
-                )
-            }
-        },
-        mainContent = {
-            Text(
-                text = dictionary.screenTitle.string(),
-                style = MaterialTheme.typography.titleLarge
-            )
-        }
-    )
-}
-
-@Composable
-private fun DayCellWithMemory(
-    modifier: Modifier = Modifier,
-    date: LocalDate,
-    memory: PhotoMemory
-) {
-    CalendarDayCellContainer(
-        modifier = modifier,
-        defaults = ScreenCalendarDayCellsDefaults,
-        onClick = {}
+    @Composable
+    override fun ScreenContent(
+        modifier: Modifier,
+        navBackStackEntry: NavBackStackEntry
     ) {
-        ByteArrayImage(
-            content = memory.photoContent,
-            size = ScreenCalendarDayCellsDefaults.containerSize,
-            colorFilter = ColorFilter.tint(
-                color = Color.Black.copy(alpha = 0.5f),
-                blendMode = BlendMode.Multiply
+        val appState = LocalAppState.current
+        val parentBackStackEntry = remember(navBackStackEntry) {
+            appState.navHostController.getBackStackEntry(
+                route = AppDestinations.Memories.List.route
             )
+        }
+        val viewModel = hiltViewModel<MemoriesViewModel>(viewModelStoreOwner = parentBackStackEntry)
+        Content(modifier, viewModel)
+    }
+
+    @OptIn(ExperimentalLayoutApi::class, ExperimentalFoundationApi::class)
+    @Composable
+    private fun Content(
+        modifier: Modifier = Modifier,
+        viewModel: MemoriesViewModel
+    ) {
+        val asyncMemories by viewModel.memoriesState
+        val associatedMemories = remember(asyncMemories) {
+            asyncMemories.value?.associated() ?: emptyList()
+        }
+        LazyCalendarColumn(
+            modifier = modifier.fillMaxSize(),
+            contentPadding = PaddingValues(20.dp)
+                .alsoNavBar()
+                .alsoStatusBar(),
+            verticalArrangement = Arrangement.spacedBy(space = 20.dp),
+            dayCellContent = { date ->
+                val dayMemories = remember(associatedMemories) {
+                    associatedMemories.byDate(date)
+                }
+                if (dayMemories.isNotEmpty()) {
+                    DayCellWithMemory(
+                        date = date,
+                        memory = dayMemories.first()
+                    )
+                } else {
+                    CalendarDayCell(
+                        defaults = ScreenCalendarDayCellsDefaults,
+                        date = date
+                    )
+                }
+            },
+            buildBeforeCalendar = {
+                stickyHeader(key = "screen_header") {
+                    ScreenHeader()
+                }
+            }
         )
-        Text(text = date.dayOfMonth.toString())
+    }
+
+    @Composable
+    private fun ScreenHeader(
+        modifier: Modifier = Modifier,
+    ) {
+        val dictionary = dictionary.screens.memoriesCalendar
+        val appState = LocalAppState.current
+        SmallAppTopBar(
+            modifier = modifier.fillMaxWidth(),
+            leftContent = {
+                IconButton(onClick = { appState.navigateUp() }) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                        contentDescription = null
+                    )
+                }
+            },
+            mainContent = {
+                Text(
+                    text = dictionary.screenTitle.string(),
+                    style = MaterialTheme.typography.titleLarge
+                )
+            }
+        )
+    }
+
+    @Composable
+    private fun DayCellWithMemory(
+        modifier: Modifier = Modifier,
+        date: LocalDate,
+        memory: PhotoMemory
+    ) {
+        CalendarDayCellContainer(
+            modifier = modifier,
+            defaults = ScreenCalendarDayCellsDefaults,
+            onClick = {}
+        ) {
+            ByteArrayImage(
+                content = memory.photoContent,
+                size = ScreenCalendarDayCellsDefaults.containerSize,
+                colorFilter = ColorFilter.tint(
+                    color = Color.Black.copy(alpha = 0.5f),
+                    blendMode = BlendMode.Multiply
+                )
+            )
+            Text(text = date.dayOfMonth.toString())
+        }
     }
 }

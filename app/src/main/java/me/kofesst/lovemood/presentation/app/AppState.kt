@@ -14,9 +14,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import me.kofesst.lovemood.presentation.navigation.AppNavigation
-import me.kofesst.lovemood.presentation.navigation.AppScreen
-import me.kofesst.lovemood.presentation.navigation.AppScreenArgument
+import me.kofesst.android.lovemood.navigation.AppDestination
+import me.kofesst.android.lovemood.navigation.DestinationArgument
+import me.kofesst.lovemood.app.AppDestinations
 
 @Stable
 data class AppState(
@@ -24,11 +24,11 @@ data class AppState(
     val coroutineScope: CoroutineScope,
     val snackbarHostState: SnackbarHostState
 ) {
-    private val screensFlow: Flow<AppScreen?>
+    private val destinationsFlow: Flow<AppDestination?>
         get() = navHostController.currentBackStackEntryFlow
             .map { backStackEntry ->
                 val currentRoute = backStackEntry.destination.route
-                AppNavigation.AllScreens.firstOrNull { screen ->
+                AppDestinations.All.firstOrNull { screen ->
                     screen.route.equals(
                         currentRoute,
                         ignoreCase = true
@@ -36,8 +36,8 @@ data class AppState(
                 }
             }
 
-    val currentScreenState: State<AppScreen?>
-        @Composable get() = screensFlow.collectAsState(initial = null)
+    val currentDestinationState: State<AppDestination?>
+        @Composable get() = destinationsFlow.collectAsState(initial = null)
 
     fun showSnackbar(message: String) {
         coroutineScope.launch {
@@ -53,11 +53,11 @@ data class AppState(
     }
 
     fun navigate(
-        appScreen: AppScreen,
+        destination: AppDestination,
         clearBackStack: Boolean = false,
-        vararg argumentValues: Pair<AppScreenArgument<*>, Any>
+        vararg argumentValues: Pair<DestinationArgument<*>, Any>
     ) {
-        navHostController.navigate(appScreen.withArgs(*argumentValues)) {
+        navHostController.navigate(destination.withArgs(*argumentValues)) {
             if (clearBackStack) {
                 popUpTo(0) {
                     inclusive = true
