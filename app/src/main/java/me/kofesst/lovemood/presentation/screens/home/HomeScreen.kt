@@ -382,8 +382,7 @@ object HomeScreen : AppScreen() {
                     }
                     item(key = EVENTS_SECTION_KEY) {
                         EventsSection(
-                            modifier = Modifier.fillMaxWidth(),
-                            relationship = relationship
+                            modifier = Modifier.fillMaxWidth()
                         )
                     }
                     buildMemories(asyncMemories)

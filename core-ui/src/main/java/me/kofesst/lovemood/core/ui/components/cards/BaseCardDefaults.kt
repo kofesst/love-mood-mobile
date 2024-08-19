@@ -21,13 +21,11 @@ object BaseCardDefaults {
     fun colors(
         container: Color = MaterialTheme.colorScheme.surfaceVariant,
         labelContent: Color = MaterialTheme.colorScheme.primary,
-        mainContent: Color = MaterialTheme.colorScheme.onSurfaceVariant,
-        backgroundImageTint: Color = MaterialTheme.colorScheme.tertiary
+        mainContent: Color = MaterialTheme.colorScheme.onSurfaceVariant
     ) = BaseCardColors(
         container = container,
         labelContent = labelContent,
-        mainContent = mainContent,
-        backgroundImageTint = backgroundImageTint
+        mainContent = mainContent
     )
 
     @Composable
@@ -77,8 +75,7 @@ object BaseCardDefaults {
 data class BaseCardColors(
     val container: Color,
     val labelContent: Color,
-    val mainContent: Color,
-    val backgroundImageTint: Color
+    val mainContent: Color
 )
 
 data class BaseCardLayout(
