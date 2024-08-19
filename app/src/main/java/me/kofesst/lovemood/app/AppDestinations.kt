@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import me.kofesst.android.lovemood.navigation.AppDestination
 import me.kofesst.android.lovemood.navigation.AppMainDestination
 import me.kofesst.android.lovemood.navigation.AppScreen
+import me.kofesst.android.lovemood.navigation.DestinationArgument
 import me.kofesst.android.lovemood.navigation.IntArgument
 import me.kofesst.lovemood.core.text.AppTextHolder
 import me.kofesst.lovemood.presentation.app.dictionary
@@ -59,6 +60,9 @@ object AppDestinations {
                 defaultValue = -1
             )
 
+            override val arguments: List<DestinationArgument<*>>
+                get() = listOf(editingIdArgument)
+
             override val screen: AppScreen get() = UserProfileFormScreen
         }
 
@@ -68,6 +72,9 @@ object AppDestinations {
                 defaultValue = -1
             )
 
+            override val arguments: List<DestinationArgument<*>>
+                get() = listOf(UserProfile.editingIdArgument)
+
             override val screen: AppScreen get() = RelationshipFormScreen
         }
 
@@ -76,6 +83,9 @@ object AppDestinations {
                 name = "editing_id",
                 defaultValue = -1
             )
+
+            override val arguments: List<DestinationArgument<*>>
+                get() = listOf(UserProfile.editingIdArgument)
 
             override val screen: AppScreen get() = MemoryFormScreen
         }
