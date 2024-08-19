@@ -18,7 +18,6 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import me.kofesst.lovemood.core.models.UserSettings
-import me.kofesst.lovemood.core.ui.components.scaffold.AppBottomBarSettings
 import me.kofesst.lovemood.core.ui.components.scaffold.AppScaffold
 import me.kofesst.lovemood.features.date.DateTimePattern
 import me.kofesst.lovemood.presentation.app.LocalAppState
@@ -42,14 +41,14 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var dateTimePattern: DateTimePattern
 
-    private val _bottomBarExpandState = mutableStateOf(false)
+    private val _bottomBarVisibleState = mutableStateOf(false)
 
     private fun expandBottomBar() {
-        _bottomBarExpandState.value = true
+        _bottomBarVisibleState.value = true
     }
 
     private fun hideBottomBar() {
-        _bottomBarExpandState.value = false
+        _bottomBarVisibleState.value = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -107,11 +106,6 @@ class MainActivity : ComponentActivity() {
         val currentScreen by appState.currentScreenState
         NavigationListener(currentScreen)
 
-        val bottomBarSettings = remember(_bottomBarExpandState.value) {
-            AppBottomBarSettings(
-                isVisible = _bottomBarExpandState.value
-            )
-        }
         val bottomBarScreens = remember {
             AppNavigation.getBottomBarScreens(this@MainActivity)
         }
@@ -121,7 +115,7 @@ class MainActivity : ComponentActivity() {
         AppScaffold(
             modifier = modifier,
             snackbarHostState = appState.snackbarHostState,
-            bottomBarSettings = bottomBarSettings,
+            isBottomBarVisible = _bottomBarVisibleState.value,
             selectedBottomBarItem = currentBottomBarItem,
             bottomBarItems = bottomBarScreens,
             onBottomBarItemClick = { item ->

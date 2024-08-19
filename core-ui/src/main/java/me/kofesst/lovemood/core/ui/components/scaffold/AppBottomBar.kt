@@ -47,7 +47,7 @@ open class BottomBarItem(
 /**
  * Нижняя панель приложения.
  *
- * [settings] - настройки панели.
+ * [isVisible] - отображается ли панель.
  *
  * [selected] - выбранный элемент.
  *
@@ -59,7 +59,7 @@ open class BottomBarItem(
 @Composable
 fun AppBottomBar(
     modifier: Modifier = Modifier,
-    settings: AppBottomBarSettings,
+    isVisible: Boolean,
     selected: BottomBarItem?,
     items: List<BottomBarItem>,
     iconSize: Dp = AppBottomBarDefaults.iconSize,
@@ -71,7 +71,7 @@ fun AppBottomBar(
 ) {
     AnimatedVisibility(
         modifier = modifier,
-        visible = settings.isVisible,
+        visible = isVisible,
         enter = getEnterBarExpandAnim(),
         exit = getExitBarExpandAnim()
     ) {

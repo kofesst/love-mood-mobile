@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun AppScaffold(
     modifier: Modifier = Modifier,
-    bottomBarSettings: AppBottomBarSettings,
+    isBottomBarVisible: Boolean,
     selectedBottomBarItem: BottomBarItem?,
     bottomBarItems: List<BottomBarItem>,
     onBottomBarItemClick: (BottomBarItem) -> Unit,
@@ -29,7 +29,7 @@ fun AppScaffold(
         bottomBar = {
             AppBottomBar(
                 modifier = Modifier.fillMaxWidth(),
-                settings = bottomBarSettings,
+                isVisible = isBottomBarVisible,
                 selected = selectedBottomBarItem,
                 items = bottomBarItems,
                 onItemClick = onBottomBarItemClick
