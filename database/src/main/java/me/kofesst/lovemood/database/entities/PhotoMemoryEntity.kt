@@ -29,8 +29,8 @@ data class PhotoMemoryEntity(
     val addedAt: Long = 0,
 
     @ColumnInfo(
-        name = DatabaseTables.PhotoMemories.LINKED_DATE_COLUMN,
+        name = DatabaseTables.PhotoMemories.ASSOCIATED_DATE_COLUMN,
         typeAffinity = ColumnInfo.INTEGER
     )
-    val linkedDate: Long? = null
+    val associatedDate: Long? = null
 )

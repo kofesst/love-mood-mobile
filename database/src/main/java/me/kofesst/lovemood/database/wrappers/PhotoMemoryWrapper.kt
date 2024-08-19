@@ -12,7 +12,7 @@ object PhotoMemoryWrapper : EntityWrapper<PhotoMemoryEntity, PhotoMemory> {
             id = id,
             photoContent = photoContent,
             addedAt = addedAt.epochMillis,
-            linkedDate = linkedDate?.epochMillis
+            associatedDate = associatedDate?.epochMillis
         )
     }
 
@@ -21,7 +21,7 @@ object PhotoMemoryWrapper : EntityWrapper<PhotoMemoryEntity, PhotoMemory> {
             id = id,
             photoContent = photoContent,
             addedAt = addedAt.localDateTime,
-            linkedDate = linkedDate?.localDate
+            associatedDate = associatedDate?.localDate
         )
     }
 }

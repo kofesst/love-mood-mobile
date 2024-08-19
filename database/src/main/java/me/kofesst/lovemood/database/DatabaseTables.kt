@@ -36,6 +36,6 @@ object DatabaseTables {
         const val ID_COLUMN = "id_memory"
         const val CONTENT_COLUMN = "photo_content"
         const val ADDED_DATE_TIME_COLUMN = "added_at"
-        const val LINKED_DATE_COLUMN = "linked_date"
+        const val ASSOCIATED_DATE_COLUMN = "associated_date"
     }
 }

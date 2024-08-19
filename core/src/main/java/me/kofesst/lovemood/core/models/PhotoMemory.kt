@@ -12,12 +12,12 @@ import java.time.LocalDateTime
  *
  * [addedAt] - дата и время добавления момента.
  *
- * [linkedDate] - связанная с моментом дата.
+ * [associatedDate] - связанная с моментом дата.
  */
 @Suppress("ArrayInDataClass")
 data class PhotoMemory(
     val id: Int,
     val photoContent: ByteArray,
     val addedAt: LocalDateTime,
-    val linkedDate: LocalDate?
+    val associatedDate: LocalDate?
 )
