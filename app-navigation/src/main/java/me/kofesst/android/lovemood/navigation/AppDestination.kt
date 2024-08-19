@@ -7,13 +7,17 @@ abstract class AppDestination(
     /**
      * Базовый путь.
      */
-    baseRoute: String,
-    val arguments: List<DestinationArgument<*>> = emptyList()
+    private val baseRoute: String
 ) {
     /**
      * Экран пункта назначения.
      */
     abstract val screen: AppScreen
+
+    /**
+     * Аргументы пункта назначения.
+     */
+    open val arguments: List<DestinationArgument<*>> = emptyList()
 
     /**
      * Путь навигации, созданный из базового пути, переданного в
@@ -34,7 +38,7 @@ abstract class AppDestination(
      *
      * ```
      */
-    val route: String = buildString {
+    val route: String get() = buildString {
         append(baseRoute)
 
         val nonNullArguments = arguments.filter { it.defaultValue == null }
