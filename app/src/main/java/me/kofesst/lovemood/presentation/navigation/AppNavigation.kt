@@ -13,6 +13,9 @@ import me.kofesst.lovemood.core.text.AppTextHolder
 import me.kofesst.lovemood.presentation.screens.app.AboutAppScreen
 import me.kofesst.lovemood.presentation.screens.app.todos.AppTodosScreen
 import me.kofesst.lovemood.presentation.screens.home.HomeScreen
+import me.kofesst.lovemood.presentation.screens.memory.calendar.MemoriesCalendarScreen
+import me.kofesst.lovemood.presentation.screens.memory.form.MemoryFormScreen
+import me.kofesst.lovemood.presentation.screens.memory.list.MemoriesScreen
 import me.kofesst.lovemood.presentation.screens.profile.UserProfileFormScreen
 import me.kofesst.lovemood.presentation.screens.relationship.RelationshipFormScreen
 import me.kofesst.lovemood.ui.text.ResourceText
@@ -86,6 +89,27 @@ object AppNavigation {
         }
     }
 
+    object MemoryForm : AppScreen(baseRoute = "memories/form") {
+        val editingMemoryIdArgument = IntArgument(name = "id", defaultValue = -1)
+        override val arguments: List<AppScreenArgument<*>> = listOf(
+            editingMemoryIdArgument
+        )
+
+        @Composable
+        override fun ComposableContent(
+            modifier: Modifier,
+            navBackStackEntry: NavBackStackEntry
+        ) {
+            val editingMemoryId = rememberArgument(
+                editingMemoryIdArgument, navBackStackEntry
+            )
+            MemoryFormScreen(
+                modifier = modifier,
+                editingMemoryId = editingMemoryId
+            )
+        }
+    }
+
     object AboutAppScreen : AppMainScreen(baseRoute = "app") {
         override val bottomBarIcon: ImageVector
             get() = Icons.Outlined.Android
@@ -109,6 +133,32 @@ object AppNavigation {
             navBackStackEntry: NavBackStackEntry
         ) {
             AppTodosScreen(modifier)
+        }
+    }
+
+    object MemoriesScreen : AppScreen(baseRoute = "memories") {
+        @Composable
+        override fun ComposableContent(
+            modifier: Modifier,
+            navBackStackEntry: NavBackStackEntry
+        ) {
+            MemoriesScreen(
+                modifier = modifier,
+                navBackStackEntry = navBackStackEntry
+            )
+        }
+    }
+
+    object MemoriesCalendarScreen : AppScreen(baseRoute = "memories/calendar") {
+        @Composable
+        override fun ComposableContent(
+            modifier: Modifier,
+            navBackStackEntry: NavBackStackEntry
+        ) {
+            MemoriesCalendarScreen(
+                modifier = modifier,
+                navBackStackEntry = navBackStackEntry
+            )
         }
     }
 
@@ -136,8 +186,11 @@ object AppNavigation {
         Home,
         ProfileForm,
         RelationshipForm,
+        MemoryForm,
         AboutAppScreen,
-        AppTodosScreen
+        AppTodosScreen,
+        MemoriesScreen,
+        MemoriesCalendarScreen
     )
 
     /**

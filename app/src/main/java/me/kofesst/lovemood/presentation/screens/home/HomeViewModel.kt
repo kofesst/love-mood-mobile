@@ -6,11 +6,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import me.kofesst.lovemood.core.models.PhotoMemory
 import me.kofesst.lovemood.core.models.Profile
 import me.kofesst.lovemood.core.models.Relationship
 import me.kofesst.lovemood.core.usecases.AppUseCases
 import me.kofesst.lovemood.ui.async.AsyncValue
+import me.kofesst.lovemood.ui.async.AsyncValuesList
 import me.kofesst.lovemood.ui.async.load
 import javax.inject.Inject
 
@@ -24,8 +27,11 @@ class HomeViewModel @Inject constructor(
     private val _relationshipState = mutableStateOf<AsyncValue<Relationship>>(AsyncValue())
     val relationshipState: State<AsyncValue<Relationship>> = _relationshipState
 
+    private val _memoriesState = mutableStateOf<AsyncValuesList<PhotoMemory>>(AsyncValue())
+    val memoriesState: State<AsyncValuesList<PhotoMemory>> = _memoriesState
+
     fun loadData() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val userSettings = useCases.dataStore.getSettings()
             Log.d("LoveMood", "Loaded user settings: $userSettings")
             val userProfileId = userSettings.userProfileId ?: return@launch
@@ -37,6 +43,10 @@ class HomeViewModel @Inject constructor(
                 useCases.relationship.readByProfileId(userProfileId)
             }
             Log.d("LoveMood", "Loaded relationship: ${relationshipState.value}")
+            _memoriesState.load {
+                useCases.memories.readAll()
+            }
+            Log.d("LoveMood", "Loaded memories: ${memoriesState.value}")
         }
     }
 }

@@ -13,6 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+typealias ComposableContent = @Composable () -> Unit
+
 @Composable
 fun AppScaffold(
     modifier: Modifier = Modifier,

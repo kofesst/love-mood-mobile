@@ -20,8 +20,8 @@ data class ProfileFormState(
 ) : FormState<Profile>() {
     companion object {
         val USERNAME_LENGTH_RANGE = 2..48
-        val MIN_DATE_OF_BIRTH = LocalDate.of(1900, 1, 1)
-        val MAX_DATE_OF_BRITH = LocalDate.now()
+        val MIN_DATE_OF_BIRTH: LocalDate = LocalDate.of(1900, 1, 1)
+        val MAX_DATE_OF_BRITH: LocalDate = LocalDate.now()
     }
 
     override val isValid

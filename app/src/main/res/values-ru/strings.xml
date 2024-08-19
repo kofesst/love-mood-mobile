@@ -35,13 +35,17 @@
 
     <string name="screens__home__love_duration_section_label">Вы вместе</string>
     <string name="screens__home__events_section_label">Следующее событие</string>
-    <string name="screens__home__moments_section_label">Ваши моменты</string>
+    <string name="screens__home__memories_section_label">Воспоминания</string>
     <string name="screens__home__start_date_when_unit_are_empty">с сегодняшнего дня</string>
     <string name="screens__home__edit_profile_action">Редактировать профиль</string>
     <string name="screens__home__edit_relationship_action">Редактировать отношения</string>
     <string name="screens__home__user_and_partner">%user_username% и %partner_username%</string>
     <string name="screens__home__no_relationship_title">Вы не добавили отношения</string>
     <string name="screens__home__add_relationship_action">Добавить вторую половинку</string>
+    <string name="screens__home__do_not_have_memories">Вы ещё не добавили воспоминания</string>
+    <string name="screens__home__add_first_memory_action">Добавить первое воспоминание</string>
+    <string name="screens__home__memories_content_text">Ваши совместные запечатленные моменты - это прекрасно!</string>
+    <string name="screens__home__view_all_memories_action">Посмотреть все</string>
 
     <string name="screens__user_profile_form__avatar_picker_label">Измените изображение своего профиля</string>
     <string name="screens__user_profile_form__avatar_picker_action">Выбрать изображение</string>
@@ -63,6 +67,16 @@
     <string name="screens__relationship_form__create_header_title">Добавьте Ваши отношения</string>
     <string name="screens__relationship_form__create_header_subtitle">И начните отслеживать самые счастливые моменты Вашей совместной жизни</string>
     <string name="screens__relationship_form__edit_header">Редактирование отношений</string>
+
+    <string name="screens__memory_form__photo_picker_label">Загрузите воспоминание</string>
+    <string name="screens__memory_form__photo_picker_action">Выбрать изображение</string>
+    <string name="screens__memory_form__is_associated_to_date_label">Воспоминание связано с датой</string>
+    <string name="screens__memory_form__associated_date_field_label">Связанная дата</string>
+    <string name="screens__memory_form__create_header_title">Добавьте воспоминание</string>
+    <string name="screens__memory_form__create_header_subtitle">И запомните этот момент навсегда</string>
+    <string name="screens__memory_form__edit_header">Редактирование воспоминания</string>
+
+    <string name="screens__memories_calendar__screen_title">Календарь воспоминаний</string>
 
     <string name="screen__app__about_app_title">Приложение</string>
     <string name="screen__app__app_todos_screen_title">План разработки</string>

@@ -15,8 +15,8 @@ android {
         applicationId = "me.kofesst.lovemood"
         minSdk = 28
         targetSdk = 34
-        versionCode = 1
-        versionName = "0.0.1"
+        versionCode = 2
+        versionName = "0.0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -81,6 +81,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.splashscreen)
+    implementation(libs.androidx.constraintlayout.compose)
 
     // Compose
     implementation(platform(libs.androidx.compose.bom))

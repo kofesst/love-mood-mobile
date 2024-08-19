@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.valentinilk.shimmer.shimmer
 import me.kofesst.lovemood.core.models.Gender
+import me.kofesst.lovemood.core.models.PhotoMemory
 import me.kofesst.lovemood.core.models.Profile
 import me.kofesst.lovemood.core.models.Relationship
 import me.kofesst.lovemood.core.ui.components.action.PanelButton
@@ -50,12 +51,13 @@ import me.kofesst.lovemood.presentation.app.dictionary
 import me.kofesst.lovemood.presentation.navigation.AppNavigation
 import me.kofesst.lovemood.presentation.screens.home.sections.EventsSection
 import me.kofesst.lovemood.presentation.screens.home.sections.LoveDurationSection
-import me.kofesst.lovemood.presentation.screens.home.sections.MomentsSection
+import me.kofesst.lovemood.presentation.screens.home.sections.MemoriesSection
 import me.kofesst.lovemood.presentation.screens.home.sections.ShimmerSection
 import me.kofesst.lovemood.ui.AvatarPlaceholder
 import me.kofesst.lovemood.ui.LottieResources
 import me.kofesst.lovemood.ui.RelationshipAvatars
 import me.kofesst.lovemood.ui.async.AsyncValue
+import me.kofesst.lovemood.ui.async.AsyncValuesList
 import me.kofesst.lovemood.ui.async.asyncValueContent
 import me.kofesst.lovemood.ui.async.requiredAsyncValueContent
 import me.kofesst.lovemood.ui.theme.WithShimmerEffect
@@ -72,6 +74,7 @@ fun HomeScreen(
 
     val asyncProfile by viewModel.userProfileState
     val asyncRelationship by viewModel.relationshipState
+    val asyncMemories by viewModel.memoriesState
     WithShimmerEffect {
         LazyColumn(
             modifier = modifier.fillMaxSize(),
@@ -82,9 +85,10 @@ fun HomeScreen(
                 asyncProfile = asyncProfile,
                 asyncRelationship = asyncRelationship
             )
-            buildAsyncBody(
+            buildBody(
                 userProfile = asyncProfile.value,
-                asyncRelationship = asyncRelationship
+                asyncRelationship = asyncRelationship,
+                asyncMemories = asyncMemories
             )
         }
     }
@@ -338,9 +342,10 @@ private fun ScreenHeaderTitleLayout(
 //endregion
 
 //region Body content
-private fun LazyListScope.buildAsyncBody(
+private fun LazyListScope.buildBody(
     userProfile: Profile?,
-    asyncRelationship: AsyncValue<Relationship>
+    asyncRelationship: AsyncValue<Relationship>,
+    asyncMemories: AsyncValuesList<PhotoMemory>
 ) {
     asyncValueContent(
         asyncValue = asyncRelationship,
@@ -362,52 +367,89 @@ private fun LazyListScope.buildAsyncBody(
                     )
                 }
             } else {
-                buildBody(relationship)
+                item(key = LOVE_DURATION_SECTION_KEY) {
+                    LoveDurationSection(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp),
+                        relationship = relationship
+                    )
+                }
+                item(key = EVENTS_SECTION_KEY) {
+                    EventsSection(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp),
+                        relationship = relationship
+                    )
+                }
+                buildMemories(asyncMemories)
             }
         }
     )
 }
 
 private fun LazyListScope.buildShimmerBody() {
-    repeat(3) {
-        item(key = "section_$it") {
-            ShimmerSection(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-            )
-        }
+    item(key = LOVE_DURATION_SECTION_KEY) {
+        ShimmerSection(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+        )
+    }
+    item(key = EVENTS_SECTION_KEY) {
+        ShimmerSection(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+        )
+    }
+    item(key = MEMORIES_SECTION_KEY) {
+        ShimmerSection(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+        )
     }
 }
 
-private fun LazyListScope.buildBody(
-    relationship: Relationship
+private fun LazyListScope.buildMemories(
+    asyncMemories: AsyncValuesList<PhotoMemory>
 ) {
-    item(key = "love_duration_section") {
-        LoveDurationSection(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp),
-            relationship = relationship
-        )
-    }
-    item(key = "events_section") {
-        EventsSection(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp),
-            relationship = relationship
-        )
-    }
-    item(key = "moments_section") {
-        MomentsSection(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp),
-            relationship = relationship
-        )
-    }
+    requiredAsyncValueContent(
+        asyncValue = asyncMemories,
+        onLoading = {
+            item(key = MEMORIES_SECTION_KEY) {
+                ShimmerSection(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp)
+                )
+            }
+        },
+        onLoaded = { memories ->
+            item(key = MEMORIES_SECTION_KEY) {
+                val appState = LocalAppState.current
+                MemoriesSection(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    memories = memories,
+                    onAddMemoryClick = {
+                        appState.navigate(AppNavigation.MemoryForm)
+                    },
+                    onViewAllClick = {
+                        appState.navigate(AppNavigation.MemoriesScreen)
+                    }
+                )
+            }
+        }
+    )
 }
+
+private const val LOVE_DURATION_SECTION_KEY = "love_duration_section"
+private const val EVENTS_SECTION_KEY = "events_section"
+private const val MEMORIES_SECTION_KEY = "memories_section"
 
 @Composable
 private fun NoRelationshipContent(

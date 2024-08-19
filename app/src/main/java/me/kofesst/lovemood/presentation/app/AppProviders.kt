@@ -9,9 +9,6 @@ import me.kofesst.lovemood.features.date.DateTimePattern
 import me.kofesst.lovemood.presentation.main.MainActivity
 import me.kofesst.lovemood.ui.text.dictionary.AppDictionary
 
-val dictionary
-    @Composable get() = LocalDictionary.current
-
 val LocalMainActivity = staticCompositionLocalOf<MainActivity> {
     error("MainActivity is not provided")
 }
@@ -31,5 +28,7 @@ val LocalDateTimePattern = staticCompositionLocalOf<DateTimePattern> {
 val LocalDictionary = staticCompositionLocalOf<AppDictionary> {
     error("AppDictionary is not provided")
 }
+
+val dictionary @Composable get() = LocalDictionary.current
 
 val LocalShimmer = compositionLocalOf<Shimmer?> { null }

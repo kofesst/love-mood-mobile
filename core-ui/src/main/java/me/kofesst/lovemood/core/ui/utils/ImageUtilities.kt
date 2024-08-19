@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
@@ -116,7 +117,7 @@ suspend fun ByteArray.rotate(degrees: Float): ByteArray {
 }
 
 /**
- * Изображение, получаемое из набора байтов.
+ * Круглое изображение, получаемое из набора байтов.
  *
  * [modifier] - модификатор изображения.
  *
@@ -138,16 +139,44 @@ fun ByteArrayImage(
         CircularProgressIndicator(
             modifier = Modifier.size(size)
         )
-    }
+    },
+    colorFilter: ColorFilter? = null
 ) {
-    var pictureBitmap: Bitmap? by remember {
-        mutableStateOf(null)
-    }
-    LaunchedEffect(content) {
-        pictureBitmap = content.asBitmap()
-    }
+    ByteArrayImage(
+        modifier = modifier
+            .clip(shape)
+            .size(size),
+        content = content,
+        placeholder = placeholder,
+        colorFilter = colorFilter
+    )
+}
+
+@Composable
+fun rememberBitmap(content: ByteArray): Bitmap? {
+    var bitmap by remember { mutableStateOf<Bitmap?>(null) }
+    LaunchedEffect(content) { bitmap = content.asBitmap() }
+    return bitmap
+}
+
+/**
+ * Круглое изображение, получаемое из набора байтов.
+ *
+ * [modifier] - модификатор изображения.
+ *
+ * [content] - набор байтов изображения.
+ *
+ * [placeholder] - контент, появляющийся во время загрузки изображения.
+ */
+@Composable
+fun ByteArrayImage(
+    modifier: Modifier = Modifier,
+    content: ByteArray,
+    placeholder: @Composable () -> Unit = {},
+    colorFilter: ColorFilter? = null
+) {
+    val pictureBitmap = rememberBitmap(content)
     Crossfade(
-        modifier = modifier,
         targetState = content.isNotEmpty(),
         label = "byte_array_image"
     ) { isContentLoaded ->
@@ -162,12 +191,11 @@ fun ByteArrayImage(
                     placeholder()
                 } else {
                     Image(
+                        modifier = modifier,
                         bitmap = bitmap.asImageBitmap(),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .clip(shape)
-                            .size(size)
+                        colorFilter = colorFilter
                     )
                 }
             }

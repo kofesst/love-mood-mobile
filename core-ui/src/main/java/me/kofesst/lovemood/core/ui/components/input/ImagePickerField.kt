@@ -1,14 +1,17 @@
 package me.kofesst.lovemood.core.ui.components.input
 
+import android.net.Uri
+import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.RotateLeft
@@ -22,13 +25,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -42,17 +44,45 @@ import me.kofesst.lovemood.core.ui.utils.compress
 import me.kofesst.lovemood.core.ui.utils.getImagePickerLauncher
 import me.kofesst.lovemood.core.ui.utils.rotate
 
-@Preview
+private const val SMALL_IMAGE_COMPRESS_QUALITY = 75
+private const val SMALL_IMAGE_COMPRESS_HEIGHT = 512
+
+private const val LARGE_IMAGE_COMPRESS_QUALITY = 100
+private const val LARGE_IMAGE_COMPRESS_HEIGHT = 1024
+
 @Composable
-private fun ImagePickerFieldPreview() {
-    SmallImagePickerField(
-        modifier = Modifier.width(400.dp),
-        loadedContent = byteArrayOf(),
-        onContentLoad = {},
-        coroutineScope = rememberCoroutineScope(),
-        label = "Load your profile picture",
-        action = "Choose image"
-    )
+fun LargeImagePickerField(
+    modifier: Modifier = Modifier,
+    defaults: InputFieldContainerDefaults = InputFieldContainerDefaults.defaults(),
+    loadedContent: ByteArray,
+    onContentLoad: (ByteArray) -> Unit,
+    coroutineScope: CoroutineScope,
+    label: String,
+    action: String,
+    previewHeight: Dp = 400.dp
+) {
+    ImagePickerFieldContainer(
+        modifier = modifier,
+        defaults = defaults.copy(
+            contentPadding = PaddingValues(0.dp)
+        ),
+        loadedContent = loadedContent,
+        onContentLoad = onContentLoad,
+        coroutineScope = coroutineScope,
+        label = label,
+        action = action,
+        pictureCompressQuality = LARGE_IMAGE_COMPRESS_QUALITY,
+        pictureCompressHeight = LARGE_IMAGE_COMPRESS_HEIGHT
+    ) { imagePicker ->
+        LargeImageLoadedContent(
+            modifier = Modifier.fillMaxWidth(),
+            content = loadedContent,
+            onSelectAnotherClick = { imagePicker.launch(SELECT_IMAGE_LAUNCHER_INPUT) },
+            onContentChange = onContentLoad,
+            coroutineScope = coroutineScope,
+            previewHeight = previewHeight
+        )
+    }
 }
 
 @Composable
@@ -64,6 +94,40 @@ fun SmallImagePickerField(
     coroutineScope: CoroutineScope,
     label: String,
     action: String
+) {
+    ImagePickerFieldContainer(
+        modifier = modifier,
+        defaults = defaults,
+        loadedContent = loadedContent,
+        onContentLoad = onContentLoad,
+        coroutineScope = coroutineScope,
+        label = label,
+        action = action,
+        pictureCompressQuality = SMALL_IMAGE_COMPRESS_QUALITY,
+        pictureCompressHeight = SMALL_IMAGE_COMPRESS_HEIGHT
+    ) { imagePicker ->
+        SmallImageLoadedContent(
+            modifier = Modifier.fillMaxWidth(),
+            content = loadedContent,
+            onSelectAnotherClick = { imagePicker.launch(SELECT_IMAGE_LAUNCHER_INPUT) },
+            onContentChange = onContentLoad,
+            coroutineScope = coroutineScope
+        )
+    }
+}
+
+@Composable
+private fun ImagePickerFieldContainer(
+    modifier: Modifier = Modifier,
+    defaults: InputFieldContainerDefaults = InputFieldContainerDefaults.defaults(),
+    loadedContent: ByteArray,
+    onContentLoad: (ByteArray) -> Unit,
+    coroutineScope: CoroutineScope,
+    label: String,
+    action: String,
+    pictureCompressQuality: Int,
+    pictureCompressHeight: Int,
+    pickedPictureContent: @Composable (imagePicker: ManagedActivityResultLauncher<String, Uri?>) -> Unit
 ) {
     BaseInputFieldContainer(
         modifier = modifier,
@@ -79,7 +143,10 @@ fun SmallImagePickerField(
             val item = context.contentResolver.openInputStream(uri)
             if (item != null) {
                 coroutineScope.launch {
-                    val bytes = item.readBytes().compress()
+                    val bytes = item.readBytes().compress(
+                        quality = pictureCompressQuality,
+                        newHeight = pictureCompressHeight
+                    )
                     onContentLoad(bytes)
                     item.close()
                 }
@@ -92,13 +159,7 @@ fun SmallImagePickerField(
             transitionSpec = { fadeTransition }
         ) { isPicturePicked ->
             if (isPicturePicked) {
-                ImageLoadedContent(
-                    modifier = Modifier.fillMaxWidth(),
-                    content = loadedContent,
-                    onSelectAnotherClick = { imagePicker.launch(SELECT_IMAGE_LAUNCHER_INPUT) },
-                    onContentChange = onContentLoad,
-                    coroutineScope = coroutineScope
-                )
+                pickedPictureContent(imagePicker)
             } else {
                 ImageNotLoadedContent(
                     modifier = Modifier
@@ -144,20 +205,65 @@ private fun ImageNotLoadedContent(
 }
 
 @Composable
-fun ImageLoadedContent(
+private fun LargeImageLoadedContent(
+    modifier: Modifier = Modifier,
+    content: ByteArray,
+    onSelectAnotherClick: () -> Unit,
+    onContentChange: (ByteArray) -> Unit,
+    coroutineScope: CoroutineScope,
+    previewHeight: Dp
+) {
+    ImageLoadedContent(
+        modifier = modifier,
+        content = content,
+        onSelectAnotherClick = onSelectAnotherClick,
+        onContentChange = onContentChange,
+        coroutineScope = coroutineScope
+    ) {
+        LargeImagePreview(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(previewHeight),
+            imageContent = content
+        )
+    }
+}
+
+@Composable
+private fun SmallImageLoadedContent(
     modifier: Modifier = Modifier,
     content: ByteArray,
     onSelectAnotherClick: () -> Unit,
     onContentChange: (ByteArray) -> Unit,
     coroutineScope: CoroutineScope
 ) {
-    Column(modifier) {
-        ImagePreview(
+    ImageLoadedContent(
+        modifier = modifier,
+        content = content,
+        onSelectAnotherClick = onSelectAnotherClick,
+        onContentChange = onContentChange,
+        coroutineScope = coroutineScope
+    ) {
+        SmallImagePreview(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(20.dp),
-            content = content
+            imageContent = content
         )
+    }
+}
+
+@Composable
+private fun ImageLoadedContent(
+    modifier: Modifier = Modifier,
+    content: ByteArray,
+    onSelectAnotherClick: () -> Unit,
+    onContentChange: (ByteArray) -> Unit,
+    coroutineScope: CoroutineScope,
+    previewContent: @Composable () -> Unit
+) {
+    Column(modifier) {
+        previewContent()
         ImageEditControls(
             modifier = Modifier.fillMaxWidth(),
             onSelectAnotherClick = onSelectAnotherClick,
@@ -181,53 +287,83 @@ fun ImageLoadedContent(
 }
 
 @Composable
-private fun ImagePreview(
+private fun LargeImagePreview(
     modifier: Modifier = Modifier,
-    content: ByteArray
+    imageContent: ByteArray
+) {
+    ImagePreviewContainer(
+        modifier = modifier,
+        imageContent = imageContent
+    ) {
+        ByteArrayImage(
+            modifier = Modifier.fillMaxSize(),
+            content = imageContent
+        )
+    }
+}
+
+@Composable
+private fun SmallImagePreview(
+    modifier: Modifier = Modifier,
+    imageContent: ByteArray
+) {
+    ImagePreviewContainer(
+        modifier = modifier,
+        imageContent = imageContent
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.Bottom
+        ) {
+            ByteArrayImage(
+                modifier = Modifier.border(
+                    width = 5.dp,
+                    color = MaterialTheme.colorScheme.primaryContainer,
+                    shape = CircleShape
+                ),
+                content = imageContent,
+                size = 128.dp,
+                shape = CircleShape
+            )
+            ByteArrayImage(
+                modifier = Modifier.border(
+                    width = 5.dp,
+                    color = MaterialTheme.colorScheme.primaryContainer,
+                    shape = CircleShape
+                ),
+                content = imageContent,
+                size = 96.dp,
+                shape = CircleShape
+            )
+            ByteArrayImage(
+                modifier = Modifier.border(
+                    width = 5.dp,
+                    color = MaterialTheme.colorScheme.primaryContainer,
+                    shape = CircleShape
+                ),
+                content = imageContent,
+                size = 72.dp,
+                shape = CircleShape
+            )
+        }
+    }
+}
+
+@Composable
+private fun ImagePreviewContainer(
+    modifier: Modifier = Modifier,
+    imageContent: ByteArray,
+    onLoadedContent: @Composable () -> Unit
 ) {
     AnimatedContent(
         modifier = modifier,
-        targetState = content.isNotEmpty(),
+        targetState = imageContent.isNotEmpty(),
         label = "image_preview",
         transitionSpec = { fadeTransition }
     ) { isPictureLoaded ->
         if (isPictureLoaded) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Bottom
-            ) {
-                ByteArrayImage(
-                    modifier = Modifier.border(
-                        width = 5.dp,
-                        color = MaterialTheme.colorScheme.primaryContainer,
-                        shape = CircleShape
-                    ),
-                    content = content,
-                    size = 128.dp,
-                    shape = CircleShape
-                )
-                ByteArrayImage(
-                    modifier = Modifier.border(
-                        width = 5.dp,
-                        color = MaterialTheme.colorScheme.primaryContainer,
-                        shape = CircleShape
-                    ),
-                    content = content,
-                    size = 96.dp,
-                    shape = CircleShape
-                )
-                ByteArrayImage(
-                    modifier = Modifier.border(
-                        width = 5.dp,
-                        color = MaterialTheme.colorScheme.primaryContainer,
-                        shape = CircleShape
-                    ),
-                    content = content,
-                    size = 72.dp,
-                    shape = CircleShape
-                )
-            }
+            onLoadedContent()
         }
     }
 }

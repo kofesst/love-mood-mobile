@@ -11,8 +11,20 @@ class HomeScreenDictionary(appContext: Context) {
     val eventsSectionLabel = ResourceText(
         R.string.screens__home__events_section_label, appContext
     )
-    val momentsSectionLabel = ResourceText(
-        R.string.screens__home__moments_section_label, appContext
+    val memoriesSectionLabel = ResourceText(
+        R.string.screens__home__memories_section_label, appContext
+    )
+    val doNotHaveMemories = ResourceText(
+        R.string.screens__home__do_not_have_memories, appContext
+    )
+    val addFirstMemoryAction = ResourceText(
+        R.string.screens__home__add_first_memory_action, appContext
+    )
+    val memoriesContentText = ResourceText(
+        R.string.screens__home__memories_content_text, appContext
+    )
+    val viewAllMemoriesAction = ResourceText(
+        R.string.screens__home__view_all_memories_action, appContext
     )
     val startDateWhenUnitsAreEmpty = ResourceText(
         R.string.screens__home__start_date_when_unit_are_empty, appContext
