@@ -9,7 +9,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -23,7 +22,6 @@ import me.kofesst.lovemood.app.dictionary
 import me.kofesst.lovemood.core.models.Relationship
 import me.kofesst.lovemood.core.text.AppTextHolder
 import me.kofesst.lovemood.core.ui.components.cards.BaseCard
-import me.kofesst.lovemood.core.ui.components.cards.BaseCardDefaults
 import me.kofesst.lovemood.features.date.DatePeriod
 import me.kofesst.lovemood.ui.text.dictionary.AppDictionary
 import java.time.LocalDate
@@ -55,9 +53,6 @@ fun LoveDurationSection(
     key(lovePeriod) {
         BaseCard(
             modifier = modifier,
-            colors = BaseCardDefaults.colors(
-                backgroundImageTint = Color(0xFFFECCC0)
-            ),
             backgroundImagePainter = painterResource(R.drawable.ic_love_clock),
             label = dictionary.screens.home.loveDurationSectionLabel.string()
         ) {

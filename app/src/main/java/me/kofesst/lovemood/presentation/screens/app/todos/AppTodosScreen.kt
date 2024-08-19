@@ -75,8 +75,7 @@ object AppTodosScreen : AppScreen() {
     ) {
         BaseCard(
             modifier = modifier,
-            label = item.title.string(),
-            backgroundImagePainter = null
+            label = item.title.string()
         ) {
             Text(
                 text = item.description.string()

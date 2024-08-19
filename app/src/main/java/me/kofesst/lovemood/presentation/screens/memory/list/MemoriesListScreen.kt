@@ -21,7 +21,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -36,7 +35,6 @@ import me.kofesst.lovemood.app.dictionary
 import me.kofesst.lovemood.async.requiredAsyncValueContent
 import me.kofesst.lovemood.core.models.PhotoMemory
 import me.kofesst.lovemood.core.ui.components.cards.BaseCard
-import me.kofesst.lovemood.core.ui.components.cards.BaseCardDefaults
 import me.kofesst.lovemood.core.ui.components.scaffold.NavigateUpIconButton
 import me.kofesst.lovemood.core.ui.components.scaffold.SmallAppTopBar
 import me.kofesst.lovemood.core.ui.transitions.softHorizontalSlide
@@ -134,9 +132,6 @@ object MemoriesListScreen : AppScreen() {
                 BaseCard(
                     modifier = modifier,
                     backgroundImagePainter = painterResource(R.drawable.ic_couple_love_calendar),
-                    colors = BaseCardDefaults.colors(
-                        backgroundImageTint = Color(0xFFFF94E8)
-                    ),
                     label = dictionary.memoriesCalendarCardLabel.string()
                 ) {
                     Text(text = dictionary.memoriesCalendarCardText.string())

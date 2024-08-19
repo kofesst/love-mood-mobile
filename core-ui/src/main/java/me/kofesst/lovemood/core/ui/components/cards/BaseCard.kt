@@ -14,8 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 
@@ -64,7 +62,7 @@ fun BaseCard(
     styles: BaseCardStyles = BaseCardDefaults.styles(),
     label: String? = null,
     headerContent: (@Composable () -> Unit)? = null,
-    backgroundImagePainter: Painter?,
+    backgroundImagePainter: Painter? = null,
     bodyContent: @Composable ColumnScope.() -> Unit
 ) {
     Surface(
@@ -96,7 +94,7 @@ private fun CardContent(
     styles: BaseCardStyles,
     label: String?,
     headerContent: (@Composable () -> Unit)?,
-    backgroundImagePainter: Painter?,
+    backgroundImagePainter: Painter? = null,
     bodyContent: @Composable ColumnScope.() -> Unit
 ) {
     Column(
@@ -131,23 +129,21 @@ private fun CardContent(
                 }
                 bodyContent(this)
             }
-            CardImage(
-                colors = colors,
+            CardBackgroundIcon(
                 dimensions = dimensions,
-                backgroundImagePainter = backgroundImagePainter
+                imagePainter = backgroundImagePainter
             )
         }
     }
 }
 
 @Composable
-private fun CardImage(
+private fun CardBackgroundIcon(
     modifier: Modifier = Modifier,
-    colors: BaseCardColors,
     dimensions: BaseCardDimensions,
-    backgroundImagePainter: Painter?
+    imagePainter: Painter?
 ) {
-    backgroundImagePainter?.let { painter ->
+    imagePainter?.let { painter ->
         Image(
             modifier = modifier
                 .width(dimensions.backgroundImageWidth)
@@ -157,10 +153,6 @@ private fun CardImage(
                     y = dimensions.backgroundImageOffset.y
                 ),
             painter = painter,
-            colorFilter = ColorFilter.tint(
-                color = colors.backgroundImageTint,
-                blendMode = BlendMode.Modulate
-            ),
             contentDescription = null
         )
     }
