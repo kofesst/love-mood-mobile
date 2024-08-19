@@ -11,7 +11,6 @@ import me.kofesst.android.lovemood.navigation.AppScreen
 import me.kofesst.android.lovemood.navigation.DestinationArgument
 import me.kofesst.android.lovemood.navigation.IntArgument
 import me.kofesst.lovemood.core.text.AppTextHolder
-import me.kofesst.lovemood.presentation.app.dictionary
 import me.kofesst.lovemood.presentation.screens.app.AboutAppScreen
 import me.kofesst.lovemood.presentation.screens.app.todos.AppTodosScreen
 import me.kofesst.lovemood.presentation.screens.home.HomeScreen

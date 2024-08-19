@@ -1,4 +1,4 @@
-package me.kofesst.lovemood.presentation.app
+package me.kofesst.lovemood.app
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf

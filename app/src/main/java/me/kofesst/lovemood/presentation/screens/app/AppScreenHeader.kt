@@ -16,7 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import me.kofesst.lovemood.R
-import me.kofesst.lovemood.presentation.app.LocalDictionary
+import me.kofesst.lovemood.app.LocalDictionary
 
 @Composable
 fun AppScreenHeader(

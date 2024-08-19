@@ -1,4 +1,4 @@
-package me.kofesst.lovemood.ui.async
+package me.kofesst.lovemood.async
 
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.CircularProgressIndicator
@@ -88,20 +88,20 @@ fun <T : Any> LazyListScope.asyncValueContent(
     onFailed: LazyListScope.(Exception?) -> Unit = defaultLazyFailedContent,
     onLoaded: LazyListScope.(T?) -> Unit
 ) {
-    if (asyncValue.status != AsyncValue.LoadStatus.Loaded && asyncValue.hasLoadedBefore) {
+    if (asyncValue.status != me.kofesst.lovemood.async.AsyncValue.LoadStatus.Loaded && asyncValue.hasLoadedBefore) {
         val loadedValue = asyncValue.value
         onLoaded(loadedValue)
     } else {
         when (asyncValue.status) {
-            AsyncValue.LoadStatus.Idle,
-            AsyncValue.LoadStatus.Loading -> onLoading()
+            me.kofesst.lovemood.async.AsyncValue.LoadStatus.Idle,
+            me.kofesst.lovemood.async.AsyncValue.LoadStatus.Loading -> onLoading()
 
-            AsyncValue.LoadStatus.Failed -> {
+            me.kofesst.lovemood.async.AsyncValue.LoadStatus.Failed -> {
                 val exception = asyncValue.error
                 onFailed(exception)
             }
 
-            AsyncValue.LoadStatus.Loaded -> {
+            me.kofesst.lovemood.async.AsyncValue.LoadStatus.Loaded -> {
                 val loadedValue = asyncValue.value
                 onLoaded(loadedValue)
             }

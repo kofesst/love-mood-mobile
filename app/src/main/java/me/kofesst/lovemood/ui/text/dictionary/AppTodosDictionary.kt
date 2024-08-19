@@ -3,7 +3,7 @@ package me.kofesst.lovemood.ui.text.dictionary
 import android.content.Context
 import androidx.compose.runtime.Composable
 import me.kofesst.lovemood.R
-import me.kofesst.lovemood.presentation.app.LocalDictionary
+import me.kofesst.lovemood.app.LocalDictionary
 import me.kofesst.lovemood.presentation.screens.app.todos.AppTodo
 import me.kofesst.lovemood.ui.text.ResourceText
 

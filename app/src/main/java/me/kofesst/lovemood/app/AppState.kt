@@ -1,4 +1,4 @@
-package me.kofesst.lovemood.presentation.app
+package me.kofesst.lovemood.app
 
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import me.kofesst.android.lovemood.navigation.AppDestination
 import me.kofesst.android.lovemood.navigation.DestinationArgument
-import me.kofesst.lovemood.app.AppDestinations
 
 @Stable
 data class AppState(

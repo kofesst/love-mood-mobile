@@ -20,6 +20,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import me.kofesst.android.lovemood.navigation.AppScreen
 import me.kofesst.lovemood.app.AppDestinations
+import me.kofesst.lovemood.app.LocalAppState
+import me.kofesst.lovemood.app.dictionary
 import me.kofesst.lovemood.core.models.PhotoMemory
 import me.kofesst.lovemood.core.ui.components.calendar.CalendarCellDefaults
 import me.kofesst.lovemood.core.ui.components.calendar.CalendarDayCell
@@ -30,8 +32,6 @@ import me.kofesst.lovemood.core.ui.components.scaffold.SmallAppTopBar
 import me.kofesst.lovemood.core.ui.utils.ByteArrayImage
 import me.kofesst.lovemood.core.ui.utils.alsoNavBar
 import me.kofesst.lovemood.core.ui.utils.alsoStatusBar
-import me.kofesst.lovemood.presentation.app.LocalAppState
-import me.kofesst.lovemood.presentation.app.dictionary
 import me.kofesst.lovemood.presentation.screens.memory.list.MemoriesViewModel
 import java.time.LocalDate
 

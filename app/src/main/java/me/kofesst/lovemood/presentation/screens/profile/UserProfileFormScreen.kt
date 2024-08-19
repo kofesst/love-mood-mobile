@@ -19,9 +19,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import me.kofesst.android.lovemood.navigation.AppScreen
 import me.kofesst.lovemood.app.AppDestinations
+import me.kofesst.lovemood.app.LocalAppState
+import me.kofesst.lovemood.app.LocalDictionary
 import me.kofesst.lovemood.core.ui.utils.alsoNavBar
-import me.kofesst.lovemood.presentation.app.LocalAppState
-import me.kofesst.lovemood.presentation.app.LocalDictionary
 import me.kofesst.lovemood.presentation.forms.FormMethod
 import me.kofesst.lovemood.presentation.forms.FormResultsListener
 import me.kofesst.lovemood.presentation.forms.buildFormLayout

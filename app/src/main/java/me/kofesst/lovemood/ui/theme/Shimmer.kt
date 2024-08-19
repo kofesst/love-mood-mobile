@@ -12,7 +12,7 @@ import com.valentinilk.shimmer.ShimmerBounds
 import com.valentinilk.shimmer.defaultShimmerTheme
 import com.valentinilk.shimmer.rememberShimmer
 import com.valentinilk.shimmer.shimmerSpec
-import me.kofesst.lovemood.presentation.app.LocalShimmer
+import me.kofesst.lovemood.app.LocalShimmer
 
 private fun lightShimmerColors() = listOf(
     Color.Unspecified.copy(alpha = 0.00f),

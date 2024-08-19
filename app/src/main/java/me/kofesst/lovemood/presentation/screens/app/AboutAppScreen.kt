@@ -16,10 +16,10 @@ import androidx.navigation.NavBackStackEntry
 import me.kofesst.android.lovemood.navigation.AppScreen
 import me.kofesst.lovemood.R
 import me.kofesst.lovemood.app.AppDestinations
+import me.kofesst.lovemood.app.LocalAppState
+import me.kofesst.lovemood.app.dictionary
 import me.kofesst.lovemood.core.ui.components.cards.BaseCard
 import me.kofesst.lovemood.core.ui.components.scaffold.SmallAppTopBar
-import me.kofesst.lovemood.presentation.app.LocalAppState
-import me.kofesst.lovemood.presentation.app.dictionary
 
 object AboutAppScreen : AppScreen() {
     @Composable
