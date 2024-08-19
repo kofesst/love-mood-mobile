@@ -1,4 +1,4 @@
-package me.kofesst.lovemood.ui.async
+package me.kofesst.lovemood.async
 
 import android.util.Log
 import androidx.compose.runtime.MutableState

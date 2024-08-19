@@ -8,27 +8,29 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import me.kofesst.lovemood.async.load
 import me.kofesst.lovemood.core.models.PhotoMemory
 import me.kofesst.lovemood.core.models.Profile
 import me.kofesst.lovemood.core.models.Relationship
 import me.kofesst.lovemood.core.usecases.AppUseCases
-import me.kofesst.lovemood.ui.async.AsyncValue
-import me.kofesst.lovemood.ui.async.AsyncValuesList
-import me.kofesst.lovemood.ui.async.load
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val useCases: AppUseCases
 ) : ViewModel() {
-    private val _userProfileState = mutableStateOf<AsyncValue<Profile>>(AsyncValue())
-    val userProfileState: State<AsyncValue<Profile>> = _userProfileState
+    private val _userProfileState = mutableStateOf<me.kofesst.lovemood.async.AsyncValue<Profile>>(me.kofesst.lovemood.async.AsyncValue())
+    val userProfileState: State<me.kofesst.lovemood.async.AsyncValue<Profile>> = _userProfileState
 
-    private val _relationshipState = mutableStateOf<AsyncValue<Relationship>>(AsyncValue())
-    val relationshipState: State<AsyncValue<Relationship>> = _relationshipState
+    private val _relationshipState = mutableStateOf<me.kofesst.lovemood.async.AsyncValue<Relationship>>(
+        me.kofesst.lovemood.async.AsyncValue()
+    )
+    val relationshipState: State<me.kofesst.lovemood.async.AsyncValue<Relationship>> = _relationshipState
 
-    private val _memoriesState = mutableStateOf<AsyncValuesList<PhotoMemory>>(AsyncValue())
-    val memoriesState: State<AsyncValuesList<PhotoMemory>> = _memoriesState
+    private val _memoriesState = mutableStateOf<me.kofesst.lovemood.async.AsyncValuesList<PhotoMemory>>(
+        me.kofesst.lovemood.async.AsyncValue()
+    )
+    val memoriesState: State<me.kofesst.lovemood.async.AsyncValuesList<PhotoMemory>> = _memoriesState
 
     fun loadData() {
         viewModelScope.launch(Dispatchers.IO) {

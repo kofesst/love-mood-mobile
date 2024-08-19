@@ -69,6 +69,7 @@ dependencies {
     kapt(libs.di.hilt.compiler.androidx)
 
     // Modules
+    implementation(project(":app-async"))
     implementation(project(":app-navigation"))
     implementation(project(":features-validation"))
     implementation(project(":features-date"))

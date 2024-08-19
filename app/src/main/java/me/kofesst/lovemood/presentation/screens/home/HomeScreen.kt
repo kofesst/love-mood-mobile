@@ -35,6 +35,12 @@ import androidx.navigation.NavBackStackEntry
 import com.valentinilk.shimmer.shimmer
 import me.kofesst.android.lovemood.navigation.AppScreen
 import me.kofesst.lovemood.app.AppDestinations
+import me.kofesst.lovemood.app.LocalAppState
+import me.kofesst.lovemood.app.LocalMainActivity
+import me.kofesst.lovemood.app.LocalShimmer
+import me.kofesst.lovemood.app.dictionary
+import me.kofesst.lovemood.async.asyncValueContent
+import me.kofesst.lovemood.async.requiredAsyncValueContent
 import me.kofesst.lovemood.core.models.Gender
 import me.kofesst.lovemood.core.models.PhotoMemory
 import me.kofesst.lovemood.core.models.Profile
@@ -46,10 +52,6 @@ import me.kofesst.lovemood.core.ui.components.lottie.LottieSize
 import me.kofesst.lovemood.core.ui.utils.ByteArrayImage
 import me.kofesst.lovemood.core.ui.utils.mergeWithStatusBar
 import me.kofesst.lovemood.core.ui.utils.statusBarPadding
-import me.kofesst.lovemood.presentation.app.LocalAppState
-import me.kofesst.lovemood.presentation.app.LocalMainActivity
-import me.kofesst.lovemood.presentation.app.LocalShimmer
-import me.kofesst.lovemood.presentation.app.dictionary
 import me.kofesst.lovemood.presentation.screens.home.sections.EventsSection
 import me.kofesst.lovemood.presentation.screens.home.sections.LoveDurationSection
 import me.kofesst.lovemood.presentation.screens.home.sections.MemoriesSection
@@ -57,10 +59,6 @@ import me.kofesst.lovemood.presentation.screens.home.sections.ShimmerSection
 import me.kofesst.lovemood.ui.AvatarPlaceholder
 import me.kofesst.lovemood.ui.LottieResources
 import me.kofesst.lovemood.ui.RelationshipAvatars
-import me.kofesst.lovemood.ui.async.AsyncValue
-import me.kofesst.lovemood.ui.async.AsyncValuesList
-import me.kofesst.lovemood.ui.async.asyncValueContent
-import me.kofesst.lovemood.ui.async.requiredAsyncValueContent
 import me.kofesst.lovemood.ui.theme.WithShimmerEffect
 
 object HomeScreen : AppScreen() {
@@ -108,8 +106,8 @@ object HomeScreen : AppScreen() {
     //region Screen header
 
     private fun LazyListScope.buildAsyncHeader(
-        asyncProfile: AsyncValue<Profile>,
-        asyncRelationship: AsyncValue<Relationship>
+        asyncProfile: me.kofesst.lovemood.async.AsyncValue<Profile>,
+        asyncRelationship: me.kofesst.lovemood.async.AsyncValue<Relationship>
     ) {
         asyncValueContent(
             asyncValue = asyncRelationship,
@@ -153,7 +151,7 @@ object HomeScreen : AppScreen() {
     }
 
     private fun LazyListScope.buildProfileHeader(
-        asyncProfile: AsyncValue<Profile>
+        asyncProfile: me.kofesst.lovemood.async.AsyncValue<Profile>
     ) {
         requiredAsyncValueContent(
             asyncValue = asyncProfile,
@@ -351,8 +349,8 @@ object HomeScreen : AppScreen() {
     //region Body content
     private fun LazyListScope.buildBody(
         userProfile: Profile?,
-        asyncRelationship: AsyncValue<Relationship>,
-        asyncMemories: AsyncValuesList<PhotoMemory>
+        asyncRelationship: me.kofesst.lovemood.async.AsyncValue<Relationship>,
+        asyncMemories: me.kofesst.lovemood.async.AsyncValuesList<PhotoMemory>
     ) {
         asyncValueContent(
             asyncValue = asyncRelationship,
@@ -411,7 +409,7 @@ object HomeScreen : AppScreen() {
     }
 
     private fun LazyListScope.buildMemories(
-        asyncMemories: AsyncValuesList<PhotoMemory>
+        asyncMemories: me.kofesst.lovemood.async.AsyncValuesList<PhotoMemory>
     ) {
         requiredAsyncValueContent(
             asyncValue = asyncMemories,

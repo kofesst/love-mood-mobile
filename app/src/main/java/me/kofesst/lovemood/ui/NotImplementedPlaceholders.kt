@@ -8,7 +8,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import me.kofesst.lovemood.presentation.app.LocalDictionary
+import me.kofesst.lovemood.app.LocalDictionary
 
 @Composable
 fun LargeNotImplementedText(

@@ -15,13 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavBackStackEntry
 import me.kofesst.android.lovemood.navigation.AppScreen
+import me.kofesst.lovemood.app.LocalAppState
+import me.kofesst.lovemood.app.LocalDictionary
+import me.kofesst.lovemood.app.dictionary
 import me.kofesst.lovemood.core.ui.components.cards.BaseCard
 import me.kofesst.lovemood.core.ui.components.scaffold.NavigateUpIconButton
 import me.kofesst.lovemood.core.ui.components.scaffold.SmallAppTopBar
 import me.kofesst.lovemood.core.ui.utils.alsoNavBar
-import me.kofesst.lovemood.presentation.app.LocalAppState
-import me.kofesst.lovemood.presentation.app.LocalDictionary
-import me.kofesst.lovemood.presentation.app.dictionary
 import me.kofesst.lovemood.presentation.screens.app.AppScreenHeader
 import me.kofesst.lovemood.ui.text.dictionary.uiText
 

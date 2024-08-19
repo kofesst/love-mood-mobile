@@ -18,13 +18,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import kotlinx.coroutines.delay
 import me.kofesst.lovemood.R
+import me.kofesst.lovemood.app.LocalDictionary
+import me.kofesst.lovemood.app.dictionary
 import me.kofesst.lovemood.core.models.Relationship
 import me.kofesst.lovemood.core.text.AppTextHolder
 import me.kofesst.lovemood.core.ui.components.cards.BaseCard
 import me.kofesst.lovemood.core.ui.components.cards.BaseCardDefaults
 import me.kofesst.lovemood.features.date.DatePeriod
-import me.kofesst.lovemood.presentation.app.LocalDictionary
-import me.kofesst.lovemood.presentation.app.dictionary
 import me.kofesst.lovemood.ui.text.dictionary.AppDictionary
 import java.time.LocalDate
 import kotlin.time.Duration.Companion.minutes
