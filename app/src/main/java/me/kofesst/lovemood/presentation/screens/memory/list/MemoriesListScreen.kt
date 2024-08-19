@@ -1,6 +1,7 @@
 package me.kofesst.lovemood.presentation.screens.memory.list
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AddCircleOutline
@@ -18,6 +20,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,9 +35,11 @@ import me.kofesst.lovemood.R
 import me.kofesst.lovemood.app.AppDestinations
 import me.kofesst.lovemood.app.LocalAppState
 import me.kofesst.lovemood.app.dictionary
-import me.kofesst.lovemood.async.requiredAsyncValueContent
+import me.kofesst.lovemood.async.RequiredAsyncValueContent
 import me.kofesst.lovemood.core.models.PhotoMemory
 import me.kofesst.lovemood.core.ui.components.cards.BaseCard
+import me.kofesst.lovemood.core.ui.components.image.ImageViewer
+import me.kofesst.lovemood.core.ui.components.image.ImageViewerState
 import me.kofesst.lovemood.core.ui.components.scaffold.NavigateUpIconButton
 import me.kofesst.lovemood.core.ui.components.scaffold.SmallAppTopBar
 import me.kofesst.lovemood.core.ui.transitions.softHorizontalSlide
@@ -66,7 +71,6 @@ object MemoriesListScreen : AppScreen() {
                 )
             }
         }
-
         Content(modifier, viewModel)
     }
 
@@ -77,14 +81,19 @@ object MemoriesListScreen : AppScreen() {
     ) {
         val appState = LocalAppState.current
         val asyncMemories by viewModel.memoriesState
-        LazyColumn(
-            modifier = modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(20.dp),
-            contentPadding = PaddingValues(all = 20.dp)
-        ) {
-            requiredAsyncValueContent(
-                asyncValue = asyncMemories,
-                onLoaded = { memories ->
+        RequiredAsyncValueContent(
+            asyncValue = asyncMemories
+        ) { memories ->
+            val imageViewerState = remember { ImageViewerState() }
+            ImageViewer(
+                modifier = modifier.fillMaxSize(),
+                state = imageViewerState
+            ) {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(20.dp),
+                    contentPadding = PaddingValues(all = 20.dp)
+                ) {
                     item(key = "memories_calendar_card") {
                         MemoriesCalendarCard(
                             modifier = Modifier.fillMaxWidth(),
@@ -102,17 +111,15 @@ object MemoriesListScreen : AppScreen() {
                             }
                         )
                     }
-                    items(
-                        count = memories.size,
-                        key = { "memory_item_${it}" }
-                    ) {
+                    items(items = memories) { memory ->
                         MemoryListItem(
                             modifier = Modifier.fillMaxWidth(),
-                            memory = memories[it]
+                            memory = memory,
+                            onClick = { imageViewerState.showItem(memory.photoContent) }
                         )
                     }
                 }
-            )
+            }
         }
     }
 
@@ -181,13 +188,15 @@ object MemoriesListScreen : AppScreen() {
     @Composable
     private fun MemoryListItem(
         modifier: Modifier = Modifier,
-        memory: PhotoMemory
+        memory: PhotoMemory,
+        onClick: () -> Unit
     ) {
         ByteArrayImage(
             modifier = modifier
                 .fillMaxWidth()
                 .height(500.dp)
-                .clip(RoundedCornerShape(20.dp)),
+                .clip(RoundedCornerShape(20.dp))
+                .clickable(onClick = onClick),
             content = memory.photoContent
         )
     }

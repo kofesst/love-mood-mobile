@@ -167,13 +167,16 @@ fun rememberBitmap(content: ByteArray): Bitmap? {
  * [content] - набор байтов изображения.
  *
  * [placeholder] - контент, появляющийся во время загрузки изображения.
+ *
+ * [contentScale] - параметры масштабирования изображения.
  */
 @Composable
 fun ByteArrayImage(
     modifier: Modifier = Modifier,
     content: ByteArray,
     placeholder: @Composable () -> Unit = {},
-    colorFilter: ColorFilter? = null
+    colorFilter: ColorFilter? = null,
+    contentScale: ContentScale = ContentScale.Crop
 ) {
     val pictureBitmap = rememberBitmap(content)
     Crossfade(
@@ -194,7 +197,7 @@ fun ByteArrayImage(
                         modifier = modifier,
                         bitmap = bitmap.asImageBitmap(),
                         contentDescription = null,
-                        contentScale = ContentScale.Crop,
+                        contentScale = contentScale,
                         colorFilter = colorFilter
                     )
                 }

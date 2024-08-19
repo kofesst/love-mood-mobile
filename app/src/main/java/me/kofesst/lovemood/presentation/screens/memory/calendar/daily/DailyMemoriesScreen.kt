@@ -1,10 +1,13 @@
 package me.kofesst.lovemood.presentation.screens.memory.calendar.daily
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBackIos
@@ -28,7 +31,9 @@ import me.kofesst.android.lovemood.navigation.AppScreen
 import me.kofesst.lovemood.app.AppDestinations
 import me.kofesst.lovemood.app.LocalAppState
 import me.kofesst.lovemood.app.LocalDateTimePattern
-import me.kofesst.lovemood.async.requiredAsyncValueContent
+import me.kofesst.lovemood.async.RequiredAsyncValueContent
+import me.kofesst.lovemood.core.ui.components.image.ImageViewer
+import me.kofesst.lovemood.core.ui.components.image.ImageViewerState
 import me.kofesst.lovemood.core.ui.components.scaffold.SmallAppTopBar
 import me.kofesst.lovemood.core.ui.utils.ByteArrayImage
 import me.kofesst.lovemood.core.ui.utils.alsoNavBar
@@ -93,32 +98,35 @@ object DailyMemoriesScreen : AppScreen() {
         date: LocalDate
     ) {
         val asyncMemories by viewModel.memoriesState
-        LazyColumn(
-            modifier = modifier,
-            contentPadding = PaddingValues(all = 20.dp).alsoNavBar(),
-            verticalArrangement = Arrangement.spacedBy(20.dp)
-        ) {
-            requiredAsyncValueContent(
-                asyncValue = asyncMemories,
-                onLoaded = { memories ->
+        RequiredAsyncValueContent(
+            asyncValue = asyncMemories
+        ) { memories ->
+            val imageViewerState = remember { ImageViewerState() }
+            ImageViewer(
+                modifier = modifier.fillMaxSize(),
+                state = imageViewerState
+            ) {
+                LazyColumn(
+                    modifier = modifier,
+                    contentPadding = PaddingValues(all = 20.dp).alsoNavBar(),
+                    verticalArrangement = Arrangement.spacedBy(20.dp)
+                ) {
                     val dailyMemories = memories
                         .filter { it.associatedDate != null }
                         .filter { it.associatedDate!!.atStartOfDay() == date.atStartOfDay() }
                         .sortedByDescending { it.addedAt }
-                    items(
-                        count = dailyMemories.size,
-                        key = { "daily_memory_$it" }
-                    ) {
+                    items(items = dailyMemories) { memory ->
                         ByteArrayImage(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(500.dp)
-                                .clip(RoundedCornerShape(20.dp)),
-                            content = dailyMemories[it].photoContent
+                                .clip(RoundedCornerShape(20.dp))
+                                .clickable { imageViewerState.showItem(memory.photoContent) },
+                            content = memory.photoContent
                         )
                     }
                 }
-            )
+            }
         }
     }
 }
