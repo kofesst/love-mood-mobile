@@ -18,6 +18,7 @@ import androidx.glance.LocalSize
 import androidx.glance.action.actionStartActivity
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
+import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.appWidgetBackground
 import androidx.glance.appwidget.cornerRadius
@@ -54,6 +55,12 @@ object RelationshipWidget : GlanceAppWidget() {
 
     override val stateDefinition: GlanceStateDefinition<*> =
         PreferencesGlanceStateDefinition
+
+    suspend fun pinNewWidget(context: Context) {
+        GlanceAppWidgetManager(context).requestPinGlanceAppWidget(
+            receiver = RelationshipWidgetReceiver::class.java
+        )
+    }
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         provideContent {

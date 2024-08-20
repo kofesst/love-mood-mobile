@@ -44,6 +44,10 @@ android {
 }
 
 dependencies {
+    // Glance
+    implementation(libs.glance)
+    implementation(libs.glance.appwidget)
+
     // Datastore
     implementation(libs.datastore.preferences)
     implementation(libs.datastore.preferences.core)

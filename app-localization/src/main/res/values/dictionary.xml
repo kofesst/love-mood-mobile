@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Love Mood</string>
-    
+
     <string name="not_implemented_yet">Not implemented yet</string>
     <string name="app_version">Version: %app_version%</string>
 
@@ -92,7 +92,7 @@
     <string name="screen__app__app_settings_card_text">Customize application for yourself</string>
     <string name="screen__app__app_todos_card_title">App developing</string>
     <string name="screen__app__app_todos_card_text">See how the application will develop in the future</string>
-    <string name="screen__app__app_version_history_card_title">App version history (developing)</string>
-    <string name="screen__app__app_version_history_card_text">Track the application\'s development history</string>
+    <string name="screen__app__app_widget_card_title">Relationship widget</string>
+    <string name="screen__app__app_widget_card_text">Track your relationship outside of the app</string>
     <string name="screen__app__todo_status">Status: %todo_status%</string>
 </resources>
