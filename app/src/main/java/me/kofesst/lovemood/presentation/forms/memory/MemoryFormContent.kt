@@ -9,17 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import me.kofesst.lovemood.app.LocalAppState
 import me.kofesst.lovemood.app.LocalDateTimePattern
-import me.kofesst.lovemood.core.text.AppTextHolder
 import me.kofesst.lovemood.core.ui.components.input.CheckField
 import me.kofesst.lovemood.core.ui.components.input.LargeImagePickerField
 import me.kofesst.lovemood.core.ui.components.input.TextInputField
-
-data class MemoryFormDictionary(
-    val photoPickerLabel: AppTextHolder,
-    val photoPickerAction: AppTextHolder,
-    val isAssociatedWithDateLabel: AppTextHolder,
-    val associatedDateFieldLabel: AppTextHolder
-)
+import me.kofesst.lovemood.localization.dictionary.screens.forms.MemoryFormDictionary
 
 fun LazyListScope.memoryFormContent(
     dictionary: MemoryFormDictionary,

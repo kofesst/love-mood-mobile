@@ -1,11 +1,8 @@
-package me.kofesst.lovemood.ui.text.dictionary
+package me.kofesst.lovemood.localization.dictionary
 
 import android.content.Context
-import androidx.compose.runtime.Composable
-import me.kofesst.lovemood.R
-import me.kofesst.lovemood.app.LocalDictionary
-import me.kofesst.lovemood.presentation.screens.app.todos.AppTodo
-import me.kofesst.lovemood.ui.text.ResourceText
+import me.kofesst.lovemood.localization.R
+import me.kofesst.lovemood.localization.ResourceText
 
 class AppTodosDictionary(appContext: Context) {
     val appSettingsTitle = ResourceText(
@@ -34,11 +31,3 @@ class AppTodosDictionary(appContext: Context) {
         R.string.todos__status__released, appContext
     )
 }
-
-val AppTodo.Status.uiText: String
-    @Composable get() = with(LocalDictionary.current.todos) {
-        when (this@uiText) {
-            is AppTodo.Status.InDevelop -> inDevelopStatus.string()
-            is AppTodo.Status.Released -> releasedStatus.string("%app_version%", appVersion)
-        }
-    }

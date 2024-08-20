@@ -71,6 +71,7 @@ dependencies {
     // Modules
     implementation(project(":app-async"))
     implementation(project(":app-navigation"))
+    implementation(project(":app-localization"))
     implementation(project(":features-validation"))
     implementation(project(":features-date"))
     implementation(project(":datastore"))

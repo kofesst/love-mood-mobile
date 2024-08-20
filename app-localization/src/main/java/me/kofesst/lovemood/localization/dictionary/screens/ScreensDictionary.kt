@@ -1,4 +1,4 @@
-package me.kofesst.lovemood.ui.text.dictionary.screens
+package me.kofesst.lovemood.localization.dictionary.screens
 
 import android.content.Context
 

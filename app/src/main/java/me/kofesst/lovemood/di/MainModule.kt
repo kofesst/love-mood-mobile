@@ -12,7 +12,7 @@ import me.kofesst.lovemood.core.usecases.models.PhotoMemoryUseCases
 import me.kofesst.lovemood.core.usecases.models.ProfileUseCases
 import me.kofesst.lovemood.core.usecases.models.RelationshipEventUseCases
 import me.kofesst.lovemood.core.usecases.models.RelationshipUseCases
-import me.kofesst.lovemood.ui.text.dictionary.AppDictionary
+import me.kofesst.lovemood.localization.dictionary.AppDictionary
 import javax.inject.Singleton
 
 @Module

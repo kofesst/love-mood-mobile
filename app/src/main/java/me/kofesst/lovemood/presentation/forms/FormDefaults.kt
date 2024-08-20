@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.collectLatest
 import me.kofesst.lovemood.app.LocalAppState
 import me.kofesst.lovemood.app.LocalDictionary
 import me.kofesst.lovemood.core.ui.utils.alsoStatusBar
+import me.kofesst.lovemood.ui.uiText
 
 /**
  * Верхняя панель формы с кнопкой отправки.
@@ -123,7 +124,7 @@ fun <Model : Any> FormResultsListener(
                 when (formResult) {
                     is FormResult.Failed -> {
                         appState.showSnackbar(
-                            message = errorsDictionary.fromError(formResult.cause).string()
+                            message = formResult.cause.uiText(errorsDictionary).string()
                         )
                         onFailedResult(formResult.cause)
                     }

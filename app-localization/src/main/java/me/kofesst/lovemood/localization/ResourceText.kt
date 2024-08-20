@@ -1,4 +1,4 @@
-package me.kofesst.lovemood.ui.text
+package me.kofesst.lovemood.localization
 
 import android.content.Context
 import androidx.annotation.StringRes

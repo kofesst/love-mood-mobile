@@ -1,9 +1,9 @@
-package me.kofesst.lovemood.ui.text.dictionary
+package me.kofesst.lovemood.localization.dictionary
 
 import android.content.Context
-import me.kofesst.lovemood.R
 import me.kofesst.lovemood.core.text.TextCasesHolder
-import me.kofesst.lovemood.ui.text.ResourceText
+import me.kofesst.lovemood.localization.R
+import me.kofesst.lovemood.localization.ResourceText
 
 class DatesDictionary(appContext: Context) {
     private val daysFirstCase = ResourceText(

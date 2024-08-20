@@ -23,7 +23,7 @@ import me.kofesst.lovemood.core.ui.components.scaffold.NavigateUpIconButton
 import me.kofesst.lovemood.core.ui.components.scaffold.SmallAppTopBar
 import me.kofesst.lovemood.core.ui.utils.alsoNavBar
 import me.kofesst.lovemood.presentation.screens.app.AppScreenHeader
-import me.kofesst.lovemood.ui.text.dictionary.uiText
+import me.kofesst.lovemood.ui.uiString
 
 object AppTodosScreen : AppScreen() {
     @Composable
@@ -82,7 +82,7 @@ object AppTodosScreen : AppScreen() {
             )
             Text(
                 text = dictionary.screens.app.todoStatus.string(
-                    "%todo_status%" to item.status.uiText,
+                    "%todo_status%" to item.status.uiString,
                     "%app_version%" to ((item.status as? AppTodo.Status.Released)?.appVersion ?: "")
                 )
             )

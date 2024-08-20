@@ -1,9 +1,9 @@
-package me.kofesst.lovemood.ui.text.dictionary.screens
+package me.kofesst.lovemood.localization.dictionary.screens
 
 import android.content.Context
-import me.kofesst.lovemood.R
-import me.kofesst.lovemood.presentation.forms.profile.ProfileFormDictionary
-import me.kofesst.lovemood.ui.text.ResourceText
+import me.kofesst.lovemood.localization.R
+import me.kofesst.lovemood.localization.ResourceText
+import me.kofesst.lovemood.localization.dictionary.screens.forms.ProfileFormDictionary
 
 class UserProfileFormScreenDictionary(appContext: Context) {
     private val avatarPickerLabel = ResourceText(
