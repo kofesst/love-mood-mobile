@@ -1,16 +1,18 @@
 package me.kofesst.lovemood.presentation.forms.relationship
 
+import android.content.Context
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import me.kofesst.lovemood.core.models.Relationship
 import me.kofesst.lovemood.core.usecases.AppUseCases
 import me.kofesst.lovemood.database.ProfileNotFoundException
 import me.kofesst.lovemood.features.date.DateTimePattern
 import me.kofesst.lovemood.features.validation.operations.DateValidation
 import me.kofesst.lovemood.features.validation.operations.consumeOperations
+import me.kofesst.lovemood.localization.dictionary.AppDictionary
 import me.kofesst.lovemood.presentation.forms.BaseFormViewModel
 import me.kofesst.lovemood.presentation.forms.FormMethod
-import me.kofesst.lovemood.ui.text.dictionary.AppDictionary
-import me.kofesst.lovemood.ui.text.dictionary.textHolder
+import me.kofesst.lovemood.ui.uiText
 import javax.inject.Inject
 
 /**
@@ -66,7 +68,7 @@ class RelationshipFormViewModel @Inject constructor(
             )
         ).validate(form.startDate)
         return form.copy(
-            startDateError = startDateError?.textHolder(dictionary.errors)
+            startDateError = startDateError?.uiText(dictionary.errors)
         )
     }
 }

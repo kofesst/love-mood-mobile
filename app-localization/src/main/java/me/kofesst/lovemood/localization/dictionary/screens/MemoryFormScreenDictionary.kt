@@ -1,9 +1,9 @@
-package me.kofesst.lovemood.ui.text.dictionary.screens
+package me.kofesst.lovemood.localization.dictionary.screens
 
 import android.content.Context
-import me.kofesst.lovemood.R
-import me.kofesst.lovemood.presentation.forms.memory.MemoryFormDictionary
-import me.kofesst.lovemood.ui.text.ResourceText
+import me.kofesst.lovemood.localization.R
+import me.kofesst.lovemood.localization.ResourceText
+import me.kofesst.lovemood.localization.dictionary.screens.forms.MemoryFormDictionary
 
 class MemoryFormScreenDictionary(appContext: Context) {
     private val photoPickerLabel = ResourceText(

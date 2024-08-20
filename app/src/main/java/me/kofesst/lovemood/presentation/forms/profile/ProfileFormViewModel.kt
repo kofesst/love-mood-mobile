@@ -7,10 +7,10 @@ import me.kofesst.lovemood.features.date.DateTimePattern
 import me.kofesst.lovemood.features.validation.operations.DateValidation
 import me.kofesst.lovemood.features.validation.operations.StringValidation
 import me.kofesst.lovemood.features.validation.operations.consumeOperations
+import me.kofesst.lovemood.localization.dictionary.AppDictionary
 import me.kofesst.lovemood.presentation.forms.BaseFormViewModel
 import me.kofesst.lovemood.presentation.forms.FormMethod
-import me.kofesst.lovemood.ui.text.dictionary.AppDictionary
-import me.kofesst.lovemood.ui.text.dictionary.textHolder
+import me.kofesst.lovemood.ui.uiText
 import javax.inject.Inject
 
 /**
@@ -56,8 +56,8 @@ open class ProfileFormViewModel @Inject constructor(
             )
         ).validate(form.dateOfBirth)
         return form.copy(
-            usernameError = usernameError?.textHolder(dictionary.errors),
-            dateOfBirthError = dateOfBirthError?.textHolder(dictionary.errors)
+            usernameError = usernameError?.uiText(dictionary.errors),
+            dateOfBirthError = dateOfBirthError?.uiText(dictionary.errors)
         )
     }
 }

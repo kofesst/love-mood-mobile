@@ -5,12 +5,8 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import me.kofesst.lovemood.app.LocalDateTimePattern
-import me.kofesst.lovemood.core.text.AppTextHolder
 import me.kofesst.lovemood.core.ui.components.input.TextInputField
-
-data class RelationshipFormDictionary(
-    val startDateFieldLabel: AppTextHolder
-)
+import me.kofesst.lovemood.localization.dictionary.screens.forms.RelationshipFormDictionary
 
 fun LazyListScope.relationshipFormContent(
     dictionary: RelationshipFormDictionary,

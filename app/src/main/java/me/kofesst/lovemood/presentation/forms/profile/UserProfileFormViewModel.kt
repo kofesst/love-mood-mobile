@@ -1,11 +1,13 @@
 package me.kofesst.lovemood.presentation.forms.profile
 
+import android.content.Context
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import me.kofesst.lovemood.core.models.Profile
 import me.kofesst.lovemood.core.usecases.AppUseCases
 import me.kofesst.lovemood.features.date.DateTimePattern
+import me.kofesst.lovemood.localization.dictionary.AppDictionary
 import me.kofesst.lovemood.presentation.forms.FormMethod
-import me.kofesst.lovemood.ui.text.dictionary.AppDictionary
 import javax.inject.Inject
 
 @HiltViewModel

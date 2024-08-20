@@ -1,9 +1,9 @@
-package me.kofesst.lovemood.ui.text.dictionary
+package me.kofesst.lovemood.localization.dictionary
 
 import android.content.Context
-import me.kofesst.lovemood.R
-import me.kofesst.lovemood.ui.text.ResourceText
-import me.kofesst.lovemood.ui.text.dictionary.screens.ScreensDictionary
+import me.kofesst.lovemood.localization.R
+import me.kofesst.lovemood.localization.ResourceText
+import me.kofesst.lovemood.localization.dictionary.screens.ScreensDictionary
 
 class AppDictionary(appContext: Context) {
     val notImplementedYet = ResourceText(

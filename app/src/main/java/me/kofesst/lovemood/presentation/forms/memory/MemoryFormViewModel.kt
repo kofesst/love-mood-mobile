@@ -8,10 +8,10 @@ import me.kofesst.lovemood.features.validation.operations.DateValidation
 import me.kofesst.lovemood.features.validation.operations.RequiredFieldError
 import me.kofesst.lovemood.features.validation.operations.ValidateOperation
 import me.kofesst.lovemood.features.validation.operations.consumeOperations
+import me.kofesst.lovemood.localization.dictionary.AppDictionary
 import me.kofesst.lovemood.presentation.forms.BaseFormViewModel
 import me.kofesst.lovemood.presentation.forms.FormMethod
-import me.kofesst.lovemood.ui.text.dictionary.AppDictionary
-import me.kofesst.lovemood.ui.text.dictionary.textHolder
+import me.kofesst.lovemood.ui.uiText
 import javax.inject.Inject
 
 /**
@@ -59,8 +59,8 @@ class MemoryFormViewModel @Inject constructor(
             ).validate(form.associatedDate)
         } else null
         return form.copy(
-            photoContentError = photoContentError?.textHolder(dictionary.errors),
-            associatedDateError = associatedDateError?.textHolder(dictionary.errors)
+            photoContentError = photoContentError?.uiText(dictionary.errors),
+            associatedDateError = associatedDateError?.uiText(dictionary.errors)
         )
     }
 }

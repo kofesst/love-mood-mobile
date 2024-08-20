@@ -1,6 +1,6 @@
 package me.kofesst.lovemood.presentation.screens.app.todos
 
-import me.kofesst.lovemood.ui.text.dictionary.AppTodosDictionary
+import me.kofesst.lovemood.localization.dictionary.AppTodosDictionary
 
 class AppTodosRepository(dictionary: AppTodosDictionary) {
     val all

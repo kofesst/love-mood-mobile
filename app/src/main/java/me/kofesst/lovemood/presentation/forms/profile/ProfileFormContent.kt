@@ -13,22 +13,13 @@ import androidx.compose.ui.unit.dp
 import me.kofesst.lovemood.app.LocalAppState
 import me.kofesst.lovemood.app.LocalDateTimePattern
 import me.kofesst.lovemood.core.models.Gender
-import me.kofesst.lovemood.core.text.AppTextHolder
 import me.kofesst.lovemood.core.ui.components.input.RadioInputField
 import me.kofesst.lovemood.core.ui.components.input.RadioInputFieldItem
 import me.kofesst.lovemood.core.ui.components.input.SmallImagePickerField
 import me.kofesst.lovemood.core.ui.components.input.TextInputField
-import me.kofesst.lovemood.ui.text.dictionary.shortLocalizedName
+import me.kofesst.lovemood.localization.dictionary.screens.forms.ProfileFormDictionary
+import me.kofesst.lovemood.ui.shortUiText
 import me.kofesst.lovemood.ui.theme.containerColor
-
-data class ProfileFormDictionary(
-    val avatarPickerLabel: AppTextHolder,
-    val avatarPickerAction: AppTextHolder,
-    val usernameFieldLabel: AppTextHolder,
-    val usernameFieldPlaceholder: AppTextHolder,
-    val genderFieldLabel: AppTextHolder,
-    val dateOfBirthFieldLabel: AppTextHolder
-)
 
 fun LazyListScope.profileFormContent(
     dictionary: ProfileFormDictionary,
@@ -154,7 +145,7 @@ private fun GenderRadioField(
             itemContent = {
                 Text(
                     modifier = Modifier.weight(1.0f),
-                    text = gender.shortLocalizedName.string(),
+                    text = gender.shortUiText.string(),
                     style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Center
                 )
