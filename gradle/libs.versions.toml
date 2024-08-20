@@ -9,6 +9,7 @@ activityCompose = "1.9.1"
 composeBom = "2024.06.00"
 splashScreen = "1.0.1"
 constraintLayoutCompose = "1.1.0-alpha13"
+coroutineWorker = "2.8.1"
 
 # Tests
 junit = "4.13.2"
@@ -20,6 +21,7 @@ di-hilt = "2.51.1"
 di-hilt-navigation = "1.2.0"
 di-hilt-compiler-android = "2.51.1"
 di-hilt-compiler-androidx = "1.2.0"
+di-hilt-worker = "1.0.0"
 
 # Room ORM
 orm-room = "2.6.1"
@@ -36,6 +38,9 @@ shimmer-compose = "1.3.0"
 # Lottie compose
 lottie-compose = "6.4.1"
 
+# Glance widgets
+glanceWidget = "1.1.0"
+
 # Autogenerating
 appcompat = "1.7.0"
 material = "1.12.0"
@@ -47,6 +52,7 @@ androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecyc
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashScreen" }
 androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintLayoutCompose" }
+androidx-worker = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "coroutineWorker" }
 
 # Compose
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
@@ -69,6 +75,7 @@ di-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.
 di-hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "di-hilt-navigation" }
 di-hilt-compiler-android = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "di-hilt-compiler-android" }
 di-hilt-compiler-androidx = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "di-hilt-compiler-androidx" }
+di-hilt-worker = { group = "androidx.hilt", name = "hilt-work", version.ref = "di-hilt-worker" }
 
 # Datastore
 datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore-preferences" }
@@ -87,6 +94,11 @@ shimmer-compose = { group = "com.valentinilk.shimmer", name = "compose-shimmer",
 
 # Lottie compose
 lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie-compose" }
+
+# Glance widget
+glance = { group = "androidx.glance", name = "glance", version.ref = "glanceWidget" }
+glance-appwidget = { group = "androidx.glance", name = "glance-appwidget", version.ref = "glanceWidget" }
+glance-material3 = { group = "androidx.glance", name = "glance-material3", version.ref = "glanceWidget" }
 
 # Autogenerating
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }

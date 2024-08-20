@@ -1,6 +1,8 @@
 package me.kofesst.lovemood.presentation.forms.memory
 
+import android.content.Context
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import me.kofesst.lovemood.core.models.PhotoMemory
 import me.kofesst.lovemood.core.usecases.AppUseCases
 import me.kofesst.lovemood.features.date.DateTimePattern
@@ -19,11 +21,15 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class MemoryFormViewModel @Inject constructor(
+    @ApplicationContext context: Context,
     private val useCases: AppUseCases,
     private val dateTimePattern: DateTimePattern,
     private val dictionary: AppDictionary
 ) : BaseFormViewModel<PhotoMemory, MemoryFormState, MemoryFormAction>(
     initialFormState = MemoryFormState(dateTimePattern),
+    applicationContext = context,
+    useCases = useCases,
+    dictionary = dictionary,
     submitAction = MemoryFormAction.SubmitClicked
 ) {
     override suspend fun loadEditingModel(modelId: Int): PhotoMemory? {

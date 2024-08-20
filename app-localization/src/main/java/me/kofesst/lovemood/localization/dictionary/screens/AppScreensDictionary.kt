@@ -23,11 +23,11 @@ class AppScreensDictionary(appContext: Context) {
     val appTodosCardText = ResourceText(
         R.string.screen__app__app_todos_card_text, appContext
     )
-    val appVersionHistoryCardTitle = ResourceText(
-        R.string.screen__app__app_version_history_card_title, appContext
+    val appWidgetCardTitle = ResourceText(
+        R.string.screen__app__app_widget_card_title, appContext
     )
-    val appVersionHistoryCardText = ResourceText(
-        R.string.screen__app__app_version_history_card_text, appContext
+    val appWidgetCardText = ResourceText(
+        R.string.screen__app__app_widget_card_text, appContext
     )
 
     val appTodosScreenTitle = ResourceText(

@@ -1,6 +1,8 @@
 package me.kofesst.lovemood.presentation.forms.profile
 
+import android.content.Context
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import me.kofesst.lovemood.core.models.Profile
 import me.kofesst.lovemood.core.usecases.AppUseCases
 import me.kofesst.lovemood.features.date.DateTimePattern
@@ -18,11 +20,15 @@ import javax.inject.Inject
  */
 @HiltViewModel
 open class ProfileFormViewModel @Inject constructor(
+    @ApplicationContext context: Context,
     private val useCases: AppUseCases,
     private val dateTimePattern: DateTimePattern,
     private val dictionary: AppDictionary
 ) : BaseFormViewModel<Profile, ProfileFormState, ProfileFormAction>(
     initialFormState = ProfileFormState(dateTimePattern),
+    applicationContext = context,
+    useCases = useCases,
+    dictionary = dictionary,
     submitAction = ProfileFormAction.SubmitClicked
 ) {
     override suspend fun loadEditingModel(modelId: Int): Profile? {

@@ -16,6 +16,7 @@
         <activity
             android:name=".presentation.main.MainActivity"
             android:exported="true"
+            android:launchMode="singleInstance"
             android:theme="@style/LoveMoodTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,6 +24,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="remove">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
+
+        <receiver
+            android:name=".widgets.RelationshipWidgetReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/love_duration_widget_meta" />
+        </receiver>
     </application>
 
 </manifest>

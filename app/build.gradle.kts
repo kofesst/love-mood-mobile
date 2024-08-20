@@ -44,6 +44,10 @@ android {
 }
 
 dependencies {
+    // Glance
+    implementation(libs.glance)
+    implementation(libs.glance.appwidget)
+
     // Datastore
     implementation(libs.datastore.preferences)
     implementation(libs.datastore.preferences.core)
@@ -65,10 +69,12 @@ dependencies {
     // DI
     implementation(libs.di.hilt.android)
     implementation(libs.di.hilt.navigation)
+    implementation(libs.di.hilt.worker)
     kapt(libs.di.hilt.compiler.android)
     kapt(libs.di.hilt.compiler.androidx)
 
     // Modules
+    implementation(project(":app-widgets"))
     implementation(project(":app-async"))
     implementation(project(":app-navigation"))
     implementation(project(":app-localization"))
@@ -85,6 +91,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.splashscreen)
     implementation(libs.androidx.constraintlayout.compose)
+    implementation(libs.androidx.worker)
 
     // Compose
     implementation(platform(libs.androidx.compose.bom))

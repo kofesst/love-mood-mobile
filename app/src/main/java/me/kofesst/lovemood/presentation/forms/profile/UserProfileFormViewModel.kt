@@ -12,10 +12,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserProfileFormViewModel @Inject constructor(
+    @ApplicationContext context: Context,
     private val useCases: AppUseCases,
     dateTimePattern: DateTimePattern,
     dictionary: AppDictionary
-) : ProfileFormViewModel(useCases, dateTimePattern, dictionary) {
+) : ProfileFormViewModel(context, useCases, dateTimePattern, dictionary) {
     override suspend fun workWithModel(model: Profile, method: FormMethod): Profile {
         return when (method) {
             FormMethod.CreatingNewModel -> {

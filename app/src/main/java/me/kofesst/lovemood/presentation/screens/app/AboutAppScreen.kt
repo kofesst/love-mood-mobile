@@ -10,9 +10,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavBackStackEntry
+import kotlinx.coroutines.launch
 import me.kofesst.android.lovemood.navigation.AppScreen
 import me.kofesst.lovemood.R
 import me.kofesst.lovemood.app.AppDestinations
@@ -20,6 +22,7 @@ import me.kofesst.lovemood.app.LocalAppState
 import me.kofesst.lovemood.app.dictionary
 import me.kofesst.lovemood.core.ui.components.cards.BaseCard
 import me.kofesst.lovemood.core.ui.components.scaffold.SmallAppTopBar
+import me.kofesst.lovemood.widgets.RelationshipWidget
 
 object AboutAppScreen : AppScreen() {
     @Composable
@@ -53,8 +56,13 @@ object AboutAppScreen : AppScreen() {
             item(key = "todos_card") {
                 TodosCard { appState.navigate(AppDestinations.App.Todos) }
             }
-            item(key = "version_history_card") {
-                VersionHistoryCard { }
+            item(key = "widget_cart") {
+                val context = LocalContext.current
+                WidgetCard {
+                    appState.coroutineScope.launch {
+                        RelationshipWidget.pinNewWidget(context)
+                    }
+                }
             }
         }
     }
@@ -94,18 +102,18 @@ object AboutAppScreen : AppScreen() {
     }
 
     @Composable
-    private fun VersionHistoryCard(
+    private fun WidgetCard(
         modifier: Modifier = Modifier,
         onClick: () -> Unit
     ) {
         BaseCard(
             modifier = modifier,
-            backgroundImagePainter = painterResource(R.drawable.ic_puzzle),
-            label = dictionary.screens.app.appVersionHistoryCardTitle.string(),
+            backgroundImagePainter = painterResource(R.drawable.ic_widget),
+            label = dictionary.screens.app.appWidgetCardTitle.string(),
             onClick = onClick
         ) {
             Text(
-                text = dictionary.screens.app.appVersionHistoryCardText.string()
+                text = dictionary.screens.app.appWidgetCardText.string()
             )
         }
     }
