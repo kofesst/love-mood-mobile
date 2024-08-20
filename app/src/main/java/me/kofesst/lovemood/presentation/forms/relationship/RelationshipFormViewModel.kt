@@ -20,11 +20,15 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class RelationshipFormViewModel @Inject constructor(
+    @ApplicationContext context: Context,
     private val useCases: AppUseCases,
     private val dateTimePattern: DateTimePattern,
     private val dictionary: AppDictionary
 ) : BaseFormViewModel<Relationship, RelationshipFormState, RelationshipFormAction>(
     initialFormState = RelationshipFormState(dateTimePattern),
+    applicationContext = context,
+    useCases = useCases,
+    dictionary = dictionary,
     submitAction = RelationshipFormAction.SubmitClicked
 ) {
     override suspend fun loadEditingModel(modelId: Int): Relationship? {

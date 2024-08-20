@@ -1,5 +1,6 @@
 package me.kofesst.lovemood.presentation.forms
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -12,6 +13,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.kofesst.lovemood.core.usecases.AppUseCases
+import me.kofesst.lovemood.localization.dictionary.AppDictionary
+import me.kofesst.lovemood.widgets.RelationshipWidgetWorker
 
 /**
  * Базовая вью модель для формы.
@@ -27,6 +31,21 @@ abstract class BaseFormViewModel<Model : Any, Form : FormState<Model>, Action : 
      * Начальное состояние формы
      */
     initialFormState: Form,
+
+    /**
+     * Контекст приложения
+     */
+    private val applicationContext: Context,
+
+    /**
+     * Use cases приложения
+     */
+    private val useCases: AppUseCases,
+
+    /**
+     * Словарь приложения
+     */
+    private val dictionary: AppDictionary,
 
     /**
      * Событие отправки формы.
@@ -158,6 +177,7 @@ abstract class BaseFormViewModel<Model : Any, Form : FormState<Model>, Action : 
                 _resultsChannel.send(
                     FormResult.Success(model)
                 )
+                RelationshipWidgetWorker.updateWidgets(applicationContext, useCases, dictionary)
             } catch (throwable: Throwable) {
                 _resultsChannel.send(
                     FormResult.Failed(throwable)
