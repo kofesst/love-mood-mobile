@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.CircleShape
@@ -47,9 +48,9 @@ import me.kofesst.lovemood.core.models.Profile
 import me.kofesst.lovemood.core.models.Relationship
 import me.kofesst.lovemood.core.ui.components.action.PanelButton
 import me.kofesst.lovemood.core.ui.components.action.PanelButtonDefaults
+import me.kofesst.lovemood.core.ui.components.image.ByteImage
 import me.kofesst.lovemood.core.ui.components.lottie.LottieFile
 import me.kofesst.lovemood.core.ui.components.lottie.LottieSize
-import me.kofesst.lovemood.core.ui.utils.ByteArrayImage
 import me.kofesst.lovemood.core.ui.utils.mergeWithStatusBar
 import me.kofesst.lovemood.core.ui.utils.statusBarPadding
 import me.kofesst.lovemood.presentation.screens.home.sections.EventsSection
@@ -263,15 +264,15 @@ object HomeScreen : AppScreen() {
     ) {
         ScreenHeaderContainer(modifier = modifier) {
             ScreenHeaderTitleLayout(modifier = Modifier.fillMaxWidth()) {
-                ByteArrayImage(
-                    content = profile.avatarContent,
+                ByteImage(
+                    modifier = Modifier.size(72.dp),
+                    byteContent = profile.avatarContent,
                     placeholder = {
                         AvatarPlaceholder(
                             gender = profile.gender,
                             size = 72.dp
                         )
-                    },
-                    size = 72.dp
+                    }
                 )
                 Column(
                     modifier = Modifier.weight(1.0f),

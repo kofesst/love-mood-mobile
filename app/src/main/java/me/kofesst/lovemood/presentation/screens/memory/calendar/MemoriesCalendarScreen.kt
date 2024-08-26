@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,9 +28,9 @@ import me.kofesst.lovemood.core.ui.components.calendar.CalendarCellDefaults
 import me.kofesst.lovemood.core.ui.components.calendar.CalendarDayCell
 import me.kofesst.lovemood.core.ui.components.calendar.CalendarDayCellContainer
 import me.kofesst.lovemood.core.ui.components.calendar.LazyCalendarColumn
+import me.kofesst.lovemood.core.ui.components.image.ByteImage
 import me.kofesst.lovemood.core.ui.components.scaffold.NavigateUpIconButton
 import me.kofesst.lovemood.core.ui.components.scaffold.SmallAppTopBar
-import me.kofesst.lovemood.core.ui.utils.ByteArrayImage
 import me.kofesst.lovemood.core.ui.utils.alsoNavBar
 import me.kofesst.lovemood.core.ui.utils.alsoStatusBar
 import me.kofesst.lovemood.presentation.screens.memory.list.MemoriesViewModel
@@ -131,9 +132,9 @@ object MemoriesCalendarScreen : AppScreen() {
             defaults = ScreenCalendarDayCellsDefaults,
             onClick = onClick
         ) {
-            ByteArrayImage(
-                content = memory.photoContent,
-                size = ScreenCalendarDayCellsDefaults.containerSize,
+            ByteImage(
+                modifier = Modifier.size(ScreenCalendarDayCellsDefaults.containerSize),
+                byteContent = memory.photoContent,
                 colorFilter = ColorFilter.tint(
                     color = Color.Black.copy(alpha = 0.5f),
                     blendMode = BlendMode.Multiply

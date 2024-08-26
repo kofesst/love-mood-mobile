@@ -27,7 +27,6 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import me.kofesst.lovemood.core.ui.utils.ByteArrayImage
 
 class ImageViewerState {
     private val _imageState = mutableStateOf(byteArrayOf())
@@ -111,7 +110,7 @@ private fun ImageViewerContent(
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
     ) {
-        ByteArrayImage(
+        ByteImage(
             modifier = Modifier
                 .graphicsLayer {
                     scaleX = scale
@@ -121,7 +120,7 @@ private fun ImageViewerContent(
                 }
                 .fillMaxSize()
                 .padding(20.dp),
-            content = imageContent,
+            byteContent = imageContent,
             contentScale = ContentScale.Fit
         )
     }

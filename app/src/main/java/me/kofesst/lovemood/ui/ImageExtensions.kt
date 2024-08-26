@@ -18,7 +18,7 @@ import me.kofesst.lovemood.R
 import me.kofesst.lovemood.core.models.Gender
 import me.kofesst.lovemood.core.models.Profile
 import me.kofesst.lovemood.core.models.Relationship
-import me.kofesst.lovemood.core.ui.utils.ByteArrayImage
+import me.kofesst.lovemood.core.ui.components.image.ByteImage
 import me.kofesst.lovemood.ui.theme.containerColor
 
 @Composable
@@ -33,31 +33,17 @@ fun RelationshipAvatars(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(space = (-imageSize) / 2)
     ) {
-        ByteArrayImage(
+        ProfileAvatarImage(
             modifier = imageModifier,
-            content = relationship.userProfile.avatarContent,
-            placeholder = {
-                AvatarPlaceholder(
-                    gender = relationship.userProfile.gender,
-                    size = imageSize,
-                    shape = imageShape
-                )
-            },
-            size = imageSize,
-            shape = imageShape
+            profile = relationship.userProfile,
+            imageSize = imageSize,
+            imageShape = imageShape
         )
-        ByteArrayImage(
+        ProfileAvatarImage(
             modifier = imageModifier,
-            content = relationship.partnerProfile.avatarContent,
-            placeholder = {
-                AvatarPlaceholder(
-                    gender = relationship.partnerProfile.gender,
-                    size = imageSize,
-                    shape = imageShape
-                )
-            },
-            size = imageSize,
-            shape = imageShape
+            profile = relationship.partnerProfile,
+            imageSize = imageSize,
+            imageShape = imageShape
         )
     }
 }
@@ -67,20 +53,20 @@ fun ProfileAvatarImage(
     modifier: Modifier = Modifier,
     profile: Profile,
     imageSize: Dp = 72.dp,
-    shape: Shape = CircleShape
+    imageShape: Shape = CircleShape
 ) {
-    ByteArrayImage(
-        modifier = modifier,
-        content = profile.avatarContent,
+    ByteImage(
+        modifier = modifier
+            .size(imageSize)
+            .clip(imageShape),
+        byteContent = profile.avatarContent,
         placeholder = {
             AvatarPlaceholder(
                 gender = profile.gender,
                 size = imageSize,
-                shape = shape
+                shape = imageShape
             )
-        },
-        size = imageSize,
-        shape = shape
+        }
     )
 }
 

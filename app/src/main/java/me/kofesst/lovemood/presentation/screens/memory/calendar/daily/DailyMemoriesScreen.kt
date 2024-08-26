@@ -32,10 +32,10 @@ import me.kofesst.lovemood.app.AppDestinations
 import me.kofesst.lovemood.app.LocalAppState
 import me.kofesst.lovemood.app.LocalDateTimePattern
 import me.kofesst.lovemood.async.RequiredAsyncValueContent
+import me.kofesst.lovemood.core.ui.components.image.ByteImage
 import me.kofesst.lovemood.core.ui.components.image.ImageViewer
 import me.kofesst.lovemood.core.ui.components.image.ImageViewerState
 import me.kofesst.lovemood.core.ui.components.scaffold.SmallAppTopBar
-import me.kofesst.lovemood.core.ui.utils.ByteArrayImage
 import me.kofesst.lovemood.core.ui.utils.alsoNavBar
 import me.kofesst.lovemood.presentation.screens.memory.list.MemoriesViewModel
 import java.time.LocalDate
@@ -116,13 +116,13 @@ object DailyMemoriesScreen : AppScreen() {
                         .filter { it.associatedDate!!.atStartOfDay() == date.atStartOfDay() }
                         .sortedByDescending { it.addedAt }
                     items(items = dailyMemories) { memory ->
-                        ByteArrayImage(
+                        ByteImage(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(500.dp)
                                 .clip(RoundedCornerShape(20.dp))
                                 .clickable { imageViewerState.showItem(memory.photoContent) },
-                            content = memory.photoContent
+                            byteContent = memory.photoContent
                         )
                     }
                 }
