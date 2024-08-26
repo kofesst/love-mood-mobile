@@ -110,7 +110,7 @@ private fun UsernameInputField(
         label = dictionary.usernameFieldLabel.string(),
         placeholder = dictionary.usernameFieldPlaceholder.string(),
         maxSymbols = 36,
-        error = error,
+        errorMessage = error,
         singleLine = true,
         maxLines = 1
     )
@@ -169,7 +169,7 @@ fun DateOfBirthInputField(
         onValueChange = onValueChange,
         label = dictionary.dateOfBirthFieldLabel.string(),
         placeholder = dateTimePattern.displayDatePattern,
-        error = error,
+        errorMessage = error,
         singleLine = true,
         maxLines = 1
     )

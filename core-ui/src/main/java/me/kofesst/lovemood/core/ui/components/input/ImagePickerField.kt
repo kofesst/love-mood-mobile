@@ -29,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -55,7 +56,9 @@ private const val LARGE_IMAGE_COMPRESS_HEIGHT = 1024
 @Composable
 fun LargeImagePickerField(
     modifier: Modifier = Modifier,
-    defaults: InputFieldContainerDefaults = InputFieldContainerDefaults.defaults(),
+    colors: InputFieldContainerColors = InputFieldContainerDefaults.colors(),
+    contentPadding: PaddingValues = InputFieldContainerDefaults.contentPadding,
+    containerShape: Shape = InputFieldContainerDefaults.containerShape,
     loadedContent: ByteArray,
     onContentLoad: (ByteArray) -> Unit,
     coroutineScope: CoroutineScope,
@@ -65,9 +68,9 @@ fun LargeImagePickerField(
 ) {
     ImagePickerFieldContainer(
         modifier = modifier,
-        defaults = defaults.copy(
-            contentPadding = PaddingValues(0.dp)
-        ),
+        colors = colors,
+        contentPadding = contentPadding,
+        containerShape = containerShape,
         loadedContent = loadedContent,
         onContentLoad = onContentLoad,
         coroutineScope = coroutineScope,
@@ -90,7 +93,9 @@ fun LargeImagePickerField(
 @Composable
 fun SmallImagePickerField(
     modifier: Modifier = Modifier,
-    defaults: InputFieldContainerDefaults = InputFieldContainerDefaults.defaults(),
+    colors: InputFieldContainerColors = InputFieldContainerDefaults.colors(),
+    contentPadding: PaddingValues = InputFieldContainerDefaults.contentPadding,
+    containerShape: Shape = InputFieldContainerDefaults.containerShape,
     loadedContent: ByteArray,
     onContentLoad: (ByteArray) -> Unit,
     coroutineScope: CoroutineScope,
@@ -99,7 +104,9 @@ fun SmallImagePickerField(
 ) {
     ImagePickerFieldContainer(
         modifier = modifier,
-        defaults = defaults,
+        colors = colors,
+        contentPadding = contentPadding,
+        containerShape = containerShape,
         loadedContent = loadedContent,
         onContentLoad = onContentLoad,
         coroutineScope = coroutineScope,
@@ -121,7 +128,9 @@ fun SmallImagePickerField(
 @Composable
 private fun ImagePickerFieldContainer(
     modifier: Modifier = Modifier,
-    defaults: InputFieldContainerDefaults = InputFieldContainerDefaults.defaults(),
+    colors: InputFieldContainerColors,
+    contentPadding: PaddingValues,
+    containerShape: Shape,
     loadedContent: ByteArray,
     onContentLoad: (ByteArray) -> Unit,
     coroutineScope: CoroutineScope,
@@ -131,11 +140,11 @@ private fun ImagePickerFieldContainer(
     pictureCompressHeight: Int,
     pickedPictureContent: @Composable (imagePicker: ManagedActivityResultLauncher<String, Uri?>) -> Unit
 ) {
-    BaseInputFieldContainer(
+    InputFieldContainer(
         modifier = modifier,
-        defaults = defaults.copy(
-            contentPadding = PaddingValues(0.dp)
-        )
+        colors = colors,
+        contentPadding = contentPadding,
+        containerShape = containerShape
     ) {
         val context = LocalContext.current
         val imagePicker = getImagePickerLauncher { uri ->
