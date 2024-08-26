@@ -340,7 +340,7 @@ fun CalendarDayCellContainer(
     content: @Composable BoxScope.() -> Unit
 ) {
     Surface(
-        modifier = Modifier.size(defaults.containerSize),
+        modifier = modifier.size(defaults.containerSize),
         color = defaults.containerColor,
         contentColor = defaults.contentColor,
         shape = defaults.containerShape,
