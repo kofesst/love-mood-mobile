@@ -2,7 +2,11 @@ package me.kofesst.lovemood.core.ui.components.calendar
 
 import java.time.YearMonth
 
-val a = IntRange
+internal val DefaultCalendarRange: CalendarRange
+    get() = CalendarRange(
+        start = YearMonth.of(1991, 1),
+        endInclusive = YearMonth.now()
+    )
 
 class CalendarIterator internal constructor(
     start: YearMonth,

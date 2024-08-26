@@ -12,12 +12,6 @@ class LazyCalendarColumnState(
     val range: CalendarRange
 )
 
-internal val DefaultCalendarRange: CalendarRange
-    get() = CalendarRange(
-        start = YearMonth.of(1991, 1),
-        endInclusive = YearMonth.now()
-    )
-
 @Composable
 fun rememberLazyCalendarColumnState(
     range: CalendarRange = DefaultCalendarRange,
