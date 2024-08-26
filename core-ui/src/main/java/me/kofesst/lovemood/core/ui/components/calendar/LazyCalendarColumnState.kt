@@ -7,7 +7,7 @@ import androidx.compose.runtime.Stable
 import java.time.YearMonth
 
 @Stable
-class LazyCalendarGridState(
+class LazyCalendarColumnState(
     val lazyState: LazyListState,
     val range: CalendarRange
 )
@@ -19,10 +19,10 @@ internal val DefaultCalendarRange: CalendarRange
     )
 
 @Composable
-fun rememberLazyCalendarGridState(
+fun rememberLazyCalendarColumnState(
     range: CalendarRange = DefaultCalendarRange,
     initialFirstVisibleYearMonth: YearMonth = YearMonth.now()
-) = LazyCalendarGridState(
+) = LazyCalendarColumnState(
     lazyState = rememberLazyListState(
         initialFirstVisibleItemIndex = range.getItemIndex(initialFirstVisibleYearMonth)
     ),

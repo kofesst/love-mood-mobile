@@ -72,7 +72,7 @@ import java.time.YearMonth
 @Composable
 fun LazyCalendarColumn(
     modifier: Modifier = Modifier,
-    state: LazyCalendarGridState = rememberLazyCalendarGridState(),
+    state: LazyCalendarColumnState = rememberLazyCalendarColumnState(),
     contentPadding: PaddingValues = PaddingValues(all = 0.dp),
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
