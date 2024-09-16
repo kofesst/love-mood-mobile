@@ -9,6 +9,7 @@ import javax.inject.Singleton
 @Singleton
 class MemoryInteractor @Inject constructor(
     val getAll: GetAllMemories,
+    val get: GetMemory,
     val create: CreateMemory,
     val update: UpdateMemory,
     val delete: DeleteMemory
