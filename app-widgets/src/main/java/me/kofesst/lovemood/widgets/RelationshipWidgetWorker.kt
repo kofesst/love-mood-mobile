@@ -9,7 +9,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import me.kofesst.lovemood.core.usecases.AppUseCases
+import me.kofesst.lovemood.core.interactor.relationship.RelationshipInteractor
 import me.kofesst.lovemood.features.date.DatePeriod
 import me.kofesst.lovemood.localization.dictionary.AppDictionary
 import java.time.LocalDate
@@ -18,7 +18,7 @@ import java.time.LocalDate
 class RelationshipWidgetWorker @AssistedInject constructor(
     @Assisted private val context: Context,
     @Assisted parameters: WorkerParameters,
-    private val useCases: AppUseCases,
+    private val relationshipInteractor: RelationshipInteractor,
     private val dictionary: AppDictionary
 ) : CoroutineWorker(context, parameters) {
     companion object {
@@ -27,13 +27,16 @@ class RelationshipWidgetWorker @AssistedInject constructor(
         @JvmStatic
         suspend fun updateWidgets(
             context: Context,
-            useCases: AppUseCases,
+            relationshipInteractor: RelationshipInteractor,
             dictionary: AppDictionary
         ): Result {
             val glanceIds = GlanceAppWidgetManager(context).getGlanceIds(
                 provider = RelationshipWidget::class.java
             )
-            val widgetData = getWidgetData(useCases, dictionary) ?: return Result.failure()
+            val widgetData = getWidgetData(
+                relationshipInteractor = relationshipInteractor,
+                dictionary = dictionary
+            ) ?: return Result.failure()
             glanceIds.forEach { glanceId ->
                 updateWidget(context, glanceId, widgetData)
             }
@@ -59,14 +62,12 @@ class RelationshipWidgetWorker @AssistedInject constructor(
             RelationshipWidget.update(context, glanceWidgetId)
         }
 
+        @JvmStatic
         suspend fun getWidgetData(
-            useCases: AppUseCases,
+            relationshipInteractor: RelationshipInteractor,
             dictionary: AppDictionary
         ): RelationshipWidgetData? {
-            val userProfileId = useCases.dataStore.getSettings().userProfileId
-                ?: return null
-            val relationship = useCases.relationship.readByProfileId(userProfileId)
-                ?: return null
+            val relationship = relationshipInteractor.get().getOrNull() ?: return null
             val loveDurationPeriod = DatePeriod(
                 startDate = relationship.startDate,
                 endDate = LocalDate.now()
@@ -86,5 +87,9 @@ class RelationshipWidgetWorker @AssistedInject constructor(
         }
     }
 
-    override suspend fun doWork(): Result = updateWidgets(context, useCases, dictionary)
+    override suspend fun doWork(): Result = updateWidgets(
+        context = context,
+        relationshipInteractor = relationshipInteractor,
+        dictionary = dictionary
+    )
 }

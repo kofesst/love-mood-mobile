@@ -9,7 +9,7 @@ import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import me.kofesst.lovemood.core.usecases.AppUseCases
+import me.kofesst.lovemood.core.interactor.relationship.RelationshipInteractor
 import me.kofesst.lovemood.localization.dictionary.AppDictionary
 import javax.inject.Inject
 import kotlin.coroutines.EmptyCoroutineContext
@@ -19,7 +19,7 @@ class RelationshipWidgetReceiver : GlanceAppWidgetReceiver() {
     override val glanceAppWidget: GlanceAppWidget = RelationshipWidget
 
     @Inject
-    lateinit var useCases: AppUseCases
+    lateinit var relationshipInteractor: RelationshipInteractor
 
     @Inject
     lateinit var dictionary: AppDictionary
@@ -38,6 +38,10 @@ class RelationshipWidgetReceiver : GlanceAppWidgetReceiver() {
 
     private suspend fun updateWidget(context: Context) {
         Log.d("LoveMoodWidget", "Updating all widgets")
-        RelationshipWidgetWorker.updateWidgets(context, useCases, dictionary)
+        RelationshipWidgetWorker.updateWidgets(
+            context = context,
+            relationshipInteractor = relationshipInteractor,
+            dictionary = dictionary
+        )
     }
 }
