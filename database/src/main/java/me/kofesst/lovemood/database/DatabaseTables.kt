@@ -20,16 +20,6 @@ internal object DatabaseTables {
         const val START_DATE_COLUMN = "start_date"
     }
 
-    object RelationshipEvents {
-        const val TABLE_NAME = "relationship_events"
-
-        const val ID_COLUMN = "id_event"
-        const val NAME_COLUMN = "raw_name"
-        const val DAY_OF_MONTH_COLUMN = "day_of_month"
-        const val MONTH_COLUMN = "month_value"
-        const val RELATIONSHIP_ID_COLUMN = "relationship_id"
-    }
-
     object PhotoMemories {
         const val TABLE_NAME = "photo_memories"
 

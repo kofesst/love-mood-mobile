@@ -13,6 +13,9 @@ import me.kofesst.lovemood.database.impl.repository.ProfileRepositoryImpl
 import me.kofesst.lovemood.database.impl.repository.RelationshipRepositoryImpl
 import javax.inject.Singleton
 
+/**
+ * DI модуль реализации репозиториев.
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 internal object RepositoriesModule {

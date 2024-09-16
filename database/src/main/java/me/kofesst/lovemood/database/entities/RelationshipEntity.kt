@@ -6,6 +6,9 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import me.kofesst.lovemood.database.DatabaseTables
 
+/**
+ * Сущность отношений.
+ */
 @Entity(
     tableName = DatabaseTables.Relationships.TABLE_NAME,
     foreignKeys = [

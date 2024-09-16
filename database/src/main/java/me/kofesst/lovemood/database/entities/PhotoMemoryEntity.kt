@@ -5,6 +5,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import me.kofesst.lovemood.database.DatabaseTables
 
+/**
+ * Сущность воспоминания.
+ */
 @Suppress("ArrayInDataClass")
 @Entity(tableName = DatabaseTables.PhotoMemories.TABLE_NAME)
 data class PhotoMemoryEntity(

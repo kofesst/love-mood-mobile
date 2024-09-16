@@ -6,8 +6,11 @@ import me.kofesst.lovemood.features.date.epochMillis
 import me.kofesst.lovemood.features.date.localDate
 import me.kofesst.lovemood.features.date.localDateTime
 
-object PhotoMemoryWrapper : EntityWrapper<PhotoMemoryEntity, PhotoMemory> {
-    override suspend fun PhotoMemory.asEntity(): PhotoMemoryEntity {
+/**
+ * Преобразователь моделей и сущностей воспоминаний.
+ */
+object PhotoMemoryWrapper {
+    fun PhotoMemory.asEntity(): PhotoMemoryEntity {
         return PhotoMemoryEntity(
             id = id,
             photoContent = photoContent,
@@ -16,7 +19,7 @@ object PhotoMemoryWrapper : EntityWrapper<PhotoMemoryEntity, PhotoMemory> {
         )
     }
 
-    override suspend fun PhotoMemoryEntity.asModel(): PhotoMemory {
+    fun PhotoMemoryEntity.asModel(): PhotoMemory {
         return PhotoMemory(
             id = id,
             photoContent = photoContent,

@@ -11,6 +11,9 @@ import me.kofesst.lovemood.database.AppDatabase
 import me.kofesst.lovemood.database.DatabaseConstants
 import javax.inject.Singleton
 
+/**
+ * DI модуль базы данных.
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 internal object DatabaseModule {

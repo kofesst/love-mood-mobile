@@ -6,8 +6,11 @@ import me.kofesst.lovemood.database.entities.ProfileEntity
 import me.kofesst.lovemood.features.date.epochMillis
 import me.kofesst.lovemood.features.date.localDate
 
-object ProfileWrapper : EntityWrapper<ProfileEntity, Profile> {
-    override suspend fun Profile.asEntity(): ProfileEntity {
+/**
+ * Преобразователь моделей и сущностей профилей.
+ */
+object ProfileWrapper {
+    fun Profile.asEntity(): ProfileEntity {
         return ProfileEntity(
             id = id,
             username = username,
@@ -17,7 +20,7 @@ object ProfileWrapper : EntityWrapper<ProfileEntity, Profile> {
         )
     }
 
-    override suspend fun ProfileEntity.asModel(): Profile {
+    fun ProfileEntity.asModel(): Profile {
         return Profile(
             id = id,
             username = username,
