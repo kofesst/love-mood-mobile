@@ -5,6 +5,7 @@ package me.kofesst.lovemood.core.usecases.crud
  *
  * Возвращает список всех полученных моделей.
  */
+@Deprecated("Deprecated")
 fun interface ReadAllUseCase<Model : Any> {
     suspend operator fun invoke(): List<Model>
 }

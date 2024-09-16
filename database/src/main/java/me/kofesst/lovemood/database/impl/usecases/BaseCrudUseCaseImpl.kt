@@ -7,6 +7,7 @@ import me.kofesst.lovemood.core.usecases.crud.UpdateUseCase
 import me.kofesst.lovemood.database.dao.BaseDao
 import me.kofesst.lovemood.database.wrappers.EntityWrapper
 
+@Deprecated(message = "Deprecated")
 abstract class BaseCrudUseCaseImpl<Entity : Any, EntityDao : BaseDao<Entity>, Model : Any>(
     val wrapper: EntityWrapper<Entity, Model>,
     private val dao: EntityDao

@@ -7,6 +7,7 @@ import me.kofesst.lovemood.core.usecases.models.relationship.ReadRelationshipByP
 /**
  * CRUD use cases модели отношений.
  */
+@Deprecated("Deprecated")
 interface RelationshipUseCases : CrudUseCases<Relationship> {
     val readByProfileId: ReadRelationshipByProfileIdUseCase
 }

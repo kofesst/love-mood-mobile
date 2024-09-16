@@ -10,6 +10,7 @@ import me.kofesst.lovemood.database.dao.RelationshipsDao
 import me.kofesst.lovemood.database.entities.RelationshipEntity
 import me.kofesst.lovemood.database.wrappers.RelationshipWrapper
 
+@Deprecated(message = "Deprecated")
 class RelationshipUseCasesImpl(
     profilesDao: ProfilesDao,
     relationshipsDao: RelationshipsDao

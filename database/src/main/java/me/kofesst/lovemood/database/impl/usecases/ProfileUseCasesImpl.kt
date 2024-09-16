@@ -8,6 +8,7 @@ import me.kofesst.lovemood.database.dao.ProfilesDao
 import me.kofesst.lovemood.database.entities.ProfileEntity
 import me.kofesst.lovemood.database.wrappers.ProfileWrapper
 
+@Deprecated(message = "Deprecated")
 class ProfileUseCasesImpl(
     profilesDao: ProfilesDao
 ) : BaseCrudUseCaseImpl<ProfileEntity, ProfilesDao, Profile>(

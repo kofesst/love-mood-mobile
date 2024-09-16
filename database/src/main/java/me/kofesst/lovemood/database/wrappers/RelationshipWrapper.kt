@@ -7,6 +7,7 @@ import me.kofesst.lovemood.database.entities.RelationshipEntity
 import me.kofesst.lovemood.features.date.epochMillis
 import me.kofesst.lovemood.features.date.localDate
 
+@Deprecated(message = "Deprecated")
 class RelationshipWrapper(
     private val profilesDao: ProfilesDao
 ) : EntityWrapper<RelationshipEntity, Relationship> {

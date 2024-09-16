@@ -8,6 +8,7 @@ import me.kofesst.lovemood.core.models.UserSettings
  * Если настройки ещё не были сохранены, сохраняет
  * и возвращает стандартные настройки.
  */
+@Deprecated("Deprecated")
 interface GetSettingsUseCase {
     suspend operator fun invoke(): UserSettings
 }

@@ -9,6 +9,7 @@ import me.kofesst.lovemood.core.usecases.models.RelationshipUseCases
 /**
  * Use cases всего приложения.
  */
+@Deprecated("Deprecated")
 data class AppUseCases(
     val profile: ProfileUseCases,
     val relationship: RelationshipUseCases,

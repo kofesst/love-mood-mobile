@@ -1,6 +1,6 @@
 package me.kofesst.lovemood.database
 
-object DatabaseTables {
+internal object DatabaseTables {
     object Profiles {
         const val TABLE_NAME = "profiles"
 

@@ -8,6 +8,7 @@ import me.kofesst.lovemood.database.dao.PhotoMemoriesDao
 import me.kofesst.lovemood.database.entities.PhotoMemoryEntity
 import me.kofesst.lovemood.database.wrappers.PhotoMemoryWrapper
 
+@Deprecated(message = "Deprecated")
 class PhotoMemoryUseCasesImpl(
     photoMemoriesDao: PhotoMemoriesDao
 ) : BaseCrudUseCaseImpl<PhotoMemoryEntity, PhotoMemoriesDao, PhotoMemory>(
