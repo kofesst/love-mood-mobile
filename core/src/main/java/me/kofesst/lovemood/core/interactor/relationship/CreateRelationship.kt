@@ -20,10 +20,14 @@ class CreateRelationship @Inject constructor(
 ) : ParameterizedUseCase<Relationship, UseCaseParams.Single<Relationship>>() {
     override val canResultBeNullable: Boolean = true
 
-    override suspend fun execute(params: UseCaseParams.Single<Relationship>): Relationship {
+    override suspend fun execute(params: UseCaseParams.Single<Relationship>): Relationship? {
+        val userProfileId = sessionRepository.restore().profileId ?: return null
         var relationship = params.value
         profileRepository.createProfile(relationship.partnerProfile).also { newPartnerProfileId ->
             relationship = relationship.copy(
+                userProfile = relationship.userProfile.copy(
+                    id = userProfileId
+                ),
                 partnerProfile = relationship.partnerProfile.copy(
                     id = newPartnerProfileId
                 )
