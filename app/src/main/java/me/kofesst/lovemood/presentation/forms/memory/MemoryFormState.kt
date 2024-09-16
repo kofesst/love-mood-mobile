@@ -4,7 +4,6 @@ import me.kofesst.lovemood.core.models.PhotoMemory
 import me.kofesst.lovemood.core.text.AppTextHolder
 import me.kofesst.lovemood.features.date.DateTimePattern
 import me.kofesst.lovemood.presentation.forms.FormState
-import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Suppress("ArrayInDataClass")
@@ -17,11 +16,6 @@ data class MemoryFormState(
     val associatedDate: String = "",
     val associatedDateError: AppTextHolder? = null
 ) : FormState<PhotoMemory>() {
-    companion object {
-        val MIN_ASSOCIATED_DATE: LocalDate = LocalDate.MIN
-        val MAX_ASSOCIATED_DATE: LocalDate = LocalDate.now()
-    }
-
     override val isValid: Boolean
         get() = photoContentError == null && associatedDateError == null
 
@@ -38,7 +32,7 @@ data class MemoryFormState(
         )
     }
 
-    override fun fromModel(model: PhotoMemory): FormState<PhotoMemory> {
+    override fun fromModel(model: PhotoMemory): MemoryFormState {
         val isAssociatedWithDate = model.associatedDate != null
         return copy(
             id = model.id,

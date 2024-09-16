@@ -27,7 +27,7 @@ import me.kofesst.lovemood.presentation.forms.FormResultsListener
 import me.kofesst.lovemood.presentation.forms.buildFormLayout
 import me.kofesst.lovemood.presentation.forms.formSubmitHeader
 import me.kofesst.lovemood.presentation.forms.profile.ProfileFormAction
-import me.kofesst.lovemood.presentation.forms.profile.UserProfileFormViewModel
+import me.kofesst.lovemood.presentation.forms.profile.ProfileFormViewModel
 import me.kofesst.lovemood.presentation.forms.profile.profileFormContent
 
 object UserProfileFormScreen : AppScreen() {
@@ -36,22 +36,24 @@ object UserProfileFormScreen : AppScreen() {
         modifier: Modifier,
         navBackStackEntry: NavBackStackEntry
     ) {
-        val profileId = rememberArgument(
-            argument = AppDestinations.Forms.UserProfile.editingIdArgument,
+        val isEditing = rememberArgument(
+            argument = AppDestinations.Forms.UserProfile.isEditingArgument,
             navBackStackEntry = navBackStackEntry
-        ).takeIf { it > 0 }
-        val viewModel = hiltViewModel<UserProfileFormViewModel>()
-        LaunchedEffect(profileId) {
-            viewModel.prepareForm(editingModelId = profileId)
+        )
+        val viewModel = hiltViewModel<ProfileFormViewModel>()
+        LaunchedEffect(isEditing) {
+            viewModel.setIsEditing(isEditing)
         }
-        
-        Content(modifier, viewModel)
+        Content(
+            modifier = modifier,
+            viewModel = viewModel
+        )
     }
 
     @Composable
     private fun Content(
         modifier: Modifier = Modifier,
-        viewModel: UserProfileFormViewModel
+        viewModel: ProfileFormViewModel
     ) {
         val appState = LocalAppState.current
         FormResultsListener(
@@ -79,7 +81,7 @@ object UserProfileFormScreen : AppScreen() {
             item(key = "screen_header") {
                 ScreenHeader(
                     modifier = Modifier.fillMaxWidth(),
-                    formMethod = viewModel.formMethod
+                    formMethod = viewModel.formMethod.value
                 )
             }
             buildFormLayout(

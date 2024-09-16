@@ -1,18 +1,14 @@
 package me.kofesst.lovemood.presentation.forms.profile
 
-import android.content.Context
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.launch
+import me.kofesst.lovemood.core.interactor.UseCaseParams
+import me.kofesst.lovemood.core.interactor.profile.UserProfileInteractor
 import me.kofesst.lovemood.core.models.Profile
-import me.kofesst.lovemood.core.usecases.AppUseCases
 import me.kofesst.lovemood.features.date.DateTimePattern
-import me.kofesst.lovemood.features.validation.operations.DateValidation
-import me.kofesst.lovemood.features.validation.operations.StringValidation
-import me.kofesst.lovemood.features.validation.operations.consumeOperations
-import me.kofesst.lovemood.localization.dictionary.AppDictionary
 import me.kofesst.lovemood.presentation.forms.BaseFormViewModel
 import me.kofesst.lovemood.presentation.forms.FormMethod
-import me.kofesst.lovemood.ui.uiText
 import javax.inject.Inject
 
 /**
@@ -20,50 +16,50 @@ import javax.inject.Inject
  */
 @HiltViewModel
 open class ProfileFormViewModel @Inject constructor(
-    @ApplicationContext context: Context,
-    private val useCases: AppUseCases,
-    private val dateTimePattern: DateTimePattern,
-    private val dictionary: AppDictionary
+    private val profileInteractor: UserProfileInteractor,
+    dateTimePattern: DateTimePattern,
+    validator: ProfileFormValidator
 ) : BaseFormViewModel<Profile, ProfileFormState, ProfileFormAction>(
     initialFormState = ProfileFormState(dateTimePattern),
-    applicationContext = context,
-    useCases = useCases,
-    dictionary = dictionary,
-    submitAction = ProfileFormAction.SubmitClicked
+    validator = validator,
+    submitActionClass = ProfileFormAction.SubmitClicked.javaClass
 ) {
-    override suspend fun loadEditingModel(modelId: Int): Profile? {
-        return useCases.profile.readById(modelId)
-    }
-
-    override suspend fun workWithModel(model: Profile, method: FormMethod): Profile {
-        return when (method) {
-            FormMethod.CreatingNewModel -> {
-                val newProfileId = useCases.profile.create(model)
-                model.copy(id = newProfileId)
+    /**
+     * Устанавливает флаг типа формы - создание новой модели или редактирование старой.
+     *
+     * [isEditing] - флаг типа формы.
+     */
+    fun setIsEditing(isEditing: Boolean) {
+        viewModelScope.launch {
+            changeFormMethod(
+                if (isEditing) FormMethod.EditingOldModel
+                else FormMethod.CreatingNewModel
+            )
+            if (isEditing) {
+                profileInteractor.get().getOrNull()?.let { userProfile ->
+                    manuallyEditForm { currentForm ->
+                        currentForm.fromModel(userProfile)
+                    }
+                }
             }
-
-            FormMethod.EditingOldModel -> {
-                useCases.profile.update(model)
-                model
-            }
+            prepareForm()
         }
     }
 
-    override fun validateForm(form: ProfileFormState): ProfileFormState {
-        val usernameError = consumeOperations(
-            StringValidation.required,
-            StringValidation.length(ProfileFormState.USERNAME_LENGTH_RANGE)
-        ).validate(form.username)
-        val dateOfBirthError = consumeOperations(
-            DateValidation.cast(dateTimePattern),
-            DateValidation.range(
-                minDate = ProfileFormState.MIN_DATE_OF_BIRTH,
-                maxDate = ProfileFormState.MAX_DATE_OF_BRITH
-            )
-        ).validate(form.dateOfBirth)
-        return form.copy(
-            usernameError = usernameError?.uiText(dictionary.errors),
-            dateOfBirthError = dateOfBirthError?.uiText(dictionary.errors)
-        )
+    override suspend fun workWithModel(model: Profile, method: FormMethod): Profile {
+        when (method) {
+            FormMethod.CreatingNewModel -> {
+                return profileInteractor.create(
+                    params = UseCaseParams.Single.with(model)
+                ).getOrThrow()
+            }
+
+            FormMethod.EditingOldModel -> {
+                profileInteractor.update(
+                    params = UseCaseParams.Single.with(model)
+                )
+                return model
+            }
+        }
     }
 }

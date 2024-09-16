@@ -21,6 +21,10 @@ internal class MemoryRepositoryImpl @Inject constructor(
         return memoriesDao.selectAll().map { it.asModel() }
     }
 
+    override suspend fun get(id: Int): PhotoMemory? {
+        return memoriesDao.selectById(id)?.asModel()
+    }
+
     override suspend fun create(memoryData: PhotoMemory): Int {
         return memoriesDao.insert(memoryData.asEntity()).toInt()
     }

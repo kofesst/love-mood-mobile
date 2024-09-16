@@ -130,8 +130,7 @@ object HomeScreen : AppScreen() {
                                 appState.navigate(
                                     destination = AppDestinations.Forms.UserProfile,
                                     argumentValues = arrayOf(
-                                        AppDestinations.Forms.UserProfile.editingIdArgument
-                                                to relationship.userProfile.id
+                                        AppDestinations.Forms.UserProfile.isEditingArgument to true
                                     )
                                 )
                             },
@@ -139,8 +138,7 @@ object HomeScreen : AppScreen() {
                                 appState.navigate(
                                     destination = AppDestinations.Forms.Relationship,
                                     argumentValues = arrayOf(
-                                        AppDestinations.Forms.Relationship.editingIdArgument
-                                                to relationship.id
+                                        AppDestinations.Forms.Relationship.isEditingArgument to true
                                     )
                                 )
                             }
@@ -173,8 +171,7 @@ object HomeScreen : AppScreen() {
                             appState.navigate(
                                 destination = AppDestinations.Forms.UserProfile,
                                 argumentValues = arrayOf(
-                                    AppDestinations.Forms.UserProfile.editingIdArgument
-                                            to profile.id
+                                    AppDestinations.Forms.UserProfile.isEditingArgument to true
                                 )
                             )
                         }

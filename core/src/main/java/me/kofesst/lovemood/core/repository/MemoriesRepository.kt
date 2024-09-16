@@ -12,6 +12,11 @@ interface MemoriesRepository {
     suspend fun getAll(): List<PhotoMemory>
 
     /**
+     * Возвращает воспоминание по ID модели [id].
+     */
+    suspend fun get(id: Int): PhotoMemory?
+
+    /**
      * Создает воспоминание и возвращает ID созданной модели.
      *
      * [memoryData] - данные воспоминания.

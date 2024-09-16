@@ -4,7 +4,7 @@ import me.kofesst.lovemood.core.models.Gender
 import me.kofesst.lovemood.core.models.Profile
 import me.kofesst.lovemood.presentation.forms.FormAction
 
-sealed class ProfileFormAction : FormAction<Profile, ProfileFormState>() {
+sealed class ProfileFormAction : FormAction<Profile, ProfileFormState> {
     data class UsernameChanged(private val value: String) : ProfileFormAction() {
         override fun applyToForm(currentForm: ProfileFormState): ProfileFormState {
             return currentForm.copy(username = value)

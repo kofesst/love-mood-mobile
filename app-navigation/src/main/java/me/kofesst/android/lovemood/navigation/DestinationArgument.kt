@@ -82,6 +82,21 @@ abstract class DestinationArgument<ValueType : Any> {
 }
 
 /**
+ * Реализация аргумента экрана со значением типа [Boolean].
+ *
+ * [defaultValue] должен быть обязательно передан в конструкторе
+ * и не может равняться null, так как это вызовет ошибку при реализации
+ * системы навигации на основе библиотеки [androidx.navigation].
+ */
+class BoolArgument(
+    override val name: String,
+    override val defaultValue: Boolean
+) : DestinationArgument<Boolean>() {
+    override val navType: NavType<*> = NavType.BoolType
+    override val valueFromBundleProducer: (Bundle) -> Boolean? = { it.getBoolean(name) }
+}
+
+/**
  * Реализация аргумента экрана со значением типа [Int].
  *
  * [defaultValue] должен быть обязательно передан в конструкторе

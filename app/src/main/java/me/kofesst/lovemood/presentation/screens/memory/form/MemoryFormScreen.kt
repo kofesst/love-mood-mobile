@@ -42,7 +42,11 @@ object MemoryFormScreen : AppScreen() {
         ).takeIf { it > 0 }
         val viewModel = hiltViewModel<MemoryFormViewModel>()
         LaunchedEffect(editingMemoryId) {
-            viewModel.prepareForm(editingMemoryId)
+            if (editingMemoryId != null) {
+                viewModel.setEditingModel(editingMemoryId)
+            } else {
+                viewModel.prepareForm()
+            }
         }
 
         Content(modifier, viewModel)
@@ -75,7 +79,7 @@ object MemoryFormScreen : AppScreen() {
                 }
             )
             item(key = "screen_header") {
-                ScreenHeader(formMethod = viewModel.formMethod)
+                ScreenHeader(formMethod = viewModel.formMethod.value)
             }
             buildFormLayout(
                 viewModels = arrayOf(viewModel),
