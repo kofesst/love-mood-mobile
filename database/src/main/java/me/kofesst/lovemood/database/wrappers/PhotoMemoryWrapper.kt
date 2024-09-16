@@ -9,7 +9,7 @@ import me.kofesst.lovemood.features.date.localDateTime
 /**
  * Преобразователь моделей и сущностей воспоминаний.
  */
-object PhotoMemoryWrapper {
+internal object PhotoMemoryWrapper {
     fun PhotoMemory.asEntity(): PhotoMemoryEntity {
         return PhotoMemoryEntity(
             id = id,

@@ -24,7 +24,7 @@ import me.kofesst.lovemood.database.DatabaseTables
         )
     ]
 )
-data class RelationshipEntity(
+internal data class RelationshipEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(
         name = DatabaseTables.Relationships.ID_COLUMN,

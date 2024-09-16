@@ -9,7 +9,7 @@ import me.kofesst.lovemood.database.entities.ProfileEntity
  * Data access object сущности профиля.
  */
 @Dao
-interface ProfilesDao : BaseDao<ProfileEntity> {
+internal interface ProfilesDao : BaseDao<ProfileEntity> {
     /**
      * Возвращает сущность профиля по ID [id].
      */

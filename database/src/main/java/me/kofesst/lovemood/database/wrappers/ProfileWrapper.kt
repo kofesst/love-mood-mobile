@@ -9,7 +9,7 @@ import me.kofesst.lovemood.features.date.localDate
 /**
  * Преобразователь моделей и сущностей профилей.
  */
-object ProfileWrapper {
+internal object ProfileWrapper {
     fun Profile.asEntity(): ProfileEntity {
         return ProfileEntity(
             id = id,

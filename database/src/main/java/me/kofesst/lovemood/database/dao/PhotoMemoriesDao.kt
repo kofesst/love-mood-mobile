@@ -9,7 +9,7 @@ import me.kofesst.lovemood.database.entities.PhotoMemoryEntity
  * Data access object сущности воспоминания.
  */
 @Dao
-interface PhotoMemoriesDao : BaseDao<PhotoMemoryEntity> {
+internal interface PhotoMemoriesDao : BaseDao<PhotoMemoryEntity> {
     /**
      * Возвращает все сущности воспоминаний.
      */

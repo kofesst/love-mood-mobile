@@ -9,7 +9,7 @@ import androidx.room.Update
  * Базовый для всех сущностей Data access object
  */
 @Dao
-interface BaseDao<Entity : Any> {
+internal interface BaseDao<Entity : Any> {
     /**
      * Добавляет сущность [entity] в базу данных.
      *

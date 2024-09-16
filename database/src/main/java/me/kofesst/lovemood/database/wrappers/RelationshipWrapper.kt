@@ -9,7 +9,7 @@ import me.kofesst.lovemood.features.date.localDate
 /**
  * Преобразователь моделей и сущностей отношений.
  */
-object RelationshipWrapper {
+internal object RelationshipWrapper {
     fun Relationship.asEntity(): RelationshipEntity {
         return RelationshipEntity(
             id = id,

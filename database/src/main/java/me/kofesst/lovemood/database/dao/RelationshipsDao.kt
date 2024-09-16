@@ -11,7 +11,7 @@ import me.kofesst.lovemood.database.entities.RelationshipEntity
  * Data access object сущности отношений.
  */
 @Dao
-interface RelationshipsDao : BaseDao<RelationshipEntity> {
+internal interface RelationshipsDao : BaseDao<RelationshipEntity> {
     /**
      * Возвращает объединенную сущность отношений по ID [id].
      */

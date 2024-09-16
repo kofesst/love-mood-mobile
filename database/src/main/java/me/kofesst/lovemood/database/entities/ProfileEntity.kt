@@ -11,7 +11,7 @@ import me.kofesst.lovemood.database.DatabaseTables
  */
 @Suppress("ArrayInDataClass")
 @Entity(tableName = DatabaseTables.Profiles.TABLE_NAME)
-data class ProfileEntity(
+internal data class ProfileEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(
         name = DatabaseTables.Profiles.ID_COLUMN,

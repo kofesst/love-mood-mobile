@@ -13,7 +13,7 @@ import me.kofesst.lovemood.database.DatabaseTables
  *
  * [partnerProfileEntity] - сущность профиля партнёра.
  */
-data class EmbeddedRelationship(
+internal data class EmbeddedRelationship(
     @Embedded
     val relationshipEntity: RelationshipEntity,
 
