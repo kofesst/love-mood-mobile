@@ -25,9 +25,9 @@ import me.kofesst.lovemood.app.LocalAppState
 import me.kofesst.lovemood.app.LocalDateTimePattern
 import me.kofesst.lovemood.app.LocalDictionary
 import me.kofesst.lovemood.app.LocalMainActivity
-import me.kofesst.lovemood.app.LocalUserSettings
+import me.kofesst.lovemood.app.LocalUserSession
 import me.kofesst.lovemood.app.rememberAppState
-import me.kofesst.lovemood.core.models.UserSettings
+import me.kofesst.lovemood.core.models.UserSession
 import me.kofesst.lovemood.core.ui.components.scaffold.AppScaffold
 import me.kofesst.lovemood.features.date.DateTimePattern
 import me.kofesst.lovemood.localization.dictionary.AppDictionary
@@ -72,7 +72,7 @@ class MainActivity : ComponentActivity() {
             val isPreLoaded by mainViewModel.preLoadedState
             splashScreen.setKeepOnScreenCondition { !isPreLoaded }
 
-            val userSettings by mainViewModel.settingsState
+            val userSession by mainViewModel.sessionState
             val appState = rememberAppState()
             val appDictionary = AppDictionary(appContext = this)
             LoveMoodMobileTheme {
@@ -80,7 +80,7 @@ class MainActivity : ComponentActivity() {
                     CompositionLocalProvider(
                         LocalMainActivity provides this,
                         LocalAppState provides appState,
-                        LocalUserSettings provides userSettings,
+                        LocalUserSession provides userSession,
                         LocalDateTimePattern provides dateTimePattern,
                         LocalDictionary provides appDictionary
                     ) {
@@ -88,7 +88,7 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier
                                 .fillMaxSize()
                                 .imePadding(),
-                            userSettings = userSettings
+                            userSession = userSession
                         )
                     }
                 }
@@ -99,7 +99,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     private fun MainScaffold(
         modifier: Modifier = Modifier,
-        userSettings: UserSettings?
+        userSession: UserSession?
     ) {
         val appState = LocalAppState.current
         val currentDestination by appState.currentDestinationState
@@ -127,10 +127,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
         ) { childModifier ->
-            if (userSettings != null) {
+            if (userSession != null) {
                 val appDestinations = remember { AppDestinations.All }
-                val startDestination = remember(userSettings) {
-                    if (userSettings.userProfileId != null) {
+                val startDestination = remember(userSession) {
+                    if (userSession.profileId != null) {
                         AppDestinations.Home
                     } else {
                         AppDestinations.Forms.UserProfile
