@@ -13,10 +13,11 @@ import javax.inject.Singleton
 @Singleton
 class CreateMemory @Inject constructor(
     private val memoriesRepository: MemoriesRepository
-) : ParameterizedUseCase<Int, UseCaseParams.Single<PhotoMemory>>() {
+) : ParameterizedUseCase<PhotoMemory, UseCaseParams.Single<PhotoMemory>>() {
     override val canResultBeNullable: Boolean = false
 
-    override suspend fun execute(params: UseCaseParams.Single<PhotoMemory>): Int? {
-        return memoriesRepository.create(params.value)
+    override suspend fun execute(params: UseCaseParams.Single<PhotoMemory>): PhotoMemory {
+        val memoryId = memoriesRepository.create(params.value)
+        return params.value.copy(id = memoryId)
     }
 }
