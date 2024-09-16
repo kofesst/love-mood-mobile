@@ -23,8 +23,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
@@ -116,7 +116,7 @@ fun <Model : Any> FormResultsListener(
     onResult: (FormResult<Model>) -> Unit = {}
 ) {
     val appState = LocalAppState.current
-    val lifecycleOwner = LocalLifecycleOwner.current // TODO Fix deprecated
+    val lifecycleOwner = LocalLifecycleOwner.current
     val errorsDictionary = LocalDictionary.current.errors
     LaunchedEffect(Unit) {
         resultsFlow
