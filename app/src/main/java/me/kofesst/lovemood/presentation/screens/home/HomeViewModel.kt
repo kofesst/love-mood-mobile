@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import me.kofesst.lovemood.async.AsyncValue
 import me.kofesst.lovemood.async.AsyncValuesList
@@ -34,7 +33,7 @@ class HomeViewModel @Inject constructor(
     val memoriesState: State<AsyncValuesList<PhotoMemory>> = _memoriesState
 
     fun loadData() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             // TODO Add handling of type of interactor result (success or failure)
             _userProfileState.load { profileInteractor.get().getOrNull() }
             _relationshipState.load { relationshipInteractor.get().getOrNull() }
