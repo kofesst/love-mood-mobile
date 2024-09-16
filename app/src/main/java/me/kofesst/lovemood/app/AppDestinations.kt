@@ -96,7 +96,7 @@ object AppDestinations {
             )
 
             override val arguments: List<DestinationArgument<*>>
-                get() = listOf(Memory.editingIdArgument)
+                get() = listOf(editingIdArgument)
 
             override val screen: AppScreen get() = MemoryFormScreen
         }

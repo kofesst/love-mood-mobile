@@ -33,7 +33,7 @@ class MemoryFormViewModel @Inject constructor(
                 params = UseCaseParams.Single.with(memoryId)
             ).getOrNull() ?: return@launch
             manuallyEditForm { currentForm ->
-                currentForm.fromModel(editingModel) as MemoryFormState
+                currentForm.fromModel(editingModel)
             }
             changeFormMethod(FormMethod.EditingOldModel)
             prepareForm()
