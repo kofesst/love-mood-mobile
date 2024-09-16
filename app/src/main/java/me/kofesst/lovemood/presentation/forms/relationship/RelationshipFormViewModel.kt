@@ -1,18 +1,15 @@
 package me.kofesst.lovemood.presentation.forms.relationship
 
-import android.content.Context
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.launch
+import me.kofesst.lovemood.core.interactor.UseCaseParams
+import me.kofesst.lovemood.core.interactor.relationship.RelationshipInteractor
 import me.kofesst.lovemood.core.models.Relationship
-import me.kofesst.lovemood.core.usecases.AppUseCases
-import me.kofesst.lovemood.database.ProfileNotFoundException
 import me.kofesst.lovemood.features.date.DateTimePattern
-import me.kofesst.lovemood.features.validation.operations.DateValidation
-import me.kofesst.lovemood.features.validation.operations.consumeOperations
-import me.kofesst.lovemood.localization.dictionary.AppDictionary
 import me.kofesst.lovemood.presentation.forms.BaseFormViewModel
 import me.kofesst.lovemood.presentation.forms.FormMethod
-import me.kofesst.lovemood.ui.uiText
+import me.kofesst.lovemood.presentation.forms.profile.ProfileFormAction
 import javax.inject.Inject
 
 /**
@@ -20,59 +17,64 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class RelationshipFormViewModel @Inject constructor(
-    @ApplicationContext context: Context,
-    private val useCases: AppUseCases,
-    private val dateTimePattern: DateTimePattern,
-    private val dictionary: AppDictionary
+    private val relationshipInteractor: RelationshipInteractor,
+    dateTimePattern: DateTimePattern,
+    validator: RelationshipFormValidator
 ) : BaseFormViewModel<Relationship, RelationshipFormState, RelationshipFormAction>(
     initialFormState = RelationshipFormState(dateTimePattern),
-    applicationContext = context,
-    useCases = useCases,
-    dictionary = dictionary,
-    submitAction = RelationshipFormAction.SubmitClicked
+    validator = validator,
+    submitActionClass = RelationshipFormAction.SubmitClicked.javaClass
 ) {
-    override suspend fun loadEditingModel(modelId: Int): Relationship? {
-        return useCases.relationship.readById(modelId)
-    }
-
-    override suspend fun workWithModel(model: Relationship, method: FormMethod): Relationship {
-        return when (method) {
-            FormMethod.CreatingNewModel -> {
-                val userProfileId = useCases.dataStore.getSettings().userProfileId
-                    ?: throw ProfileNotFoundException()
-                val userProfile = useCases.profile.readById(userProfileId)
-                    ?: throw ProfileNotFoundException()
-                val relationship = model.copy(
-                    userProfile = userProfile
-                )
-                val newRelationshipId = useCases.relationship.create(relationship)
-                model.copy(id = newRelationshipId)
+    /**
+     * Устанавливает флаг типа формы: создание новой модели или редактирование старой.
+     *
+     * [isEditing] - флаг типа формы.
+     */
+    fun setIsEditing(isEditing: Boolean) {
+        viewModelScope.launch {
+            changeFormMethod(
+                if (isEditing) FormMethod.EditingOldModel
+                else FormMethod.CreatingNewModel
+            )
+            if (isEditing) {
+                relationshipInteractor.get().getOrNull()?.let { userRelationship ->
+                    manuallyEditForm { currentForm ->
+                        currentForm.fromModel(userRelationship)
+                    }
+                }
             }
-
-            FormMethod.EditingOldModel -> {
-                val userProfileId = useCases.dataStore.getSettings().userProfileId
-                    ?: throw ProfileNotFoundException()
-                val userProfile = useCases.profile.readById(userProfileId)
-                    ?: throw ProfileNotFoundException()
-                val relationship = model.copy(
-                    userProfile = userProfile
-                )
-                useCases.relationship.update(relationship)
-                relationship
-            }
+            prepareForm()
+            prepareForm()
         }
     }
 
-    override fun validateForm(form: RelationshipFormState): RelationshipFormState {
-        val startDateError = consumeOperations(
-            DateValidation.cast(dateTimePattern),
-            DateValidation.range(
-                minDate = RelationshipFormState.MIN_START_DATE,
-                maxDate = RelationshipFormState.MAX_START_DATE
+    /**
+     * Обрабатывает событие в форме профиля.
+     *
+     * [action] - событие в форме профиля.
+     */
+    fun handleProfileFormAction(action: ProfileFormAction) {
+        manuallyEditForm { currentForm ->
+            currentForm.copy(
+                partnerProfile = action.applyToForm(currentForm.partnerProfile)
             )
-        ).validate(form.startDate)
-        return form.copy(
-            startDateError = startDateError?.uiText(dictionary.errors)
-        )
+        }
+    }
+
+    override suspend fun workWithModel(model: Relationship, method: FormMethod): Relationship {
+        when (method) {
+            FormMethod.CreatingNewModel -> {
+                return relationshipInteractor.create(
+                    params = UseCaseParams.Single.with(model)
+                ).getOrThrow()
+            }
+
+            FormMethod.EditingOldModel -> {
+                relationshipInteractor.update(
+                    params = UseCaseParams.Single.with(model)
+                )
+                return model
+            }
+        }
     }
 }

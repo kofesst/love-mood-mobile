@@ -1,6 +1,6 @@
 package me.kofesst.lovemood.database
 
-object DatabaseConstants {
+internal object DatabaseConstants {
     const val FILENAME = "love_mood.db"
-    const val VERSION = 2
+    const val VERSION = 3
 }

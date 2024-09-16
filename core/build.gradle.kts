@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.devtools.ksp)
+    alias(libs.plugins.di.hilt.android)
 }
 
 android {
@@ -32,10 +34,16 @@ android {
             jvmTarget = "17"
         }
     }
+}
 
-    dependencies {
-        testImplementation(libs.junit)
-        androidTestImplementation(libs.androidx.junit)
-        androidTestImplementation(libs.androidx.espresso.core)
-    }
+dependencies {
+    // DI
+    implementation(libs.di.hilt.android)
+    ksp(libs.di.hilt.compiler.android)
+    ksp(libs.di.hilt.compiler.androidx)
+
+    // Tests
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }

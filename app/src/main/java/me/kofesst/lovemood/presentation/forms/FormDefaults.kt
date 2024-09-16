@@ -1,5 +1,6 @@
 package me.kofesst.lovemood.presentation.forms
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -22,8 +23,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
@@ -123,6 +124,7 @@ fun <Model : Any> FormResultsListener(
             .collectLatest { formResult ->
                 when (formResult) {
                     is FormResult.Failed -> {
+                        Log.d("LoveMood", "Form failed: ${formResult.cause}")
                         appState.showSnackbar(
                             message = formResult.cause.uiText(errorsDictionary).string()
                         )

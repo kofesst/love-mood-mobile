@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.devtools.ksp)
     alias(libs.plugins.di.hilt.android)
 }
 
@@ -11,7 +11,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 26
+        minSdk = 28
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -44,8 +44,8 @@ dependencies {
     // DI
     implementation(libs.di.hilt.android)
     implementation(libs.di.hilt.worker)
-    kapt(libs.di.hilt.compiler.android)
-    kapt(libs.di.hilt.compiler.androidx)
+    ksp(libs.di.hilt.compiler.android)
+    ksp(libs.di.hilt.compiler.androidx)
 
     // Modules
     implementation(project(":app-localization"))

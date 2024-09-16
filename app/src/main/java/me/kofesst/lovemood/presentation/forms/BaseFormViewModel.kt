@@ -1,6 +1,5 @@
 package me.kofesst.lovemood.presentation.forms
 
-import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -12,10 +11,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.launch
-import me.kofesst.lovemood.core.usecases.AppUseCases
-import me.kofesst.lovemood.localization.dictionary.AppDictionary
-import me.kofesst.lovemood.widgets.RelationshipWidgetWorker
 
 /**
  * Базовая вью модель для формы.
@@ -33,24 +30,14 @@ abstract class BaseFormViewModel<Model : Any, Form : FormState<Model>, Action : 
     initialFormState: Form,
 
     /**
-     * Контекст приложения
+     * Валидатор формы.
      */
-    private val applicationContext: Context,
-
-    /**
-     * Use cases приложения
-     */
-    private val useCases: AppUseCases,
-
-    /**
-     * Словарь приложения
-     */
-    private val dictionary: AppDictionary,
+    private val validator: FormValidator<Model, Form>,
 
     /**
      * Событие отправки формы.
      */
-    private val submitAction: Action
+    private val submitActionClass: Class<Action>
 ) : ViewModel() {
     private val _preparedState = mutableStateOf(false)
 
@@ -59,11 +46,12 @@ abstract class BaseFormViewModel<Model : Any, Form : FormState<Model>, Action : 
      */
     val preparedState: State<Boolean> = _preparedState
 
+    private val _formMethod = mutableStateOf<FormMethod>(FormMethod.CreatingNewModel)
+
     /**
      * Метод формы.
      */
-    var formMethod = FormMethod.CreatingNewModel
-        private set
+    val formMethod: State<FormMethod> = _formMethod
 
     private val _formState = MutableStateFlow(initialFormState)
 
@@ -85,8 +73,8 @@ abstract class BaseFormViewModel<Model : Any, Form : FormState<Model>, Action : 
      * [action] - событие в форме.
      */
     fun handleFormAction(action: Action) {
-        when (action) {
-            submitAction -> onSubmit()
+        when {
+            action::class.java == submitActionClass -> onSubmit()
             else -> {
                 _formState.update { currentForm ->
                     action.applyToForm(currentForm)
@@ -96,57 +84,27 @@ abstract class BaseFormViewModel<Model : Any, Form : FormState<Model>, Action : 
     }
 
     /**
-     * Загружает изменяемую модель по её ID.
-     *
-     * [modelId] - ID модели.
-     *
-     * Возвращает модель, найденную по ID (может быть равно null).
+     * Устанавливает готовность формы к использованию.
      */
-    protected abstract suspend fun loadEditingModel(modelId: Int): Model?
-
-    /**
-     * Подготавливает форму, устанавливая метод
-     * формы на [FormMethod.EditingOldModel], если ID модели
-     * [editingModelId] не равен null, а также модель с данным ID
-     * существует. Иначе метод формы будет равен [FormMethod.CreatingNewModel].
-     *
-     * [callback] - callback, вызываемый при загрузке редактируемой модели.
-     */
-    fun prepareForm(
-        editingModelId: Int?,
-        callback: (Model?) -> Unit = {}
-    ) {
-        viewModelScope.launch {
-            val editingModel = editingModelId?.let { loadEditingModel(it) }
-            prepareForm(editingModel)
-            callback(editingModel)
-        }
-    }
-
-    /**
-     * Подготавливает форму, устанавливая метод
-     * формы на [FormMethod.EditingOldModel], если модель [editingModel]
-     * существует. Иначе метод формы будет равен [FormMethod.CreatingNewModel].
-     */
-    @Suppress("UNCHECKED_CAST")
-    fun prepareForm(editingModel: Model?) {
-        editingModel?.let {
-            _formState.update { currentForm ->
-                currentForm.fromModel(it) as Form
-            }
-            formMethod = FormMethod.EditingOldModel
-        }
+    fun prepareForm() {
         _preparedState.value = true
     }
 
     /**
-     * Проводит валидацию формы.
-     *
-     * [form] - текущее состояние формы.
-     *
-     * Возвращает новую форму с возможными ошибками валидации.
+     * Изменяет метод формы на [method].
      */
-    protected abstract fun validateForm(form: Form): Form
+    protected fun changeFormMethod(method: FormMethod) {
+        _formMethod.value = method
+    }
+
+    /**
+     * Вручную изменяет состояние формы.
+     *
+     * [block] - функция изменения формы.
+     */
+    protected fun manuallyEditForm(block: (Form) -> Form) {
+        _formState.update(block)
+    }
 
     /**
      * Работает с полученной из формы моделью [model].
@@ -166,18 +124,15 @@ abstract class BaseFormViewModel<Model : Any, Form : FormState<Model>, Action : 
     private fun onSubmit() {
         viewModelScope.launch {
             try {
-                val validatedForm = validateForm(formState.value)
-                _formState.value = validateForm(validatedForm)
-
+                val validatedForm = _formState.updateAndGet(validator::validate)
                 if (!validatedForm.isValid) throw InvalidFormValuesException()
 
-                val model = workWithModel(validatedForm.asModel(), formMethod)
+                val model = workWithModel(validatedForm.asModel(), formMethod.value)
                 Log.d("LoveMood", "Worked with model: $model")
                 Log.d("LoveMood", "Sending success result to channel")
                 _resultsChannel.send(
                     FormResult.Success(model)
                 )
-                RelationshipWidgetWorker.updateWidgets(applicationContext, useCases, dictionary)
             } catch (throwable: Throwable) {
                 _resultsChannel.send(
                     FormResult.Failed(throwable)

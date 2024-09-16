@@ -43,7 +43,7 @@ private fun StartDateField(
         onValueChange = onValueChange,
         label = dictionary.startDateFieldLabel.string(),
         placeholder = dateTimePattern.displayDatePattern,
-        error = error,
+        errorMessage = error,
         singleLine = true,
         maxLines = 1
     )

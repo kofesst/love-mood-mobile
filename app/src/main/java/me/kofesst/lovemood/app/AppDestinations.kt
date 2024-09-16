@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import me.kofesst.android.lovemood.navigation.AppDestination
 import me.kofesst.android.lovemood.navigation.AppMainDestination
 import me.kofesst.android.lovemood.navigation.AppScreen
+import me.kofesst.android.lovemood.navigation.BoolArgument
 import me.kofesst.android.lovemood.navigation.DestinationArgument
 import me.kofesst.android.lovemood.navigation.IntArgument
 import me.kofesst.android.lovemood.navigation.LocalDateArgument
@@ -65,25 +66,25 @@ object AppDestinations {
 
     object Forms {
         object UserProfile : AppDestination(baseRoute = "profile/user/form") {
-            val editingIdArgument = IntArgument(
-                name = "editing_id",
-                defaultValue = -1
+            val isEditingArgument = BoolArgument(
+                name = "isEditing",
+                defaultValue = false
             )
 
             override val arguments: List<DestinationArgument<*>>
-                get() = listOf(editingIdArgument)
+                get() = listOf(isEditingArgument)
 
             override val screen: AppScreen get() = UserProfileFormScreen
         }
 
         object Relationship : AppDestination(baseRoute = "relationship/form") {
-            val editingIdArgument = IntArgument(
-                name = "editing_id",
-                defaultValue = -1
+            val isEditingArgument = BoolArgument(
+                name = "isEditing",
+                defaultValue = false
             )
 
             override val arguments: List<DestinationArgument<*>>
-                get() = listOf(UserProfile.editingIdArgument)
+                get() = listOf(isEditingArgument)
 
             override val screen: AppScreen get() = RelationshipFormScreen
         }
@@ -95,7 +96,7 @@ object AppDestinations {
             )
 
             override val arguments: List<DestinationArgument<*>>
-                get() = listOf(UserProfile.editingIdArgument)
+                get() = listOf(editingIdArgument)
 
             override val screen: AppScreen get() = MemoryFormScreen
         }

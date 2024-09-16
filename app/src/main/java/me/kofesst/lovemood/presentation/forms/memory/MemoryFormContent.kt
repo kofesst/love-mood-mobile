@@ -115,7 +115,7 @@ private fun AssociatedDateField(
         onValueChange = onValueChange,
         label = dictionary.associatedDateFieldLabel.string(),
         placeholder = dateTimePattern.displayDatePattern,
-        error = error,
+        errorMessage = error,
         singleLine = true,
         maxLines = 1
     )

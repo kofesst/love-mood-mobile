@@ -2,19 +2,18 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.devtools.ksp)
     alias(libs.plugins.di.hilt.android)
 }
 
 android {
     namespace = "me.kofesst.lovemood"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "me.kofesst.lovemood"
         minSdk = 28
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 2
         versionName = "0.0.2"
 
@@ -70,8 +69,8 @@ dependencies {
     implementation(libs.di.hilt.android)
     implementation(libs.di.hilt.navigation)
     implementation(libs.di.hilt.worker)
-    kapt(libs.di.hilt.compiler.android)
-    kapt(libs.di.hilt.compiler.androidx)
+    ksp(libs.di.hilt.compiler.android)
+    ksp(libs.di.hilt.compiler.androidx)
 
     // Modules
     implementation(project(":app-widgets"))
@@ -90,7 +89,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.splashscreen)
-    implementation(libs.androidx.constraintlayout.compose)
     implementation(libs.androidx.worker)
 
     // Compose

@@ -8,26 +8,29 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import me.kofesst.lovemood.async.AsyncValuesList
 import me.kofesst.lovemood.async.load
+import me.kofesst.lovemood.core.interactor.memory.MemoryInteractor
 import me.kofesst.lovemood.core.models.PhotoMemory
-import me.kofesst.lovemood.core.usecases.AppUseCases
 import javax.inject.Inject
 
 @HiltViewModel
 class MemoriesViewModel @Inject constructor(
-    private val useCases: AppUseCases
+    private val memoryInteractor: MemoryInteractor,
 ) : ViewModel() {
     init {
         Log.d("LoveMood", "ViewModel initialized")
     }
 
-    private val _memoriesState = mutableStateOf(me.kofesst.lovemood.async.AsyncValuesList<PhotoMemory>())
-    val memoriesState: State<me.kofesst.lovemood.async.AsyncValuesList<PhotoMemory>> = _memoriesState
+    private val _memoriesState = mutableStateOf(AsyncValuesList<PhotoMemory>())
+    val memoriesState: State<AsyncValuesList<PhotoMemory>> = _memoriesState
 
     fun loadMemories() {
         viewModelScope.launch(Dispatchers.IO) {
             _memoriesState.load {
-                useCases.memories.readAll()
+                memoryInteractor.getAll().getOrDefault(
+                    defaultValue = emptyList()
+                )
             }
         }
     }

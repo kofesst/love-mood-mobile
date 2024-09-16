@@ -24,8 +24,6 @@ import me.kofesst.lovemood.core.ui.utils.alsoNavBar
 import me.kofesst.lovemood.presentation.forms.FormMethod
 import me.kofesst.lovemood.presentation.forms.FormResultsListener
 import me.kofesst.lovemood.presentation.forms.formSubmitHeader
-import me.kofesst.lovemood.presentation.forms.profile.ProfileFormAction
-import me.kofesst.lovemood.presentation.forms.profile.ProfileFormViewModel
 import me.kofesst.lovemood.presentation.forms.profile.profileFormContent
 import me.kofesst.lovemood.presentation.forms.relationship.RelationshipFormAction
 import me.kofesst.lovemood.presentation.forms.relationship.RelationshipFormViewModel
@@ -37,55 +35,34 @@ object RelationshipFormScreen : AppScreen() {
         modifier: Modifier,
         navBackStackEntry: NavBackStackEntry
     ) {
-        val editingRelationshipId = rememberArgument(
-            argument = AppDestinations.Forms.Relationship.editingIdArgument,
+        val isEditing = rememberArgument(
+            argument = AppDestinations.Forms.Relationship.isEditingArgument,
             navBackStackEntry = navBackStackEntry
-        ).takeIf { it > 0 }
-        val profileFormViewModel = hiltViewModel<ProfileFormViewModel>()
-        val relationshipFormViewModel = hiltViewModel<RelationshipFormViewModel>()
-        LaunchedEffect(editingRelationshipId) {
-            relationshipFormViewModel.prepareForm(
-                editingModelId = editingRelationshipId,
-                callback = { editingRelationship ->
-                    profileFormViewModel.prepareForm(
-                        editingModel = editingRelationship?.partnerProfile
-                    )
-                }
-            )
+        )
+        val viewModel = hiltViewModel<RelationshipFormViewModel>()
+        LaunchedEffect(isEditing) {
+            viewModel.setIsEditing(isEditing)
         }
-
-        Content(modifier, profileFormViewModel, relationshipFormViewModel)
+        Content(
+            modifier = modifier,
+            viewModel = viewModel
+        )
     }
 
     @Composable
     private fun Content(
         modifier: Modifier = Modifier,
-        profileFormViewModel: ProfileFormViewModel,
-        relationshipFormViewModel: RelationshipFormViewModel
+        viewModel: RelationshipFormViewModel
     ) {
         val appState = LocalAppState.current
         FormResultsListener(
-            resultsFlow = profileFormViewModel.resultsFlow,
-            onSuccessResult = { partnerProfile ->
-                relationshipFormViewModel.handleFormAction(
-                    RelationshipFormAction.PartnerProfileUpdated(partnerProfile)
-                )
-            },
-            onResult = {
-                relationshipFormViewModel.handleFormAction(
-                    RelationshipFormAction.SubmitClicked
-                )
-            }
-        )
-        FormResultsListener(
-            resultsFlow = relationshipFormViewModel.resultsFlow,
+            resultsFlow = viewModel.resultsFlow,
             onSuccessResult = {
                 appState.navigate(AppDestinations.Home)
             }
         )
 
-        val profileForm by profileFormViewModel.formState.collectAsState()
-        val relationshipForm by relationshipFormViewModel.formState.collectAsState()
+        val form by viewModel.formState.collectAsState()
         val screenDictionary = LocalDictionary.current.screens.relationshipForm
         LazyColumn(
             modifier = modifier,
@@ -93,28 +70,28 @@ object RelationshipFormScreen : AppScreen() {
             verticalArrangement = Arrangement.spacedBy(30.dp),
         ) {
             formSubmitHeader(
-                forms = arrayOf(profileForm, relationshipForm),
+                forms = arrayOf(form),
                 onSubmit = {
-                    profileFormViewModel.handleFormAction(
-                        ProfileFormAction.SubmitClicked
+                    viewModel.handleFormAction(
+                        RelationshipFormAction.SubmitClicked
                     )
                 }
             )
             item(key = "screen_header") {
                 ScreenHeader(
                     modifier = Modifier.fillMaxWidth(),
-                    formMethod = relationshipFormViewModel.formMethod
+                    formMethod = viewModel.formMethod.value
                 )
             }
             profileFormContent(
                 dictionary = screenDictionary.profileFormDictionary,
-                form = profileForm,
-                onFormAction = profileFormViewModel::handleFormAction
+                form = form.partnerProfile,
+                onFormAction = viewModel::handleProfileFormAction
             )
             relationshipFormContent(
                 dictionary = screenDictionary.relationshipFormDictionary,
-                form = relationshipForm,
-                onFormAction = relationshipFormViewModel::handleFormAction
+                form = form,
+                onFormAction = viewModel::handleFormAction
             )
         }
     }

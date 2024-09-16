@@ -20,16 +20,14 @@ class LoveMoodApplication : Application(), Configuration.Provider {
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
 
+    override val workManagerConfiguration: Configuration get() = Configuration.Builder()
+        .setWorkerFactory(workerFactory)
+        .setMinimumLoggingLevel(Log.ERROR)
+        .build()
+
     override fun onCreate() {
         super.onCreate()
         startWorkerTask()
-    }
-
-    override fun getWorkManagerConfiguration(): Configuration {
-        return Configuration.Builder()
-            .setWorkerFactory(workerFactory)
-            .setMinimumLoggingLevel(Log.ERROR)
-            .build()
     }
 
     private fun startWorkerTask() {

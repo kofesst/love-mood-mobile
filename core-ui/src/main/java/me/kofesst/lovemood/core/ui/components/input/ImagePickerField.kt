@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.RotateLeft
@@ -27,6 +28,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -37,8 +40,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import me.kofesst.lovemood.core.ui.components.action.PanelButton
 import me.kofesst.lovemood.core.ui.components.action.PanelButtonDefaults
+import me.kofesst.lovemood.core.ui.components.image.ByteImage
 import me.kofesst.lovemood.core.ui.transitions.fadeTransition
-import me.kofesst.lovemood.core.ui.utils.ByteArrayImage
 import me.kofesst.lovemood.core.ui.utils.SELECT_IMAGE_LAUNCHER_INPUT
 import me.kofesst.lovemood.core.ui.utils.compress
 import me.kofesst.lovemood.core.ui.utils.getImagePickerLauncher
@@ -53,7 +56,9 @@ private const val LARGE_IMAGE_COMPRESS_HEIGHT = 1024
 @Composable
 fun LargeImagePickerField(
     modifier: Modifier = Modifier,
-    defaults: InputFieldContainerDefaults = InputFieldContainerDefaults.defaults(),
+    colors: InputFieldContainerColors = InputFieldContainerDefaults.colors(),
+    contentPadding: PaddingValues = InputFieldContainerDefaults.contentPadding,
+    containerShape: Shape = InputFieldContainerDefaults.containerShape,
     loadedContent: ByteArray,
     onContentLoad: (ByteArray) -> Unit,
     coroutineScope: CoroutineScope,
@@ -63,9 +68,9 @@ fun LargeImagePickerField(
 ) {
     ImagePickerFieldContainer(
         modifier = modifier,
-        defaults = defaults.copy(
-            contentPadding = PaddingValues(0.dp)
-        ),
+        colors = colors,
+        contentPadding = contentPadding,
+        containerShape = containerShape,
         loadedContent = loadedContent,
         onContentLoad = onContentLoad,
         coroutineScope = coroutineScope,
@@ -88,7 +93,9 @@ fun LargeImagePickerField(
 @Composable
 fun SmallImagePickerField(
     modifier: Modifier = Modifier,
-    defaults: InputFieldContainerDefaults = InputFieldContainerDefaults.defaults(),
+    colors: InputFieldContainerColors = InputFieldContainerDefaults.colors(),
+    contentPadding: PaddingValues = InputFieldContainerDefaults.contentPadding,
+    containerShape: Shape = InputFieldContainerDefaults.containerShape,
     loadedContent: ByteArray,
     onContentLoad: (ByteArray) -> Unit,
     coroutineScope: CoroutineScope,
@@ -97,7 +104,9 @@ fun SmallImagePickerField(
 ) {
     ImagePickerFieldContainer(
         modifier = modifier,
-        defaults = defaults,
+        colors = colors,
+        contentPadding = contentPadding,
+        containerShape = containerShape,
         loadedContent = loadedContent,
         onContentLoad = onContentLoad,
         coroutineScope = coroutineScope,
@@ -119,7 +128,9 @@ fun SmallImagePickerField(
 @Composable
 private fun ImagePickerFieldContainer(
     modifier: Modifier = Modifier,
-    defaults: InputFieldContainerDefaults = InputFieldContainerDefaults.defaults(),
+    colors: InputFieldContainerColors,
+    contentPadding: PaddingValues,
+    containerShape: Shape,
     loadedContent: ByteArray,
     onContentLoad: (ByteArray) -> Unit,
     coroutineScope: CoroutineScope,
@@ -129,11 +140,11 @@ private fun ImagePickerFieldContainer(
     pictureCompressHeight: Int,
     pickedPictureContent: @Composable (imagePicker: ManagedActivityResultLauncher<String, Uri?>) -> Unit
 ) {
-    BaseInputFieldContainer(
+    InputFieldContainer(
         modifier = modifier,
-        defaults = defaults.copy(
-            contentPadding = PaddingValues(0.dp)
-        )
+        colors = colors,
+        contentPadding = contentPadding,
+        containerShape = containerShape
     ) {
         val context = LocalContext.current
         val imagePicker = getImagePickerLauncher { uri ->
@@ -295,9 +306,9 @@ private fun LargeImagePreview(
         modifier = modifier,
         imageContent = imageContent
     ) {
-        ByteArrayImage(
+        ByteImage(
             modifier = Modifier.fillMaxSize(),
-            content = imageContent
+            byteContent = imageContent
         )
     }
 }
@@ -316,35 +327,38 @@ private fun SmallImagePreview(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Bottom
         ) {
-            ByteArrayImage(
-                modifier = Modifier.border(
-                    width = 5.dp,
-                    color = MaterialTheme.colorScheme.primaryContainer,
-                    shape = CircleShape
-                ),
-                content = imageContent,
-                size = 128.dp,
-                shape = CircleShape
+            ByteImage(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .size(128.dp)
+                    .border(
+                        width = 5.dp,
+                        color = MaterialTheme.colorScheme.primaryContainer,
+                        shape = CircleShape
+                    ),
+                byteContent = imageContent
             )
-            ByteArrayImage(
-                modifier = Modifier.border(
-                    width = 5.dp,
-                    color = MaterialTheme.colorScheme.primaryContainer,
-                    shape = CircleShape
-                ),
-                content = imageContent,
-                size = 96.dp,
-                shape = CircleShape
+            ByteImage(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .size(96.dp)
+                    .border(
+                        width = 5.dp,
+                        color = MaterialTheme.colorScheme.primaryContainer,
+                        shape = CircleShape
+                    ),
+                byteContent = imageContent
             )
-            ByteArrayImage(
-                modifier = Modifier.border(
-                    width = 5.dp,
-                    color = MaterialTheme.colorScheme.primaryContainer,
-                    shape = CircleShape
-                ),
-                content = imageContent,
-                size = 72.dp,
-                shape = CircleShape
+            ByteImage(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .size(72.dp)
+                    .border(
+                        width = 5.dp,
+                        color = MaterialTheme.colorScheme.primaryContainer,
+                        shape = CircleShape
+                    ),
+                byteContent = imageContent
             )
         }
     }

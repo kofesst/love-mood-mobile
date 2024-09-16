@@ -6,6 +6,7 @@ import me.kofesst.lovemood.core.models.Relationship
 import me.kofesst.lovemood.core.text.AppTextHolder
 import me.kofesst.lovemood.features.date.DateTimePattern
 import me.kofesst.lovemood.presentation.forms.FormState
+import me.kofesst.lovemood.presentation.forms.profile.ProfileFormState
 import java.time.LocalDate
 
 private fun emptyProfile() = Profile(
@@ -21,14 +22,9 @@ data class RelationshipFormState(
     val id: Int = 0,
     val startDate: String = "",
     val startDateError: AppTextHolder? = null,
-    val partnerProfile: Profile? = null
+    val partnerProfile: ProfileFormState = ProfileFormState(dateTimePattern)
 ) : FormState<Relationship>() {
-    companion object {
-        val MIN_START_DATE = LocalDate.of(1900, 1, 1)
-        val MAX_START_DATE = LocalDate.now()
-    }
-
-    override val isValid: Boolean = startDateError == null && partnerProfile != null
+    override val isValid: Boolean = startDateError == null && partnerProfile.isValid
 
     override val isFilled: Boolean = startDate.isNotBlank()
 
@@ -36,16 +32,14 @@ data class RelationshipFormState(
         return Relationship(
             id = id,
             userProfile = emptyProfile(),
-            partnerProfile = partnerProfile!!,
+            partnerProfile = partnerProfile.asModel(),
             startDate = dateTimePattern.parseDate(startDate)
         )
     }
 
-    override fun fromModel(model: Relationship): FormState<Relationship> {
-        return copy(
-            id = model.id,
-            partnerProfile = model.partnerProfile,
-            startDate = dateTimePattern.formatDate(model.startDate)
-        )
-    }
+    override fun fromModel(model: Relationship) = copy(
+        id = model.id,
+        partnerProfile = partnerProfile.fromModel(model.partnerProfile),
+        startDate = dateTimePattern.formatDate(model.startDate)
+    )
 }

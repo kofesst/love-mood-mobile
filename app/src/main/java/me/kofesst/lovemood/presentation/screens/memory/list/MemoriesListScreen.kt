@@ -38,12 +38,12 @@ import me.kofesst.lovemood.app.dictionary
 import me.kofesst.lovemood.async.RequiredAsyncValueContent
 import me.kofesst.lovemood.core.models.PhotoMemory
 import me.kofesst.lovemood.core.ui.components.cards.BaseCard
+import me.kofesst.lovemood.core.ui.components.image.ByteImage
 import me.kofesst.lovemood.core.ui.components.image.ImageViewer
 import me.kofesst.lovemood.core.ui.components.image.ImageViewerState
 import me.kofesst.lovemood.core.ui.components.scaffold.NavigateUpIconButton
 import me.kofesst.lovemood.core.ui.components.scaffold.SmallAppTopBar
 import me.kofesst.lovemood.core.ui.transitions.softHorizontalSlide
-import me.kofesst.lovemood.core.ui.utils.ByteArrayImage
 import me.kofesst.lovemood.presentation.screens.memory.calendar.hasAssociated
 
 object MemoriesListScreen : AppScreen() {
@@ -191,13 +191,13 @@ object MemoriesListScreen : AppScreen() {
         memory: PhotoMemory,
         onClick: () -> Unit
     ) {
-        ByteArrayImage(
+        ByteImage(
             modifier = modifier
                 .fillMaxWidth()
                 .height(500.dp)
                 .clip(RoundedCornerShape(20.dp))
                 .clickable(onClick = onClick),
-            content = memory.photoContent
+            byteContent = memory.photoContent
         )
     }
 }

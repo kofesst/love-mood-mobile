@@ -3,7 +3,7 @@ package me.kofesst.lovemood.presentation.forms.memory
 import me.kofesst.lovemood.core.models.PhotoMemory
 import me.kofesst.lovemood.presentation.forms.FormAction
 
-sealed class MemoryFormAction : FormAction<PhotoMemory, MemoryFormState>() {
+sealed class MemoryFormAction : FormAction<PhotoMemory, MemoryFormState> {
     @Suppress("ArrayInDataClass")
     data class PhotoContentChanged(val value: ByteArray) : MemoryFormAction() {
         override fun applyToForm(currentForm: MemoryFormState): MemoryFormState {
