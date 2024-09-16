@@ -15,15 +15,15 @@ import javax.inject.Singleton
 class CreateUserProfile @Inject constructor(
     private val profileRepository: ProfileRepository,
     private val sessionRepository: SessionRepository
-) : ParameterizedUseCase<Int, UseCaseParams.Single<Profile>>() {
+) : ParameterizedUseCase<Profile, UseCaseParams.Single<Profile>>() {
     override val canResultBeNullable: Boolean = false
 
-    override suspend fun execute(params: UseCaseParams.Single<Profile>): Int? {
+    override suspend fun execute(params: UseCaseParams.Single<Profile>): Profile {
         val profileId = profileRepository.createProfile(params.value)
         val session = sessionRepository.restore()
         sessionRepository.save(
             session.copy(profileId = profileId)
         )
-        return profileId
+        return params.value.copy(id = profileId)
     }
 }

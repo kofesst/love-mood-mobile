@@ -17,10 +17,10 @@ class CreateRelationship @Inject constructor(
     private val sessionRepository: SessionRepository,
     private val profileRepository: ProfileRepository,
     private val relationshipRepository: RelationshipRepository
-) : ParameterizedUseCase<Int, UseCaseParams.Single<Relationship>>() {
+) : ParameterizedUseCase<Relationship, UseCaseParams.Single<Relationship>>() {
     override val canResultBeNullable: Boolean = true
 
-    override suspend fun execute(params: UseCaseParams.Single<Relationship>): Int? {
+    override suspend fun execute(params: UseCaseParams.Single<Relationship>): Relationship {
         var relationship = params.value
         profileRepository.createProfile(relationship.partnerProfile).also { newPartnerProfileId ->
             relationship = relationship.copy(
@@ -34,6 +34,6 @@ class CreateRelationship @Inject constructor(
         sessionRepository.save(
             session.copy(relationshipId = relationshipId)
         )
-        return relationshipId
+        return relationship
     }
 }

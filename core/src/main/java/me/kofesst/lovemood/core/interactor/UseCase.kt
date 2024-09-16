@@ -9,7 +9,16 @@ interface UseCaseParams {
     /**
      * Параметры юзкейса с одним значением [value] типа [T].
      */
-    class Single<T : Any>(val value: T) : UseCaseParams
+    class Single<T : Any>(val value: T) : UseCaseParams {
+        companion object {
+            /**
+             * Создает параметр юзкейса из значения [value].
+             */
+            fun <T : Any> with(value: T): Single<T> {
+                return Single(value)
+            }
+        }
+    }
 }
 
 /**
