@@ -5,12 +5,12 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import me.kofesst.lovemood.app.LocalAppState
 import me.kofesst.lovemood.app.LocalDateTimePattern
 import me.kofesst.lovemood.core.ui.components.input.CheckField
-import me.kofesst.lovemood.core.ui.components.input.LargeImagePickerField
+import me.kofesst.lovemood.core.ui.components.input.ImagePicker
 import me.kofesst.lovemood.core.ui.components.input.TextInputField
 import me.kofesst.lovemood.localization.dictionary.screens.forms.MemoryFormDictionary
 
@@ -22,7 +22,6 @@ fun LazyListScope.memoryFormContent(
     item(key = "photo_picker_field") {
         PhotoPickerField(
             modifier = Modifier.fillMaxWidth(),
-            dictionary = dictionary,
             content = form.photoContent,
             onContentLoad = {
                 onFormAction(
@@ -70,18 +69,15 @@ fun LazyListScope.memoryFormContent(
 @Composable
 private fun PhotoPickerField(
     modifier: Modifier = Modifier,
-    dictionary: MemoryFormDictionary,
     content: ByteArray,
     onContentLoad: (ByteArray) -> Unit
 ) {
-    val appState = LocalAppState.current
-    LargeImagePickerField(
+    ImagePicker(
         modifier = modifier,
-        loadedContent = content,
-        onContentLoad = onContentLoad,
-        coroutineScope = appState.coroutineScope,
-        label = dictionary.photoPickerLabel.string(),
-        action = dictionary.photoPickerAction.string()
+        imageContent = content,
+        onContentChange = onContentLoad,
+        selectImageAction = { Text(text = "Выбрать изображение") },
+        removeImageAction = { Text(text = "Удалить изображение") }
     )
 }
 

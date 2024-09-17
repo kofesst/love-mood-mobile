@@ -40,6 +40,7 @@ import me.kofesst.lovemood.ui.uiText
  *
  * [forms] - массив нескольких состояний форм.
  */
+@Deprecated("Use content from StagedFormLayout.kt")
 @OptIn(ExperimentalFoundationApi::class)
 fun LazyListScope.formSubmitHeader(
     onSubmit: () -> Unit,
@@ -84,6 +85,7 @@ fun LazyListScope.formSubmitHeader(
  *
  * [content] - основной контент формы.
  */
+@Deprecated("Use content from StagedFormLayout.kt")
 fun LazyListScope.buildFormLayout(
     vararg viewModels: BaseFormViewModel<*, *, *>,
     loadingContent: LazyListScope.() -> Unit,

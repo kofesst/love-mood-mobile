@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package me.kofesst.lovemood.core.ui.components.action
 
 import androidx.compose.foundation.clickable
@@ -75,11 +77,10 @@ fun PanelButton(
     onClick: () -> Unit,
     defaults: PanelButtonDefaults = PanelButtonDefaults.defaults(),
 ) {
-    Box(
-        modifier = modifier
-            .clip(defaults.clip.asShape(defaults.clipSize))
-            .clickable(onClick = onClick),
-        contentAlignment = Alignment.Center,
+    PanelButton(
+        modifier = modifier,
+        onClick = onClick,
+        defaults = defaults
     ) {
         Text(
             text = action,
@@ -126,5 +127,23 @@ fun PanelButton(
                 )
             )
         }
+    }
+}
+
+@Composable
+fun PanelButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    defaults: PanelButtonDefaults = PanelButtonDefaults.defaults(),
+    content: @Composable () -> Unit
+) {
+    Box(
+        modifier = modifier
+            .clip(shape = defaults.clip.asShape(defaults.clipSize))
+            .clickable(onClick = onClick)
+            .padding(defaults.paddingValues),
+        contentAlignment = Alignment.Center
+    ) {
+        content()
     }
 }
