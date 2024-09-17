@@ -129,7 +129,9 @@ fun <Model : Any, Form : FormState<Model>, Action : FormAction<Model, Form>> Sta
             )
         }
         val appState = LocalAppState.current
-        val canContinue by derivedStateOf { state.targetStage.continuePredicate(form) }
+        val canContinue by remember {
+            derivedStateOf { state.targetStage.continuePredicate(form) }
+        }
         StagedFormControls(
             modifier = controlsModifier.fillMaxWidth(),
             state = state,
