@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -19,7 +17,6 @@ import me.kofesst.lovemood.app.LocalAppState
 import me.kofesst.lovemood.presentation.forms.FormResultsListener
 import me.kofesst.lovemood.presentation.forms.profile.ProfileFormAction
 import me.kofesst.lovemood.presentation.forms.profile.ProfileFormStage
-import me.kofesst.lovemood.presentation.forms.profile.ProfileFormState
 import me.kofesst.lovemood.presentation.forms.profile.ProfileFormViewModel
 import me.kofesst.lovemood.presentation.forms.staged.StagedFormLayout
 
@@ -44,19 +41,16 @@ object UserProfileFormScreen : AppScreen() {
                 appState.navigate(AppDestinations.Home)
             }
         )
-        val form by viewModel.formState.collectAsState()
         Content(
             modifier = modifier,
-            form = form,
-            onFormAction = viewModel::handleFormAction
+            viewModel = viewModel
         )
     }
 
     @Composable
     private fun Content(
         modifier: Modifier = Modifier,
-        form: ProfileFormState,
-        onFormAction: (ProfileFormAction) -> Unit
+        viewModel: ProfileFormViewModel
     ) {
         Box(modifier) {
             StagedFormLayout(
@@ -70,10 +64,9 @@ object UserProfileFormScreen : AppScreen() {
                     ProfileFormStage.SelectingPicture,
                     ProfileFormStage.EnteringData
                 ),
-                form = form,
-                onFormAction = onFormAction,
+                viewModel = viewModel,
                 onSubmit = {
-                    onFormAction(
+                    viewModel.handleFormAction(
                         ProfileFormAction.SubmitClicked
                     )
                 }

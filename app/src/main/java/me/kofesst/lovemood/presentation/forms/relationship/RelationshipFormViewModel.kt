@@ -44,7 +44,6 @@ class RelationshipFormViewModel @Inject constructor(
                 }
             }
             prepareForm()
-            prepareForm()
         }
     }
 

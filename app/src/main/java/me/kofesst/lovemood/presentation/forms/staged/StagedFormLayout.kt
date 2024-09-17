@@ -30,6 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -43,12 +44,13 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.kofesst.lovemood.app.LocalAppState
+import me.kofesst.lovemood.presentation.forms.BaseFormViewModel
 import me.kofesst.lovemood.presentation.forms.FormAction
 import me.kofesst.lovemood.presentation.forms.FormState
 
 @Stable
-class StagedFormState<Model : Any, Form : FormState<Model>, Action : FormAction<Model, Form>>(
-    private val stages: List<FormStage<Model, Form, Action>>,
+class StagedFormState<Model : Any, Form : FormState<Model>, Action : FormAction<Model, Form>, ViewModel : BaseFormViewModel<Model, Form, Action>>(
+    private val stages: List<FormStage<Model, Form, Action, ViewModel>>,
     internal val coroutineScope: CoroutineScope,
     internal val pagerState: PagerState
 ) {
@@ -76,11 +78,13 @@ class StagedFormState<Model : Any, Form : FormState<Model>, Action : FormAction<
     }
 }
 
+// TODO: Fix so many generics
+
 @Composable
-fun <Model : Any, Form : FormState<Model>, Action : FormAction<Model, Form>> rememberStagedFormState(
-    stages: List<FormStage<Model, Form, Action>>,
+fun <Model : Any, Form : FormState<Model>, Action : FormAction<Model, Form>, ViewModel : BaseFormViewModel<Model, Form, Action>> rememberStagedFormState(
+    stages: List<FormStage<Model, Form, Action, ViewModel>>,
     coroutineScope: CoroutineScope
-): StagedFormState<Model, Form, Action> {
+): StagedFormState<Model, Form, Action, ViewModel> {
     val pagerState = rememberPagerState { stages.size }
     return remember {
         StagedFormState(
@@ -92,13 +96,12 @@ fun <Model : Any, Form : FormState<Model>, Action : FormAction<Model, Form>> rem
 }
 
 @Composable
-fun <Model : Any, Form : FormState<Model>, Action : FormAction<Model, Form>> StagedFormLayout(
+fun <Model : Any, Form : FormState<Model>, Action : FormAction<Model, Form>, ViewModel : BaseFormViewModel<Model, Form, Action>> StagedFormLayout(
     modifier: Modifier = Modifier,
     progressModifier: Modifier = Modifier,
     controlsModifier: Modifier = Modifier,
-    stages: List<FormStage<Model, Form, Action>>,
-    form: Form,
-    onFormAction: (Action) -> Unit,
+    stages: List<FormStage<Model, Form, Action, ViewModel>>,
+    viewModel: ViewModel,
     onSubmit: () -> Unit
 ) {
     val state = rememberStagedFormState(
@@ -110,7 +113,8 @@ fun <Model : Any, Form : FormState<Model>, Action : FormAction<Model, Form>> Sta
     ) {
         StagedFormProgress(
             modifier = progressModifier.fillMaxWidth(),
-            state = state
+            stageCount = state.stageCount,
+            currentStageIndex = state.currentStageIndex
         )
         HorizontalPager(
             modifier = Modifier
@@ -124,17 +128,17 @@ fun <Model : Any, Form : FormState<Model>, Action : FormAction<Model, Form>> Sta
         ) { stageIndex ->
             stages[stageIndex].Content(
                 modifier = Modifier.fillMaxSize(),
-                form = form,
-                onFormAction = onFormAction
+                viewModel = viewModel
             )
         }
         val appState = LocalAppState.current
+        val form by viewModel.formState.collectAsState()
         val canContinue by remember(form) {
             derivedStateOf { state.targetStage.continuePredicate(form) }
         }
         StagedFormControls(
             modifier = controlsModifier.fillMaxWidth(),
-            state = state,
+            isLastStage = state.isLastStage,
             canContinue = canContinue,
             onBackPressed = {
                 if (state.isFirstState) appState.navigateUp()
@@ -150,9 +154,10 @@ fun <Model : Any, Form : FormState<Model>, Action : FormAction<Model, Form>> Sta
 }
 
 @Composable
-private fun <Model : Any, Form : FormState<Model>, Action : FormAction<Model, Form>> StagedFormProgress(
+private fun StagedFormProgress(
     modifier: Modifier = Modifier,
-    state: StagedFormState<Model, Form, Action>,
+    stageCount: Int,
+    currentStageIndex: Int,
     baseColor: Color = MaterialTheme.colorScheme.primary.copy(alpha = 0.30f),
     currentColor: Color = MaterialTheme.colorScheme.primary,
     indicatorThickness: Dp = 8.dp
@@ -162,13 +167,13 @@ private fun <Model : Any, Form : FormState<Model>, Action : FormAction<Model, Fo
         horizontalArrangement = Arrangement.spacedBy(space = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        for (stageIndex in 0 until state.stageCount) {
+        for (stageIndex in 0 until stageCount) {
             Box(
                 modifier = Modifier
                     .weight(1.0f)
                     .height(indicatorThickness)
                     .background(
-                        color = if (stageIndex == state.currentStageIndex) currentColor
+                        color = if (stageIndex == currentStageIndex) currentColor
                         else baseColor,
                         shape = CircleShape
                     )
@@ -178,9 +183,9 @@ private fun <Model : Any, Form : FormState<Model>, Action : FormAction<Model, Fo
 }
 
 @Composable
-private fun <Model : Any, Form : FormState<Model>, Action : FormAction<Model, Form>> StagedFormControls(
+private fun StagedFormControls(
     modifier: Modifier = Modifier,
-    state: StagedFormState<Model, Form, Action>,
+    isLastStage: Boolean,
     canContinue: Boolean,
     onBackPressed: () -> Unit,
     onContinuePressed: () -> Unit
@@ -232,7 +237,7 @@ private fun <Model : Any, Form : FormState<Model>, Action : FormAction<Model, Fo
             ) {
                 Crossfade(
                     modifier = Modifier.weight(1.0f),
-                    targetState = state.isLastStage
+                    targetState = isLastStage
                 ) { isLastStage ->
                     if (isLastStage) Text(text = "Завершить")
                     else Text(text = "Продолжить")

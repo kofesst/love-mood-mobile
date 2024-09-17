@@ -1,6 +1,8 @@
 package me.kofesst.lovemood.presentation.forms.profile
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import me.kofesst.lovemood.core.models.Profile
 import me.kofesst.lovemood.presentation.forms.staged.FormStage
@@ -8,7 +10,8 @@ import me.kofesst.lovemood.presentation.forms.staged.FormStage
 /**
  * Интерфейс этапа формы профиля.
  */
-sealed interface ProfileFormStage : FormStage<Profile, ProfileFormState, ProfileFormAction> {
+sealed interface ProfileFormStage :
+    FormStage<Profile, ProfileFormState, ProfileFormAction, ProfileFormViewModel> {
     /**
      * Этап выбора фотографии профиля.
      */
@@ -18,13 +21,13 @@ sealed interface ProfileFormStage : FormStage<Profile, ProfileFormState, Profile
         @Composable
         override fun Content(
             modifier: Modifier,
-            form: ProfileFormState,
-            onFormAction: (ProfileFormAction) -> Unit
+            viewModel: ProfileFormViewModel
         ) {
-            ProfilePictureStage(
+            val form by viewModel.formState.collectAsState()
+            ProfileFormContents.SelectingPictureStageContent(
                 modifier = modifier,
                 form = form,
-                onFormAction = onFormAction
+                onFormAction = viewModel::handleFormAction
             )
         }
     }
@@ -40,13 +43,13 @@ sealed interface ProfileFormStage : FormStage<Profile, ProfileFormState, Profile
         @Composable
         override fun Content(
             modifier: Modifier,
-            form: ProfileFormState,
-            onFormAction: (ProfileFormAction) -> Unit
+            viewModel: ProfileFormViewModel
         ) {
-            ProfileDataStage(
+            val form by viewModel.formState.collectAsState()
+            ProfileFormContents.EnteringDataStageContent(
                 modifier = modifier,
                 form = form,
-                onFormAction = onFormAction
+                onFormAction = viewModel::handleFormAction
             )
         }
     }
