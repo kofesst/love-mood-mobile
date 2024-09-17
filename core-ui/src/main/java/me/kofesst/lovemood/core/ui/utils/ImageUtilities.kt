@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
-import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
@@ -24,19 +23,6 @@ import java.io.ByteArrayOutputStream
  * Параметр для выбора изображения.
  */
 const val SELECT_IMAGE_LAUNCHER_INPUT = "image/*"
-
-/**
- * Возвращает лаунчер выбора изображения.
- *
- * [onResult] - callback-функция, вызываемая при
- * успешном выборе фотографии пользователем.
- */
-@Deprecated("Use rememberImagePickerLauncher")
-@Composable
-fun getImagePickerLauncher(onResult: (Uri?) -> Unit) = rememberLauncherForActivityResult(
-    contract = ActivityResultContracts.GetContent(),
-    onResult = onResult
-)
 
 /**
  * Возвращает лаунчер выбора изображения.
