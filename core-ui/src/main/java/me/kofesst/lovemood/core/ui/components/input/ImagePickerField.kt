@@ -53,6 +53,7 @@ private const val SMALL_IMAGE_COMPRESS_HEIGHT = 512
 private const val LARGE_IMAGE_COMPRESS_QUALITY = 100
 private const val LARGE_IMAGE_COMPRESS_HEIGHT = 1024
 
+@Deprecated("Use new image picker in ImagePicker.kt")
 @Composable
 fun LargeImagePickerField(
     modifier: Modifier = Modifier,
@@ -90,6 +91,7 @@ fun LargeImagePickerField(
     }
 }
 
+@Deprecated("Use new image picker in ImagePicker.kt")
 @Composable
 fun SmallImagePickerField(
     modifier: Modifier = Modifier,
@@ -125,6 +127,7 @@ fun SmallImagePickerField(
     }
 }
 
+@Deprecated("Use new image picker in ImagePicker.kt")
 @Composable
 private fun ImagePickerFieldContainer(
     modifier: Modifier = Modifier,
@@ -185,6 +188,7 @@ private fun ImagePickerFieldContainer(
     }
 }
 
+@Deprecated("Use new image picker in ImagePicker.kt")
 @Composable
 private fun ImageNotLoadedContent(
     modifier: Modifier = Modifier,
@@ -215,6 +219,7 @@ private fun ImageNotLoadedContent(
     }
 }
 
+@Deprecated("Use new image picker in ImagePicker.kt")
 @Composable
 private fun LargeImageLoadedContent(
     modifier: Modifier = Modifier,
@@ -240,6 +245,7 @@ private fun LargeImageLoadedContent(
     }
 }
 
+@Deprecated("Use new image picker in ImagePicker.kt")
 @Composable
 private fun SmallImageLoadedContent(
     modifier: Modifier = Modifier,
@@ -264,6 +270,7 @@ private fun SmallImageLoadedContent(
     }
 }
 
+@Deprecated("Use new image picker in ImagePicker.kt")
 @Composable
 private fun ImageLoadedContent(
     modifier: Modifier = Modifier,
@@ -297,6 +304,7 @@ private fun ImageLoadedContent(
     }
 }
 
+@Deprecated("Use new image picker in ImagePicker.kt")
 @Composable
 private fun LargeImagePreview(
     modifier: Modifier = Modifier,
@@ -313,6 +321,7 @@ private fun LargeImagePreview(
     }
 }
 
+@Deprecated("Use new image picker in ImagePicker.kt")
 @Composable
 private fun SmallImagePreview(
     modifier: Modifier = Modifier,
@@ -364,6 +373,7 @@ private fun SmallImagePreview(
     }
 }
 
+@Deprecated("Use new image picker in ImagePicker.kt")
 @Composable
 private fun ImagePreviewContainer(
     modifier: Modifier = Modifier,
@@ -382,6 +392,7 @@ private fun ImagePreviewContainer(
     }
 }
 
+@Deprecated("Use new image picker in ImagePicker.kt")
 @Composable
 private fun ImageEditControls(
     modifier: Modifier = Modifier,

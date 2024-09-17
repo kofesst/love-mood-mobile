@@ -14,13 +14,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.kofesst.lovemood.app.LocalAppState
 import me.kofesst.lovemood.app.LocalDateTimePattern
 import me.kofesst.lovemood.app.dictionary
 import me.kofesst.lovemood.core.models.Gender
+import me.kofesst.lovemood.core.ui.components.input.ImagePicker
 import me.kofesst.lovemood.core.ui.components.input.RadioInputField
 import me.kofesst.lovemood.core.ui.components.input.RadioInputFieldItem
-import me.kofesst.lovemood.core.ui.components.input.SmallImagePickerField
 import me.kofesst.lovemood.core.ui.components.input.TextInputField
 import me.kofesst.lovemood.localization.dictionary.screens.forms.ProfileFormDictionary
 import me.kofesst.lovemood.ui.shortUiText
@@ -57,10 +56,8 @@ fun ProfilePictureStage(
                 color = MaterialTheme.colorScheme.secondary
             )
         }
-        val dictionary = dictionary.screens.userProfileForm.formDictionary
         AvatarPickerField(
             modifier = Modifier.fillMaxWidth(),
-            dictionary = dictionary,
             content = form.avatarContent
         ) {
             onFormAction(
@@ -141,7 +138,6 @@ fun LazyListScope.profileFormContent(
     item(key = "profile_avatar_field") {
         AvatarPickerField(
             modifier = Modifier.fillMaxWidth(),
-            dictionary = dictionary,
             content = form.avatarContent
         ) {
             onFormAction(
@@ -192,18 +188,19 @@ fun LazyListScope.profileFormContent(
 @Composable
 private fun AvatarPickerField(
     modifier: Modifier = Modifier,
-    dictionary: ProfileFormDictionary,
     content: ByteArray,
     onContentLoad: (ByteArray) -> Unit
 ) {
-    val appState = LocalAppState.current
-    SmallImagePickerField(
+    ImagePicker(
         modifier = modifier,
-        loadedContent = content,
-        onContentLoad = onContentLoad,
-        coroutineScope = appState.coroutineScope,
-        label = dictionary.avatarPickerLabel.string(),
-        action = dictionary.avatarPickerAction.string()
+        imageContent = content,
+        onContentChange = onContentLoad,
+        selectImageAction = {
+            Text(text = "Выбрать изображение")
+        },
+        removeImageAction = {
+            Text(text = "Удалить изображение")
+        }
     )
 }
 

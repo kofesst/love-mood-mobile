@@ -1,5 +1,6 @@
 package me.kofesst.lovemood.core.ui.utils
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
@@ -7,7 +8,15 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 
@@ -22,11 +31,40 @@ const val SELECT_IMAGE_LAUNCHER_INPUT = "image/*"
  * [onResult] - callback-функция, вызываемая при
  * успешном выборе фотографии пользователем.
  */
+@Deprecated("Use rememberImagePickerLauncher")
 @Composable
 fun getImagePickerLauncher(onResult: (Uri?) -> Unit) = rememberLauncherForActivityResult(
     contract = ActivityResultContracts.GetContent(),
     onResult = onResult
 )
+
+/**
+ * Возвращает лаунчер выбора изображения.
+ *
+ * [onResult] - callback-функция, вызываемая при успешном выборе фотографии пользователем.
+ */
+@Composable
+fun rememberImagePickerLauncher(
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
+    context: Context,
+    outputQuality: Int,
+    outputHeight: Int,
+    onResult: (ByteArray) -> Unit
+) = rememberLauncherForActivityResult(
+    contract = ActivityResultContracts.GetContent()
+) { fileUri ->
+    fileUri?.let { uri ->
+        context.contentResolver.openInputStream(uri)?.let { fileStream ->
+            coroutineScope.launch {
+                val imageContent = fileStream.readBytes().compress(
+                    quality = outputQuality,
+                    newHeight = outputHeight
+                ).also { fileStream.close() }
+                onResult(imageContent)
+            }
+        }
+    }
+}
 
 /**
  * Стандартные настройки для Bitmap.
@@ -67,21 +105,6 @@ suspend fun ByteArray.compress(quality: Int = 75, newHeight: Int = 512): ByteArr
 }
 
 /**
- * Конвертирует набор байтов в изображение [Bitmap].
- */
-suspend fun ByteArray.asBitmap(): Bitmap? {
-    return withContext(Dispatchers.IO) {
-        val decodedBitmap = BitmapFactory.decodeByteArray(
-            this@asBitmap,
-            0,
-            size,
-            defaultBitmapOptions
-        )
-        return@withContext decodedBitmap
-    }
-}
-
-/**
  * Поворачивает изображение на [degrees] градусов.
  */
 suspend fun ByteArray.rotate(degrees: Float): ByteArray {
@@ -96,4 +119,31 @@ suspend fun ByteArray.rotate(degrees: Float): ByteArray {
         outputStream.close()
         rotatedBytes
     }
+}
+
+/**
+ * Конвертирует набор байтов в изображение [Bitmap].
+ */
+suspend fun ByteArray.asBitmap(): Bitmap? {
+    if (isEmpty()) return null
+    return withContext(Dispatchers.IO) {
+        val decodedBitmap = BitmapFactory.decodeByteArray(
+            this@asBitmap,
+            0,
+            size,
+            defaultBitmapOptions
+        )
+        return@withContext decodedBitmap
+    }
+}
+
+/**
+ * Запоминает и возвращает Bitmap из
+ * массива байтов [byteContent].
+ */
+@Composable
+fun rememberBitmap(byteContent: ByteArray): Bitmap? {
+    var bitmap by remember { mutableStateOf<Bitmap?>(null) }
+    LaunchedEffect(byteContent) { bitmap = byteContent.asBitmap() }
+    return bitmap
 }

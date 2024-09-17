@@ -1,31 +1,14 @@
 package me.kofesst.lovemood.core.ui.components.image
 
-import android.graphics.Bitmap
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import me.kofesst.lovemood.core.ui.utils.asBitmap
-
-/**
- * Запоминает и возвращает Bitmap из
- * массива байтов [byteContent].
- */
-@Composable
-fun rememberBitmap(byteContent: ByteArray): Bitmap? {
-    var bitmap by remember { mutableStateOf<Bitmap?>(null) }
-    LaunchedEffect(byteContent) { bitmap = byteContent.asBitmap() }
-    return bitmap
-}
+import me.kofesst.lovemood.core.ui.utils.rememberBitmap
 
 /**
  * Компонент изображения, контент которого
@@ -56,13 +39,13 @@ fun ByteImage(
     val bitmap = rememberBitmap(byteContent)
     Crossfade(
         modifier = modifier,
-        targetState = byteContent.isNotEmpty() && bitmap != null,
+        targetState = bitmap,
         label = "byte_image"
-    ) { showBitmap ->
-        if (showBitmap) {
+    ) { imageBitmap ->
+        if (imageBitmap != null) {
             Image(
                 modifier = Modifier.fillMaxSize(),
-                bitmap = bitmap!!.asImageBitmap(),
+                bitmap = imageBitmap.asImageBitmap(),
                 contentDescription = contentDescription,
                 contentScale = contentScale,
                 colorFilter = colorFilter
