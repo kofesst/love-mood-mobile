@@ -3,26 +3,18 @@ package me.kofesst.lovemood.presentation.forms.profile
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.kofesst.lovemood.app.LocalDateTimePattern
 import me.kofesst.lovemood.app.dictionary
-import me.kofesst.lovemood.core.models.Gender
 import me.kofesst.lovemood.core.ui.components.input.ImagePicker
-import me.kofesst.lovemood.core.ui.components.input.RadioInputField
-import me.kofesst.lovemood.core.ui.components.input.RadioInputFieldItem
 import me.kofesst.lovemood.core.ui.components.input.TextInputField
 import me.kofesst.lovemood.localization.dictionary.screens.forms.ProfileFormDictionary
-import me.kofesst.lovemood.ui.shortUiText
-import me.kofesst.lovemood.ui.theme.containerColor
 
 object ProfileFormContents {
     @Composable
@@ -168,44 +160,6 @@ object ProfileFormContents {
             singleLine = true,
             maxLines = 1
         )
-    }
-
-    @Composable
-    fun GenderRadioField(
-        modifier: Modifier = Modifier,
-        dictionary: ProfileFormDictionary,
-        value: Gender,
-        onValueChange: (Gender) -> Unit
-    ) {
-        RadioInputField(
-            modifier = modifier,
-            selected = value,
-            items = Gender.entries.toList(),
-            label = dictionary.genderFieldLabel.string()
-        ) { gender, selected ->
-            RadioInputFieldItem(
-                isSelected = selected,
-                itemContainer = { modifier, inner ->
-                    Surface(
-                        modifier = modifier,
-                        color = gender.containerColor,
-                        contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                        shape = RoundedCornerShape(20.dp),
-                        onClick = { onValueChange(gender) }
-                    ) {
-                        inner()
-                    }
-                },
-                itemContent = {
-                    Text(
-                        modifier = Modifier.weight(1.0f),
-                        text = gender.shortUiText.string(),
-                        style = MaterialTheme.typography.bodyLarge,
-                        textAlign = TextAlign.Center
-                    )
-                }
-            )
-        }
     }
 
     @Composable
