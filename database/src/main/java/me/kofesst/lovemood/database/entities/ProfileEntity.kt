@@ -3,7 +3,6 @@ package me.kofesst.lovemood.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import me.kofesst.lovemood.core.models.Gender
 import me.kofesst.lovemood.database.DatabaseTables
 
 /**
@@ -25,12 +24,6 @@ internal data class ProfileEntity(
         typeAffinity = ColumnInfo.TEXT
     )
     val username: String = "",
-
-    @ColumnInfo(
-        name = DatabaseTables.Profiles.GENDER_COLUMN,
-        typeAffinity = ColumnInfo.TEXT
-    )
-    val genderName: String = Gender.Male.name,
 
     @ColumnInfo(
         name = DatabaseTables.Profiles.DATE_OF_BIRTH_COLUMN,

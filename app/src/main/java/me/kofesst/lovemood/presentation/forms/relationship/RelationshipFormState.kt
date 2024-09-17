@@ -1,6 +1,5 @@
 package me.kofesst.lovemood.presentation.forms.relationship
 
-import me.kofesst.lovemood.core.models.Gender
 import me.kofesst.lovemood.core.models.Profile
 import me.kofesst.lovemood.core.models.Relationship
 import me.kofesst.lovemood.core.text.AppTextHolder
@@ -12,7 +11,6 @@ import java.time.LocalDate
 private fun emptyProfile() = Profile(
     id = -1,
     username = "",
-    gender = Gender.Male,
     dateOfBirth = LocalDate.now(),
     avatarContent = byteArrayOf()
 )

@@ -6,7 +6,6 @@ internal object DatabaseTables {
 
         const val ID_COLUMN = "id_profile"
         const val USERNAME_COLUMN = "username"
-        const val GENDER_COLUMN = "gender_name"
         const val DATE_OF_BIRTH_COLUMN = "date_of_birth"
         const val AVATAR_COLUMN = "avatar_content"
     }

@@ -1,9 +1,6 @@
 package me.kofesst.lovemood.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import me.kofesst.lovemood.core.models.Gender
 
 val primaryLight = Color(0xFF415F91)
 val onPrimaryLight = Color(0xFFFFFFFF)
@@ -76,21 +73,3 @@ val surfaceContainerLowDark = Color(0xFF191C20)
 val surfaceContainerDark = Color(0xFF1D2024)
 val surfaceContainerHighDark = Color(0xFF282A2F)
 val surfaceContainerHighestDark = Color(0xFF33353A)
-
-val maleContainerLight = Color(0xFF32B0FF)
-val femaleContainerLight = Color(0xFFE0A6FB)
-val maleContainerDark = Color(0xFF0F66A4)
-val femaleContainerDark = Color(0xFFA739CB)
-
-val Gender.containerColor
-    @Composable get() = when (this) {
-        Gender.Male -> maleColor()
-        Gender.Female -> femaleColor()
-    }
-
-@Composable
-fun maleColor() = if (isSystemInDarkTheme()) maleContainerDark else maleContainerLight
-
-@Composable
-fun femaleColor() = if (isSystemInDarkTheme()) femaleContainerDark else femaleContainerLight
-

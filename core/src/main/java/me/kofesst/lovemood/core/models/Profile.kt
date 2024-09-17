@@ -9,8 +9,6 @@ import java.time.LocalDate
  *
  * [username] - имя профиля.
  *
- * [gender] - пол пользователя.
- *
  * [dateOfBirth] - дата рождения пользователя.
  *
  * [avatarContent] - контент изображения аватара профиля.
@@ -19,7 +17,6 @@ import java.time.LocalDate
 data class Profile(
     val id: Int,
     val username: String,
-    val gender: Gender,
     val dateOfBirth: LocalDate,
     val avatarContent: ByteArray
 )

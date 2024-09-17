@@ -17,9 +17,6 @@
     <string name="errors__too_late_date">Date is too late</string>
     <string name="errors__invalid_form_values">Some fields have errors</string>
 
-    <string name="models__short_male_gender_name">Male</string>
-    <string name="models__short_female_gender_name">Female</string>
-
     <string name="todos__status__in_develop">developing</string>
     <string name="todos__status__released">added in version %app_version%</string>
 
@@ -51,7 +48,6 @@
     <string name="screens__user_profile_form__avatar_picker_action">Select image</string>
     <string name="screens__user_profile_form__username_field_label">Your profile username</string>
     <string name="screens__user_profile_form__username_field_placeholder">Cyrillic, latin and digits</string>
-    <string name="screens__user_profile_form__gender_field_label">Your gender</string>
     <string name="screens__user_profile_form__date_of_birth_field_label">Your date of birth</string>
     <string name="screens__user_profile_form__create_header_title">Greetings!</string>
     <string name="screens__user_profile_form__create_header_subtitle">Firstly let\'s create your profile. It won\'t take long</string>
@@ -61,7 +57,6 @@
     <string name="screens__relationship_form__avatar_picker_action">Select image</string>
     <string name="screens__relationship_form__username_field_label">Partner\'s username</string>
     <string name="screens__relationship_form__username_field_placeholder">Cyrillic, latin and digits</string>
-    <string name="screens__relationship_form__gender_field_label">Partner\'s gender</string>
     <string name="screens__relationship_form__date_of_birth_field_label">Partners\'s date of birth</string>
     <string name="screens__relationship_form__start_date_field_label">Relationship start date</string>
     <string name="screens__relationship_form__create_header_title">Add your relationship</string>

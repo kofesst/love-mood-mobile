@@ -17,7 +17,6 @@ class AppDictionary(appContext: Context) {
     )
 
     val errors = ErrorsDictionary(appContext)
-    val models = ModelsDictionary(appContext)
     val dates = DatesDictionary(appContext)
     val screens = ScreensDictionary(appContext)
     val todos = AppTodosDictionary(appContext)
