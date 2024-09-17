@@ -1,5 +1,7 @@
 package me.kofesst.lovemood.presentation.forms.profile
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -8,10 +10,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import me.kofesst.lovemood.app.LocalAppState
 import me.kofesst.lovemood.app.LocalDateTimePattern
+import me.kofesst.lovemood.app.dictionary
 import me.kofesst.lovemood.core.models.Gender
 import me.kofesst.lovemood.core.ui.components.input.RadioInputField
 import me.kofesst.lovemood.core.ui.components.input.RadioInputFieldItem
@@ -21,6 +26,113 @@ import me.kofesst.lovemood.localization.dictionary.screens.forms.ProfileFormDict
 import me.kofesst.lovemood.ui.shortUiText
 import me.kofesst.lovemood.ui.theme.containerColor
 
+@Composable
+fun ProfilePictureStage(
+    modifier: Modifier,
+    form: ProfileFormState,
+    onFormAction: (ProfileFormAction) -> Unit
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(space = 40.dp)
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(space = 10.dp)
+        ) {
+            Text(
+                text = "Фотография профиля",
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+            Text(
+                text = "Выберите фотографию профиля",
+                fontSize = 20.sp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Text(
+                text = "Не стесняйтесь! Видеть её будете только Вы",
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.secondary
+            )
+        }
+        val dictionary = dictionary.screens.userProfileForm.formDictionary
+        AvatarPickerField(
+            modifier = Modifier.fillMaxWidth(),
+            dictionary = dictionary,
+            content = form.avatarContent
+        ) {
+            onFormAction(
+                ProfileFormAction.AvatarContentChanged(it)
+            )
+        }
+    }
+}
+
+@Composable
+fun ProfileDataStage(
+    modifier: Modifier = Modifier,
+    form: ProfileFormState,
+    onFormAction: (ProfileFormAction) -> Unit
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(space = 40.dp)
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(space = 10.dp)
+        ) {
+            Text(
+                text = "Данные профиля",
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+            Text(
+                text = "Укажите информацию о себе",
+                fontSize = 20.sp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Text(
+                text = "Не переживайте! Все данные хранятся только на Вашем устройстве и не улетят ни в чьи злые руки",
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.secondary
+            )
+        }
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(space = 20.dp)
+        ) {
+            val dictionary = dictionary.screens.userProfileForm.formDictionary
+            UsernameInputField(
+                modifier = Modifier.fillMaxWidth(),
+                dictionary = dictionary,
+                value = form.username,
+                onValueChange = {
+                    onFormAction(
+                        ProfileFormAction.UsernameChanged(it)
+                    )
+                },
+                error = form.usernameError?.string()
+            )
+            DateOfBirthInputField(
+                modifier = Modifier.fillMaxWidth(),
+                dictionary = dictionary,
+                value = form.dateOfBirth,
+                onValueChange = {
+                    onFormAction(
+                        ProfileFormAction.DateOfBirthChanged(it)
+                    )
+                },
+                error = form.dateOfBirthError?.string()
+            )
+        }
+    }
+}
+
+@Deprecated("Use layout from StagedFormLayout.kt")
 fun LazyListScope.profileFormContent(
     dictionary: ProfileFormDictionary,
     form: ProfileFormState,
