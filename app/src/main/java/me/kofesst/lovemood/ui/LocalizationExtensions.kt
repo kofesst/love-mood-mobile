@@ -2,7 +2,6 @@ package me.kofesst.lovemood.ui
 
 import androidx.compose.runtime.Composable
 import me.kofesst.lovemood.app.LocalDictionary
-import me.kofesst.lovemood.core.models.Gender
 import me.kofesst.lovemood.core.text.AppTextHolder
 import me.kofesst.lovemood.features.validation.operations.InvalidDateError
 import me.kofesst.lovemood.features.validation.operations.InvalidMaskError
@@ -51,11 +50,3 @@ fun ValidationError.uiText(dictionary: ErrorsDictionary): AppTextHolder {
         else -> dictionary.somethingWentWrong
     }
 }
-
-val Gender.shortUiText: AppTextHolder
-    @Composable get() = with(LocalDictionary.current.models) {
-        when (this@shortUiText) {
-            Gender.Male -> shortMaleGenderName
-            Gender.Female -> shortFemaleGenderName
-        }
-    }

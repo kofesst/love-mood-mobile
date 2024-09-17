@@ -7,6 +7,5 @@ data class ProfileFormDictionary(
     val avatarPickerAction: AppTextHolder,
     val usernameFieldLabel: AppTextHolder,
     val usernameFieldPlaceholder: AppTextHolder,
-    val genderFieldLabel: AppTextHolder,
     val dateOfBirthFieldLabel: AppTextHolder
 )

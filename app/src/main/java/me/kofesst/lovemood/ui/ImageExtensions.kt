@@ -8,18 +8,14 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import me.kofesst.lovemood.R
-import me.kofesst.lovemood.core.models.Gender
 import me.kofesst.lovemood.core.models.Profile
 import me.kofesst.lovemood.core.models.Relationship
 import me.kofesst.lovemood.core.ui.components.image.ByteImage
-import me.kofesst.lovemood.ui.theme.containerColor
 
 @Composable
 fun RelationshipAvatars(
@@ -62,7 +58,6 @@ fun ProfileAvatarImage(
         byteContent = profile.avatarContent,
         placeholder = {
             AvatarPlaceholder(
-                gender = profile.gender,
                 size = imageSize,
                 shape = imageShape
             )
@@ -73,7 +68,6 @@ fun ProfileAvatarImage(
 @Composable
 fun AvatarPlaceholder(
     modifier: Modifier = Modifier,
-    gender: Gender,
     size: Dp = 96.dp,
     shape: Shape = CircleShape,
 ) {
@@ -81,16 +75,7 @@ fun AvatarPlaceholder(
         modifier = modifier
             .size(size)
             .clip(shape),
-        painter = painterResource(
-            id = when (gender) {
-                Gender.Male -> R.drawable.ic_male_avatar
-                Gender.Female -> R.drawable.ic_female_avatar
-            }
-        ),
-        colorFilter = ColorFilter.tint(
-            color = gender.containerColor,
-            blendMode = BlendMode.Multiply
-        ),
+        painter = painterResource(id = R.drawable.ic_male_avatar),
         contentDescription = null
     )
 }

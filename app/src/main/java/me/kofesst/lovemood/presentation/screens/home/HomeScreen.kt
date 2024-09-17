@@ -42,7 +42,6 @@ import me.kofesst.lovemood.app.LocalShimmer
 import me.kofesst.lovemood.app.dictionary
 import me.kofesst.lovemood.async.asyncValueContent
 import me.kofesst.lovemood.async.requiredAsyncValueContent
-import me.kofesst.lovemood.core.models.Gender
 import me.kofesst.lovemood.core.models.PhotoMemory
 import me.kofesst.lovemood.core.models.Profile
 import me.kofesst.lovemood.core.models.Relationship
@@ -96,7 +95,6 @@ object HomeScreen : AppScreen() {
                     asyncRelationship = asyncRelationship
                 )
                 buildBody(
-                    userProfile = asyncProfile.value,
                     asyncRelationship = asyncRelationship,
                     asyncMemories = asyncMemories
                 )
@@ -265,10 +263,7 @@ object HomeScreen : AppScreen() {
                     modifier = Modifier.size(72.dp),
                     byteContent = profile.avatarContent,
                     placeholder = {
-                        AvatarPlaceholder(
-                            gender = profile.gender,
-                            size = 72.dp
-                        )
+                        AvatarPlaceholder(size = 72.dp)
                     }
                 )
                 Column(
@@ -346,7 +341,6 @@ object HomeScreen : AppScreen() {
 
     //region Body content
     private fun LazyListScope.buildBody(
-        userProfile: Profile?,
         asyncRelationship: me.kofesst.lovemood.async.AsyncValue<Relationship>,
         asyncMemories: me.kofesst.lovemood.async.AsyncValuesList<PhotoMemory>
     ) {
@@ -365,8 +359,7 @@ object HomeScreen : AppScreen() {
                                 .padding(40.dp),
                             onCreateRelationshipClick = {
                                 appState.navigate(AppDestinations.Forms.Relationship)
-                            },
-                            userGender = userProfile?.gender ?: Gender.Male
+                            }
                         )
                     }
                 } else {
@@ -442,8 +435,7 @@ object HomeScreen : AppScreen() {
     @Composable
     private fun NoRelationshipContent(
         modifier: Modifier = Modifier,
-        onCreateRelationshipClick: () -> Unit,
-        userGender: Gender
+        onCreateRelationshipClick: () -> Unit
     ) {
         Column(
             modifier = modifier,
@@ -455,8 +447,7 @@ object HomeScreen : AppScreen() {
         ) {
             LottieFile(
                 resource = LottieResources.SadHeart.resource(),
-                size = LottieSize.Maximized,
-                dynamicProperties = LottieResources.SadHeart.dynamicProperties(userGender)
+                size = LottieSize.Maximized
             )
             Text(
                 text = dictionary.screens.home.noRelationshipTitle.string(),

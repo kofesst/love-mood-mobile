@@ -1,6 +1,5 @@
 package me.kofesst.lovemood.presentation.forms.profile
 
-import me.kofesst.lovemood.core.models.Gender
 import me.kofesst.lovemood.core.models.Profile
 import me.kofesst.lovemood.core.text.AppTextHolder
 import me.kofesst.lovemood.features.date.DateTimePattern
@@ -13,7 +12,6 @@ data class ProfileFormState(
     val avatarContent: ByteArray = byteArrayOf(),
     val username: String = "",
     val usernameError: AppTextHolder? = null,
-    val gender: Gender = Gender.Male,
     val dateOfBirth: String = "",
     val dateOfBirthError: AppTextHolder? = null
 ) : FormState<Profile>() {
@@ -26,7 +24,6 @@ data class ProfileFormState(
     override fun asModel() = Profile(
         id = id,
         username = username,
-        gender = gender,
         dateOfBirth = dateTimePattern.parseDate(dateOfBirth),
         avatarContent = avatarContent
     )
@@ -36,7 +33,6 @@ data class ProfileFormState(
         avatarContent = model.avatarContent,
         username = model.username,
         usernameError = null,
-        gender = model.gender,
         dateOfBirth = dateTimePattern.formatDate(model.dateOfBirth),
         dateOfBirthError = null
     )

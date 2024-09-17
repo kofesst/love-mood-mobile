@@ -18,9 +18,6 @@ class UserProfileFormScreenDictionary(appContext: Context) {
     private val usernameFieldPlaceholder = ResourceText(
         R.string.screens__user_profile_form__username_field_placeholder, appContext
     )
-    private val genderFieldLabel = ResourceText(
-        R.string.screens__user_profile_form__gender_field_label, appContext
-    )
     private val dateOfBirthFieldLabel = ResourceText(
         R.string.screens__user_profile_form__date_of_birth_field_label, appContext
     )
@@ -30,7 +27,6 @@ class UserProfileFormScreenDictionary(appContext: Context) {
         avatarPickerAction = avatarPickerAction,
         usernameFieldLabel = usernameFieldLabel,
         usernameFieldPlaceholder = usernameFieldPlaceholder,
-        genderFieldLabel = genderFieldLabel,
         dateOfBirthFieldLabel = dateOfBirthFieldLabel
     )
 

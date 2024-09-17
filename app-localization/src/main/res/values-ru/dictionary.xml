@@ -12,9 +12,6 @@
     <string name="errors__too_late_date">Слишком поздняя дата</string>
     <string name="errors__invalid_form_values">Некоторые поля содержат ошибку</string>
 
-    <string name="models__short_male_gender_name">Мужской</string>
-    <string name="models__short_female_gender_name">Женский</string>
-
     <string name="todos__status__in_develop">в разработке</string>
     <string name="todos__status__released">добавлено в версии %app_version%</string>
 
@@ -47,7 +44,6 @@
     <string name="screens__user_profile_form__avatar_picker_action">Выбрать изображение</string>
     <string name="screens__user_profile_form__username_field_label">Имя Вашего профиля</string>
     <string name="screens__user_profile_form__username_field_placeholder">Кириллица, латиница и цифры</string>
-    <string name="screens__user_profile_form__gender_field_label">Ваш пол</string>
     <string name="screens__user_profile_form__date_of_birth_field_label">Ваша дата рождения</string>
     <string name="screens__user_profile_form__create_header_title">Добро пожаловать!</string>
     <string name="screens__user_profile_form__create_header_subtitle">Для начала создайте собственный профиль. Это займет не больше минуты</string>
@@ -57,7 +53,6 @@
     <string name="screens__relationship_form__avatar_picker_action">Выбрать изображение</string>
     <string name="screens__relationship_form__username_field_label">Имя партнера</string>
     <string name="screens__relationship_form__username_field_placeholder">Кириллица, латиница и цифры</string>
-    <string name="screens__relationship_form__gender_field_label">Пол партнера</string>
     <string name="screens__relationship_form__date_of_birth_field_label">Дата рождения партнера</string>
     <string name="screens__relationship_form__start_date_field_label">Дата начала отношений</string>
     <string name="screens__relationship_form__create_header_title">Добавьте Ваши отношения</string>
