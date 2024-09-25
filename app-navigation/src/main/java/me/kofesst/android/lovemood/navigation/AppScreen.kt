@@ -1,35 +1,14 @@
 package me.kofesst.android.lovemood.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavBackStackEntry
-import me.kofesst.lovemood.core.ui.components.scaffold.ComposableContent
 
 /**
  * Класс, представляющий любой экран приложения.
  */
-abstract class AppScreen(
-    /**
-     * Начальный контент верхней панели приложения.
-     */
-    initialTopBarContent: ComposableContent = {}
-) {
-    private val _topBarContentState: MutableState<ComposableContent> =
-        mutableStateOf(value = initialTopBarContent)
-
-    /**
-     * Состояние контента верхней панели приложения.
-     */
-    val topBarContentState: State<ComposableContent> = _topBarContentState
-
-    protected fun updateTopBar(newContent: ComposableContent) {
-        _topBarContentState.value = newContent
-    }
-
+abstract class AppScreen() {
     /**
      * Контент экрана.
      *

@@ -1,5 +1,6 @@
 package me.kofesst.lovemood.core.ui.components.input
 
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -74,6 +75,7 @@ fun TextInputField(
     typography: TextInputFieldTypography = TextInputFieldDefaults.typography(),
     contentPadding: PaddingValues = InputFieldContainerDefaults.contentPadding,
     containerShape: Shape = InputFieldContainerDefaults.containerShape,
+    interactionSource: MutableInteractionSource? = null,
     value: String,
     onValueChange: (String) -> Unit,
     label: String? = null,
@@ -101,6 +103,7 @@ fun TextInputField(
         maxLines = maxLines,
         enabled = enabled,
         readOnly = isReadOnly,
+        interactionSource = interactionSource,
         decorationBox = { innerComposable ->
             TextInputFieldDecoration(
                 modifier = Modifier.fillMaxWidth(),

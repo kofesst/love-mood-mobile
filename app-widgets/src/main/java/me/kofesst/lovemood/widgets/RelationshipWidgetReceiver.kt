@@ -10,7 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.kofesst.lovemood.core.interactor.relationship.RelationshipInteractor
-import me.kofesst.lovemood.localization.dictionary.AppDictionary
+import me.kofesst.lovemood.localization.AppLocalization
 import javax.inject.Inject
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -22,7 +22,7 @@ class RelationshipWidgetReceiver : GlanceAppWidgetReceiver() {
     lateinit var relationshipInteractor: RelationshipInteractor
 
     @Inject
-    lateinit var dictionary: AppDictionary
+    lateinit var localization: AppLocalization
 
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
@@ -41,7 +41,7 @@ class RelationshipWidgetReceiver : GlanceAppWidgetReceiver() {
         RelationshipWidgetWorker.updateWidgets(
             context = context,
             relationshipInteractor = relationshipInteractor,
-            dictionary = dictionary
+            localization = localization
         )
     }
 }

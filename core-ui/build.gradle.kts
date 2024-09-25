@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.lottie.compose)
 
     // Modules
+    implementation(project(":features-date"))
     implementation(project(":core"))
 
     // Androidx

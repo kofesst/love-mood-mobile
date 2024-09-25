@@ -43,10 +43,6 @@ android {
 }
 
 dependencies {
-    // Glance
-    implementation(libs.glance)
-    implementation(libs.glance.appwidget)
-
     // Datastore
     implementation(libs.datastore.preferences)
     implementation(libs.datastore.preferences.core)
@@ -73,6 +69,7 @@ dependencies {
     ksp(libs.di.hilt.compiler.androidx)
 
     // Modules
+    implementation(project(":presentation"))
     implementation(project(":app-widgets"))
     implementation(project(":app-async"))
     implementation(project(":app-navigation"))

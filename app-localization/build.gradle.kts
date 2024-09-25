@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.devtools.ksp)
+    alias(libs.plugins.di.hilt.android)
 }
 
 android {
@@ -33,8 +35,14 @@ android {
 }
 
 dependencies {
+    // DI
+    implementation(libs.di.hilt.android)
+    ksp(libs.di.hilt.compiler.android)
+    ksp(libs.di.hilt.compiler.androidx)
+
     // Modules
     implementation(project(":features-date"))
+    implementation(project(":features-validation"))
     implementation(project(":core"))
 
     // AndroidX
@@ -44,5 +52,10 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
 
+    // Tests
     testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
 }

@@ -1,7 +1,4 @@
 <resources>
-    <string name="not_implemented_yet">В разработке</string>
-    <string name="app_version">Версия: %app_version%</string>
-
     <string name="errors__something_went_wrong">Что-то пошло не так</string>
     <string name="errors__required_field">Необходимо заполнить</string>
     <string name="errors__short_string">Слишком короткое значение</string>
@@ -12,79 +9,98 @@
     <string name="errors__too_late_date">Слишком поздняя дата</string>
     <string name="errors__invalid_form_values">Некоторые поля содержат ошибку</string>
 
-    <string name="todos__status__in_develop">в разработке</string>
-    <string name="todos__status__released">добавлено в версии %app_version%</string>
+    <string name="cases__days_first_case">день</string>
+    <string name="cases__days_second_case">дня</string>
+    <string name="cases__days_third_case">дней</string>
 
-    <string name="dates__days_first_case">день</string>
-    <string name="dates__days_second_case">дня</string>
-    <string name="dates__days_third_case">дней</string>
-    <string name="dates__months_first_case">месяц</string>
-    <string name="dates__months_second_case">месяца</string>
-    <string name="dates__months_third_case">месяцев</string>
-    <string name="dates__years_first_case">год</string>
-    <string name="dates__years_second_case">года</string>
-    <string name="dates__years_third_case">лет</string>
+    <string name="cases__months_first_case">месяц</string>
+    <string name="cases__months_second_case">месяца</string>
+    <string name="cases__months_third_case">месяцев</string>
 
-    <string name="screens__home__bottom_bar_title">Главная</string>
-    <string name="screens__home__love_duration_section_label">Вы вместе</string>
-    <string name="screens__home__events_section_label">Следующее событие</string>
-    <string name="screens__home__memories_section_label">Воспоминания</string>
-    <string name="screens__home__start_date_when_unit_are_empty">с сегодняшнего дня</string>
-    <string name="screens__home__edit_profile_action">Редактировать профиль</string>
-    <string name="screens__home__edit_relationship_action">Редактировать отношения</string>
-    <string name="screens__home__user_and_partner">%user_username% и %partner_username%</string>
-    <string name="screens__home__no_relationship_title">Вы не добавили отношения</string>
-    <string name="screens__home__add_relationship_action">Добавить вторую половинку</string>
-    <string name="screens__home__do_not_have_memories">Вы ещё не добавили воспоминания</string>
-    <string name="screens__home__add_first_memory_action">Добавить первое воспоминание</string>
-    <string name="screens__home__memories_content_text">Ваши совместные запечатленные моменты - это прекрасно!</string>
-    <string name="screens__home__view_all_memories_action">Посмотреть все</string>
+    <string name="cases__years_first_case">год</string>
+    <string name="cases__years_second_case">года</string>
+    <string name="cases__years_third_case">лет</string>
 
-    <string name="screens__user_profile_form__avatar_picker_label">Измените изображение своего профиля</string>
-    <string name="screens__user_profile_form__avatar_picker_action">Выбрать изображение</string>
-    <string name="screens__user_profile_form__username_field_label">Имя Вашего профиля</string>
-    <string name="screens__user_profile_form__username_field_placeholder">Кириллица, латиница и цифры</string>
-    <string name="screens__user_profile_form__date_of_birth_field_label">Ваша дата рождения</string>
-    <string name="screens__user_profile_form__create_header_title">Добро пожаловать!</string>
-    <string name="screens__user_profile_form__create_header_subtitle">Для начала создайте собственный профиль. Это займет не больше минуты</string>
-    <string name="screens__user_profile_form__edit_header">Редактирование профиля</string>
+    <string name="cases__liters_first_case">литр</string>
+    <string name="cases__liters_second_case">литра</string>
+    <string name="cases__liters_third_case">литров</string>
 
-    <string name="screens__relationship_form__avatar_picker_label">Загрузите изображение партнера</string>
-    <string name="screens__relationship_form__avatar_picker_action">Выбрать изображение</string>
-    <string name="screens__relationship_form__username_field_label">Имя партнера</string>
-    <string name="screens__relationship_form__username_field_placeholder">Кириллица, латиница и цифры</string>
-    <string name="screens__relationship_form__date_of_birth_field_label">Дата рождения партнера</string>
-    <string name="screens__relationship_form__start_date_field_label">Дата начала отношений</string>
-    <string name="screens__relationship_form__create_header_title">Добавьте Ваши отношения</string>
-    <string name="screens__relationship_form__create_header_subtitle">И начните отслеживать самые счастливые моменты Вашей совместной жизни</string>
-    <string name="screens__relationship_form__edit_header">Редактирование отношений</string>
+    <string name="cases__times_first_case">раз</string>
+    <string name="cases__times_second_case">раза</string>
+    <string name="cases__times_third_case">раз</string>
 
-    <string name="screens__memories_list__screen_title">Ваши воспоминания</string>
-    <string name="screens__memories_list__memories_calendar_card_label">Календарь воспоминаний</string>
-    <string name="screens__memories_list__memories_calendar_card_text">
-        Посмотрите каждое ваше воспоминание в виде календаря и постарайтесь заполнить каждый день
+    <string name="cases__stars_first_case">звёзда</string>
+    <string name="cases__stars_second_case">звезды</string>
+    <string name="cases__stars_third_case">звёзд</string>
+
+    <string name="cases__people_first_case">человек</string>
+    <string name="cases__people_second_case">человека</string>
+    <string name="cases__people_third_case">человек</string>
+
+    <string name="abbreviates__thousand_first_case">тысяча</string>
+    <string name="abbreviates__thousand_second_case">тысячи</string>
+    <string name="abbreviates__thousand_third_case">тысяч</string>
+    <string name="abbreviates__million_first_case">миллион</string>
+    <string name="abbreviates__million_second_case">миллиона</string>
+    <string name="abbreviates__million_third_case">миллионов</string>
+    <string name="abbreviates__billion_first_case">миллиард</string>
+    <string name="abbreviates__billion_second_case">миллиарда</string>
+    <string name="abbreviates__billion_third_case">миллиардов</string>
+    <string name="abbreviates__trillion_first_case">триллион</string>
+    <string name="abbreviates__trillion_second_case">триллиона</string>
+    <string name="abbreviates__trillion_third_case">триллионов</string>
+
+    <string name="abbreviates__thousand_first_case_acc">тысячу</string>
+    <string name="abbreviates__thousand_second_case_acc">тысячи</string>
+    <string name="abbreviates__thousand_third_case_acc">тысяч</string>
+    <string name="abbreviates__million_first_case_acc">миллион</string>
+    <string name="abbreviates__million_second_case_acc">миллиона</string>
+    <string name="abbreviates__million_third_case_acc">миллионов</string>
+    <string name="abbreviates__billion_first_case_acc">миллиард</string>
+    <string name="abbreviates__billion_second_case_acc">миллиарда</string>
+    <string name="abbreviates__billion_third_case_acc">миллиардов</string>
+    <string name="abbreviates__trillion_first_case_acc">триллион</string>
+    <string name="abbreviates__trillion_second_case_acc">триллиона</string>
+    <string name="abbreviates__trillion_third_case_acc">триллионов</string>
+
+    <string name="duration_fact__heartbeats__left">за это время Ваше сердце ударилось примерно</string>
+
+    <string name="profile_form__selecting_picture_title">Фотография профиля</string>
+    <string name="profile_form__selecting_picture_subtitle">Выберите фотографию профиля</string>
+    <string name="profile_form__selecting_picture_label">Не стесняйтесь! Видеть её будете только Вы</string>
+    <string name="profile_form__entering_data_title">Данные профиля</string>
+    <string name="profile_form__entering_data_subtitle">Укажите данные о себе</string>
+    <string name="profile_form__entering_data_label">
+        Не переживайте! Все данные хранятся только на Вашем устройстве и не улетят ни в чьи злые руки
     </string>
-    <string name="screens__memories_list__open_memories_calendar_action">Открыть календарь</string>
-    <string name="screens__memories_list__add_new_memory_action">Добавить воспоминание</string>
+    <string name="profile_form__select_avatar_label">Выбрать изображение</string>
+    <string name="profile_form__remove_avatar_label">Удалить изображение</string>
+    <string name="profile_form__username_label">Введите имя профиля</string>
+    <string name="profile_form__username_placeholder">Как Вас называть?</string>
+    <string name="profile_form__date_of_birth_label">Дата рождения</string>
 
-    <string name="screens__memory_form__photo_picker_label">Загрузите воспоминание</string>
-    <string name="screens__memory_form__photo_picker_action">Выбрать изображение</string>
-    <string name="screens__memory_form__is_associated_to_date_label">Воспоминание связано с датой</string>
-    <string name="screens__memory_form__associated_date_field_label">Связанная дата</string>
-    <string name="screens__memory_form__create_header_title">Добавьте воспоминание</string>
-    <string name="screens__memory_form__create_header_subtitle">И запомните этот момент навсегда</string>
-    <string name="screens__memory_form__edit_header">Редактирование воспоминания</string>
+    <string name="profile_partner_form__selecting_picture_title">Фотография профиля</string>
+    <string name="profile_partner_form__selecting_picture_subtitle">Выберите фотографию профиля</string>
+    <string name="profile_partner_form__selecting_picture_label">Не стесняйтесь! Видеть её будете только Вы</string>
+    <string name="profile_partner_form__entering_data_title">Данные профиля</string>
+    <string name="profile_partner_form__entering_data_subtitle">Укажите данные о Вашем партнёре</string>
+    <string name="profile_partner_form__entering_data_label">
+        Не переживайте! Все данные хранятся только на Вашем устройстве и не улетят ни в чьи злые руки
+    </string>
+    <string name="profile_partner_form__select_avatar_label">Выбрать изображение</string>
+    <string name="profile_partner_form__remove_avatar_label">Удалить изображение</string>
+    <string name="profile_partner_form__username_label">Введите имя профиля</string>
+    <string name="profile_partner_form__username_placeholder">Как называть Вашего партнёра?</string>
+    <string name="profile_partner_form__date_of_birth_label">Дата рождения</string>
 
-    <string name="screens__memories_calendar__screen_title">Календарь воспоминаний</string>
+    <string name="relationship_form__love_start_date_stage_title">Когда Вы начали встречаться?</string>
+    <string name="relationship_form__start_date_label">Дата начала отношений</string>
 
-    <string name="screens__app__bottom_bar_title">Приложение</string>
-    <string name="screen__app__about_app_title">Приложение</string>
-    <string name="screen__app__app_todos_screen_title">План разработки</string>
-    <string name="screen__app__app_settings_card_title">Настройки приложения\n(в разработке)</string>
-    <string name="screen__app__app_settings_card_text">Настройте приложение под себя</string>
-    <string name="screen__app__app_todos_card_title">План разработки приложения</string>
-    <string name="screen__app__app_todos_card_text">Посмотрите, как будет развиваться приложение в будущем</string>
-    <string name="screen__app__app_widget_card_title">Виджет отношений</string>
-    <string name="screen__app__app_widget_card_text">Отслеживайте ваши отношения вне приложения</string>
-    <string name="screen__app__todo_status">Статус: %todo_status%</string>
+    <string name="memory_form__select_photo_label">Выбрать изображение</string>
+    <string name="memory_form__remove_photo_label">Удалить изображение</string>
+    <string name="memory_form__associate_with_date_label">Связать воспоминание с датой</string>
+    <string name="memory_form__associated_date_label">Когда это произошло?</string>
+    <string name="memory_form__title">Воспоминания - это супер!</string>
+    <string name="memory_form__subtitle">Сохраните Ваш совместный момент навсегда</string>
+    <string name="memories_overview__add_new_memory">Добавить воспоминание</string>
 </resources>

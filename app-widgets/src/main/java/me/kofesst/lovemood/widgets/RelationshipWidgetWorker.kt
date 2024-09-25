@@ -11,7 +11,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import me.kofesst.lovemood.core.interactor.relationship.RelationshipInteractor
 import me.kofesst.lovemood.features.date.DatePeriod
-import me.kofesst.lovemood.localization.dictionary.AppDictionary
+import me.kofesst.lovemood.localization.AppLocalization
 import java.time.LocalDate
 
 @HiltWorker
@@ -19,7 +19,7 @@ class RelationshipWidgetWorker @AssistedInject constructor(
     @Assisted private val context: Context,
     @Assisted parameters: WorkerParameters,
     private val relationshipInteractor: RelationshipInteractor,
-    private val dictionary: AppDictionary
+    private val localization: AppLocalization
 ) : CoroutineWorker(context, parameters) {
     companion object {
         const val WORKER_TAG = "RelationshipWidgetWorker"
@@ -28,14 +28,14 @@ class RelationshipWidgetWorker @AssistedInject constructor(
         suspend fun updateWidgets(
             context: Context,
             relationshipInteractor: RelationshipInteractor,
-            dictionary: AppDictionary
+            localization: AppLocalization
         ): Result {
             val glanceIds = GlanceAppWidgetManager(context).getGlanceIds(
                 provider = RelationshipWidget::class.java
             )
             val widgetData = getWidgetData(
                 relationshipInteractor = relationshipInteractor,
-                dictionary = dictionary
+                localization = localization
             ) ?: return Result.failure()
             glanceIds.forEach { glanceId ->
                 updateWidget(context, glanceId, widgetData)
@@ -65,16 +65,16 @@ class RelationshipWidgetWorker @AssistedInject constructor(
         @JvmStatic
         suspend fun getWidgetData(
             relationshipInteractor: RelationshipInteractor,
-            dictionary: AppDictionary
+            localization: AppLocalization
         ): RelationshipWidgetData? {
             val relationship = relationshipInteractor.get().getOrNull() ?: return null
             val loveDurationPeriod = DatePeriod(
                 startDate = relationship.startDate,
                 endDate = LocalDate.now()
             )
-            val loveDuration = dictionary.dates.buildAnnotatedPeriodString(
+            val loveDuration = localization.datePeriod.apply {
                 period = loveDurationPeriod
-            ).toString()
+            }.build()
             val widgetData = RelationshipWidgetData(
                 relationshipId = relationship.id,
                 userUsername = relationship.userProfile.username,
@@ -90,6 +90,6 @@ class RelationshipWidgetWorker @AssistedInject constructor(
     override suspend fun doWork(): Result = updateWidgets(
         context = context,
         relationshipInteractor = relationshipInteractor,
-        dictionary = dictionary
+        localization = localization
     )
 }

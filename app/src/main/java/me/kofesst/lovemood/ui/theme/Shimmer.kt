@@ -8,11 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 import com.valentinilk.shimmer.LocalShimmerTheme
-import com.valentinilk.shimmer.ShimmerBounds
 import com.valentinilk.shimmer.defaultShimmerTheme
-import com.valentinilk.shimmer.rememberShimmer
 import com.valentinilk.shimmer.shimmerSpec
-import me.kofesst.lovemood.app.LocalShimmer
 
 private fun lightShimmerColors() = listOf(
     Color.Unspecified.copy(alpha = 0.00f),
@@ -54,22 +51,6 @@ fun WithShimmerTheme(
     }
     CompositionLocalProvider(
         LocalShimmerTheme provides shimmerTheme
-    ) {
-        content()
-    }
-}
-
-@Composable
-fun WithShimmerEffect(
-    content: @Composable () -> Unit
-) {
-    val shimmerTheme = LocalShimmerTheme.current
-    val shimmer = rememberShimmer(
-        shimmerBounds = ShimmerBounds.Window,
-        theme = shimmerTheme
-    )
-    CompositionLocalProvider(
-        LocalShimmer provides shimmer
     ) {
         content()
     }

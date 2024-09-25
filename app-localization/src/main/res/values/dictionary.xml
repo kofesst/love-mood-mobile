@@ -1,12 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Love Mood</string>
 
-    <string name="not_implemented_yet">Not implemented yet</string>
-    <string name="app_version">Version: %app_version%</string>
-
-    <string name="screens__home__bottom_bar_title">Home</string>
-    <string name="screens__app__bottom_bar_title">About app</string>
-
     <string name="errors__something_went_wrong">Something went wrong</string>
     <string name="errors__required_field">This is a required field</string>
     <string name="errors__short_string">Value is too short</string>
@@ -17,77 +11,98 @@
     <string name="errors__too_late_date">Date is too late</string>
     <string name="errors__invalid_form_values">Some fields have errors</string>
 
-    <string name="todos__status__in_develop">developing</string>
-    <string name="todos__status__released">added in version %app_version%</string>
+    <string name="cases__days_first_case">day</string>
+    <string name="cases__days_second_case">days</string>
+    <string name="cases__days_third_case">days</string>
 
-    <string name="dates__days_first_case">day</string>
-    <string name="dates__days_second_case">days</string>
-    <string name="dates__days_third_case">days</string>
-    <string name="dates__months_first_case">month</string>
-    <string name="dates__months_second_case">months</string>
-    <string name="dates__months_third_case">months</string>
-    <string name="dates__years_first_case">year</string>
-    <string name="dates__years_second_case">years</string>
-    <string name="dates__years_third_case">years</string>
+    <string name="cases__months_first_case">month</string>
+    <string name="cases__months_second_case">months</string>
+    <string name="cases__months_third_case">months</string>
 
-    <string name="screens__home__love_duration_section_label">You\'ve been in love for</string>
-    <string name="screens__home__events_section_label">Next event</string>
-    <string name="screens__home__memories_section_label">Your moments</string>
-    <string name="screens__home__start_date_when_unit_are_empty">from today</string>
-    <string name="screens__home__edit_profile_action">Edit your profile</string>
-    <string name="screens__home__edit_relationship_action">Edit relationship</string>
-    <string name="screens__home__user_and_partner">%user_username% and %partner_username%</string>
-    <string name="screens__home__no_relationship_title">You didn\'t add your relationship</string>
-    <string name="screens__home__add_relationship_action">Add love partner</string>
-    <string name="screens__home__do_not_have_memories">You still have not memories</string>
-    <string name="screens__home__add_first_memory_action">Add your first memory</string>
-    <string name="screens__home__memories_content_text">Your captured memories together are wonderful!</string>
-    <string name="screens__home__view_all_memories_action">View all</string>
+    <string name="cases__years_first_case">year</string>
+    <string name="cases__years_second_case">years</string>
+    <string name="cases__years_third_case">years</string>
 
-    <string name="screens__user_profile_form__avatar_picker_label">Set your profile picture</string>
-    <string name="screens__user_profile_form__avatar_picker_action">Select image</string>
-    <string name="screens__user_profile_form__username_field_label">Your profile username</string>
-    <string name="screens__user_profile_form__username_field_placeholder">Cyrillic, latin and digits</string>
-    <string name="screens__user_profile_form__date_of_birth_field_label">Your date of birth</string>
-    <string name="screens__user_profile_form__create_header_title">Greetings!</string>
-    <string name="screens__user_profile_form__create_header_subtitle">Firstly let\'s create your profile. It won\'t take long</string>
-    <string name="screens__user_profile_form__edit_header">Editing profile</string>
+    <string name="cases__liters_first_case">liter</string>
+    <string name="cases__liters_second_case">liters</string>
+    <string name="cases__liters_third_case">liters</string>
 
-    <string name="screens__relationship_form__avatar_picker_label">Set your partner profile picture</string>
-    <string name="screens__relationship_form__avatar_picker_action">Select image</string>
-    <string name="screens__relationship_form__username_field_label">Partner\'s username</string>
-    <string name="screens__relationship_form__username_field_placeholder">Cyrillic, latin and digits</string>
-    <string name="screens__relationship_form__date_of_birth_field_label">Partners\'s date of birth</string>
-    <string name="screens__relationship_form__start_date_field_label">Relationship start date</string>
-    <string name="screens__relationship_form__create_header_title">Add your relationship</string>
-    <string name="screens__relationship_form__create_header_subtitle">And start tracking the happiest moments of your life together</string>
-    <string name="screens__relationship_form__edit_header">Editing relationship</string>
+    <string name="cases__times_first_case">time</string>
+    <string name="cases__times_second_case">times</string>
+    <string name="cases__times_third_case">times</string>
 
-    <string name="screens__memories_list__screen_title">Your memories</string>
-    <string name="screens__memories_list__memories_calendar_card_label">Memories calendar</string>
-    <string name="screens__memories_list__memories_calendar_card_text">
-        Look at each of your memories as calendar and try to fill each day
+    <string name="cases__stars_first_case">star</string>
+    <string name="cases__stars_second_case">stars</string>
+    <string name="cases__stars_third_case">stars</string>
+
+    <string name="cases__people_first_case">people</string>
+    <string name="cases__people_second_case">people</string>
+    <string name="cases__people_third_case">people</string>
+
+    <string name="abbreviates__thousand_first_case">thousand</string>
+    <string name="abbreviates__thousand_second_case">thousands</string>
+    <string name="abbreviates__thousand_third_case">thousands</string>
+    <string name="abbreviates__million_first_case">million</string>
+    <string name="abbreviates__million_second_case">millions</string>
+    <string name="abbreviates__million_third_case">millions</string>
+    <string name="abbreviates__billion_first_case">billion</string>
+    <string name="abbreviates__billion_second_case">billions</string>
+    <string name="abbreviates__billion_third_case">billions</string>
+    <string name="abbreviates__trillion_first_case">trillion</string>
+    <string name="abbreviates__trillion_second_case">trillions</string>
+    <string name="abbreviates__trillion_third_case">trillions</string>
+
+    <string name="abbreviates__thousand_first_case_acc">thousand</string>
+    <string name="abbreviates__thousand_second_case_acc">thousand</string>
+    <string name="abbreviates__thousand_third_case_acc">thousand</string>
+    <string name="abbreviates__million_first_case_acc">million</string>
+    <string name="abbreviates__million_second_case_acc">million</string>
+    <string name="abbreviates__million_third_case_acc">million</string>
+    <string name="abbreviates__billion_first_case_acc">billion</string>
+    <string name="abbreviates__billion_second_case_acc">billion</string>
+    <string name="abbreviates__billion_third_case_acc">billion</string>
+    <string name="abbreviates__trillion_first_case_acc">trillion</string>
+    <string name="abbreviates__trillion_second_case_acc">trillion</string>
+    <string name="abbreviates__trillion_third_case_acc">trillion</string>
+
+    <string name="duration_fact__heartbeats__left">за это время Ваше сердце ударилось примерно</string>
+
+    <string name="profile_form__selecting_picture_title">Profile picture</string>
+    <string name="profile_form__selecting_picture_subtitle">Choose your profile picture</string>
+    <string name="profile_form__selecting_picture_label">Don\'t be shy! Only you will see the photo</string>
+    <string name="profile_form__entering_data_title">Profile data</string>
+    <string name="profile_form__entering_data_subtitle">Enter your profile data</string>
+    <string name="profile_form__entering_data_label">
+        Don\'t worry! All data is stored only on your device and will not fall into anyone\'s evil hands
     </string>
-    <string name="screens__memories_list__open_memories_calendar_action">Open calendar</string>
-    <string name="screens__memories_list__add_new_memory_action">Add memory</string>
+    <string name="profile_form__select_avatar_label">Select an image</string>
+    <string name="profile_form__remove_avatar_label">Remove an image</string>
+    <string name="profile_form__username_label">Enter your profile name</string>
+    <string name="profile_form__username_placeholder">What should we call you?</string>
+    <string name="profile_form__date_of_birth_label">Pick your date of birth</string>
 
-    <string name="screens__memory_form__photo_picker_label">Load a memory photo</string>
-    <string name="screens__memory_form__photo_picker_action">Select image</string>
-    <string name="screens__memory_form__is_associated_to_date_label">Is the memory associated with a date?</string>
-    <string name="screens__memory_form__associated_date_field_label">Associated date</string>
-    <string name="screens__memory_form__create_header_title">Add a memory</string>
-    <string name="screens__memory_form__create_header_subtitle">And remember this moment forever</string>
-    <string name="screens__memory_form__edit_header">Memory editing</string>
+    <string name="profile_partner_form__selecting_picture_title">Profile picture</string>
+    <string name="profile_partner_form__selecting_picture_subtitle">Chouse your partner\'s profile picture</string>
+    <string name="profile_partner_form__selecting_picture_label">Don\'t be shy! Only you will see the photo</string>
+    <string name="profile_partner_form__entering_data_title">Profile data</string>
+    <string name="profile_partner_form__entering_data_subtitle">Enter your partner\'s profile data</string>
+    <string name="profile_partner_form__entering_data_label">
+        Don\'t worry! All data is stored only on your device and will not fall into anyone\'s evil hands
+    </string>
+    <string name="profile_partner_form__select_avatar_label">Select an image</string>
+    <string name="profile_partner_form__remove_avatar_label">Remove an image</string>
+    <string name="profile_partner_form__username_label">Enter your partner\'s name</string>
+    <string name="profile_partner_form__username_placeholder">How should we call your partner?</string>
+    <string name="profile_partner_form__date_of_birth_label">Pick your partner\'s date of birth</string>
 
-    <string name="screens__memories_calendar__screen_title">Memories calendar</string>
+    <string name="relationship_form__love_start_date_stage_title">Relationship start date</string>
+    <string name="relationship_form__start_date_label">When did you start dating?</string>
 
-    <string name="screen__app__about_app_title">About app</string>
-    <string name="screen__app__app_todos_screen_title">App developing</string>
-    <string name="screen__app__app_settings_card_title">App settings (developing)</string>
-    <string name="screen__app__app_settings_card_text">Customize application for yourself</string>
-    <string name="screen__app__app_todos_card_title">App developing</string>
-    <string name="screen__app__app_todos_card_text">See how the application will develop in the future</string>
-    <string name="screen__app__app_widget_card_title">Relationship widget</string>
-    <string name="screen__app__app_widget_card_text">Track your relationship outside of the app</string>
-    <string name="screen__app__todo_status">Status: %todo_status%</string>
+    <string name="memory_form__select_photo_label">Select an image</string>
+    <string name="memory_form__remove_photo_label">Remove an image</string>
+    <string name="memory_form__associate_with_date_label">Associate a memory with a date</string>
+    <string name="memory_form__associated_date_label">When did this happen?</string>
+    <string name="memory_form__title">Memories are cool!</string>
+    <string name="memory_form__subtitle">Save your together moment forever</string>
+    <string name="memories_overview__add_new_memory">Add memory</string>
 </resources>
