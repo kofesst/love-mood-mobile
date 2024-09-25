@@ -36,6 +36,22 @@ private fun <T : Any> SnapshotContentScope<T>.defaultSnapshotContentTransform():
     }
 }
 
+/**
+ * Компонент, изменяющийся в зависимости от снапшота [snapshot].
+ *
+ * [modifier] - модификатор компонента.
+ *
+ * [snapshot] - снапшот значения.
+ *
+ * [loadingContent] - контент, отображающийся при загрузке значения.
+ *
+ * [failedContent] - контент, отображающийся при ошибке загрузки.
+ *
+ * [loadedContent] - контент, отображающийся при успешной загрузке значения.
+ * Загруженное значение может равняться null.
+ *
+ * [contentTransform] - трансформация контента при изменении статуса снапшота.
+ */
 @Composable
 fun <T : Any> SnapshotContent(
     modifier: Modifier = Modifier,
@@ -65,6 +81,23 @@ fun <T : Any> SnapshotContent(
     }
 }
 
+
+/**
+ * Компонент, изменяющийся в зависимости от снапшота [snapshot].
+ *
+ * [modifier] - модификатор компонента.
+ *
+ * [snapshot] - снапшот значения.
+ *
+ * [loadingContent] - контент, отображающийся при загрузке значения.
+ *
+ * [failedContent] - контент, отображающийся при ошибке загрузки.
+ *
+ * [loadedContent] - контент, отображающийся при успешной загрузке значения.
+ * Загруженное значение никогда не равняется null.
+ *
+ * [contentTransform] - трансформация контента при изменении статуса снапшота.
+ */
 @Composable
 fun <T : Any> RequiredSnapshotContent(
     modifier: Modifier = Modifier,
