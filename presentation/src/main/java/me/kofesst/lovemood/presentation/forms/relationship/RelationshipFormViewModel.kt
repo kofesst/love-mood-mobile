@@ -30,12 +30,9 @@ class RelationshipFormViewModel @Inject constructor(
      */
     fun setIsEditing(isEditing: Boolean) {
         viewModelScope.launch {
-            changeFormMethod(
-                if (isEditing) FormMethod.EditingOldModel
-                else FormMethod.CreatingNewModel
-            )
             if (isEditing) {
                 relationshipInteractor.get().getOrNull()?.let { userRelationship ->
+                    changeFormMethod(FormMethod.EditingOldModel)
                     manuallyEditForm { currentForm ->
                         currentForm.fromModel(userRelationship)
                     }

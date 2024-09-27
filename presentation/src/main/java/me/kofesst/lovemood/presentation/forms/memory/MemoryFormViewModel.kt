@@ -28,13 +28,14 @@ class MemoryFormViewModel @Inject constructor(
     fun setEditingModel(memoryId: Int?) {
         viewModelScope.launch {
             if (memoryId != null) {
-                val editingModel = memoryInteractor.get(
+                memoryInteractor.get(
                     params = UseCaseParams.Single.with(memoryId)
-                ).getOrNull() ?: return@launch
-                manuallyEditForm { currentForm ->
-                    currentForm.fromModel(editingModel)
+                ).getOrNull()?.let { editingModel ->
+                    manuallyEditForm { currentForm ->
+                        currentForm.fromModel(editingModel)
+                    }
+                    changeFormMethod(FormMethod.EditingOldModel)
                 }
-                changeFormMethod(FormMethod.EditingOldModel)
             }
             prepareForm()
         }

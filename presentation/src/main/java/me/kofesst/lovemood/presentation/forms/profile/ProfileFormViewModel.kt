@@ -29,12 +29,9 @@ open class ProfileFormViewModel @Inject constructor(
      */
     fun setIsEditing(isEditing: Boolean) {
         viewModelScope.launch {
-            changeFormMethod(
-                if (isEditing) FormMethod.EditingOldModel
-                else FormMethod.CreatingNewModel
-            )
             if (isEditing) {
                 profileInteractor.get().getOrNull()?.let { userProfile ->
+                    changeFormMethod(FormMethod.EditingOldModel)
                     manuallyEditForm { currentForm ->
                         currentForm.fromModel(userProfile)
                     }
