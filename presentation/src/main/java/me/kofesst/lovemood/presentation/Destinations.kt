@@ -3,6 +3,7 @@ package me.kofesst.lovemood.presentation
 import me.kofesst.android.lovemood.navigation.AppDestination
 import me.kofesst.android.lovemood.navigation.AppScreen
 import me.kofesst.android.lovemood.navigation.BoolArgument
+import me.kofesst.android.lovemood.navigation.DestinationArgument
 import me.kofesst.android.lovemood.navigation.IntArgument
 import me.kofesst.lovemood.presentation.screens.home.HomeScreen
 import me.kofesst.lovemood.presentation.screens.memory.form.MemoryFormScreen
@@ -46,6 +47,10 @@ object Destinations {
             defaultValue = false
         )
 
+        override val arguments: List<DestinationArgument<*>> = listOf(
+            isEditingArgument
+        )
+
         override val screen: AppScreen = UserProfileFormScreen
     }
 
@@ -53,6 +58,10 @@ object Destinations {
         val isEditingArgument = BoolArgument(
             name = "isEditing",
             defaultValue = false
+        )
+
+        override val arguments: List<DestinationArgument<*>> = listOf(
+            isEditingArgument
         )
 
         override val screen: AppScreen = RelationshipFormScreen
@@ -66,6 +75,10 @@ object Destinations {
         val editingIdArgument = IntArgument(
             name = "id",
             defaultValue = -1
+        )
+
+        override val arguments: List<DestinationArgument<*>> = listOf(
+            editingIdArgument
         )
 
         override val screen: AppScreen = MemoryFormScreen
