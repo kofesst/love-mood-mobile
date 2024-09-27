@@ -5,7 +5,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import me.kofesst.lovemood.presentation.ui.WithShimmerTheme
 
 private val lightColorScheme = lightColorScheme(
     primary = primaryLight,
@@ -92,11 +91,9 @@ fun LoveMoodMobileTheme(
         darkTheme -> darkColorScheme
         else -> lightColorScheme
     }
-    WithShimmerTheme(darkTheme) {
-        MaterialTheme(
-            colorScheme = colorScheme,
-            typography = AppTypography,
-            content = content
-        )
-    }
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = AppTypography,
+        content = content
+    )
 }

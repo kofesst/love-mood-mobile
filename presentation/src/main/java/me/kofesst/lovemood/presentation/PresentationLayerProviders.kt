@@ -1,19 +1,13 @@
 package me.kofesst.lovemood.presentation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
-import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavBackStackEntry
-import com.valentinilk.shimmer.LocalShimmerTheme
-import com.valentinilk.shimmer.Shimmer
-import com.valentinilk.shimmer.ShimmerBounds
-import com.valentinilk.shimmer.rememberShimmer
 import me.kofesst.android.lovemood.navigation.AppDestination
 import me.kofesst.lovemood.localization.AppLocalization
 
@@ -42,32 +36,6 @@ internal inline fun <reified T : ViewModel> NavBackStackEntry.parentViewModel(
         )
     }
     return hiltViewModel(parentBackStackEntry)
-}
-
-@Deprecated(
-    "Planned to remove.",
-    ReplaceWith("Use Modifier.shimmer(Color, ShimmerBounds) for each shimmer view")
-)
-val LocalShimmer = compositionLocalOf<Shimmer?> { null }
-
-@Deprecated(
-    "Planned to remove.",
-    ReplaceWith("Use Modifier.shimmer(Color, ShimmerBounds) for each shimmer view")
-)
-@Composable
-internal fun WithShimmerEffect(
-    content: @Composable () -> Unit
-) {
-    val shimmerTheme = LocalShimmerTheme.current
-    val shimmer = rememberShimmer(
-        shimmerBounds = ShimmerBounds.Window,
-        theme = shimmerTheme
-    )
-    CompositionLocalProvider(
-        LocalShimmer provides shimmer
-    ) {
-        content()
-    }
 }
 
 val LocalLocalization = staticCompositionLocalOf<AppLocalization> {

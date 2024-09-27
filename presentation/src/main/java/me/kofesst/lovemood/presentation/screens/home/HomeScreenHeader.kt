@@ -256,8 +256,8 @@ private fun ShimmerProfilePicture() {
     Surface(
         modifier = Modifier
             .size(200.dp)
-            .shimmer(LocalShimmer.current),
-        color = MaterialTheme.colorScheme.surfaceContainer,
+            .shimmer(MaterialTheme.colorScheme.primary),
+        color = MaterialTheme.colorScheme.onSurface,
         shape = MaterialTheme.shapes.medium,
         content = {}
     )
@@ -269,8 +269,8 @@ private fun ShimmerProfileName() {
         modifier = Modifier
             .fillMaxWidth()
             .height(50.dp)
-            .shimmer(LocalShimmer.current),
-        color = MaterialTheme.colorScheme.surfaceContainer,
+            .shimmer(MaterialTheme.colorScheme.onSurfaceVariant),
+        color = MaterialTheme.colorScheme.onSurface,
         shape = MaterialTheme.shapes.medium,
         content = {}
     )
