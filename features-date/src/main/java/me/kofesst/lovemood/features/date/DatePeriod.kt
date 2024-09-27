@@ -20,12 +20,21 @@ data class DatePeriod constructor(
     }
 
     /**
-     * Нативный нормализованный объект промежутка,
-     * инициализированный из [startDate] и [endDate].
+     * Нативный ненормализованный объект промежутка,
+     * инициализованный из [startDate] и [endDate].
      */
-    val javaPeriod: Period = Period
-        .between(startDate, endDate)
-        .normalized()
+    val javaPeriod: Period = Period.between(startDate, endDate)
+
+    /**
+     * Нативный нормализованный объект промежутка,
+     * инициализованный из [startDate] и [endDate].
+     */
+    val normalizedJavaPeriod: Period = javaPeriod.normalized()
+
+    /**
+     * Полное количество лет в промежутке.
+     */
+    val fullYears: Int = javaPeriod.years
 
     /**
      * Нормализованное количество лет в промежутке.
@@ -33,12 +42,29 @@ data class DatePeriod constructor(
     val years: Int = javaPeriod.years
 
     /**
+     * Полное количество месяцев в промежутке.
+     */
+    val fullMonths: Int = javaPeriod.months
+
+    /**
      * Нормализованное количество месяцев в промежутке.
      */
     val months: Int = javaPeriod.months
 
     /**
+     * Полное количество дней в промежутке.
+     */
+    val fullDays: Int = javaPeriod.days
+
+    /**
      * Нормализованное количество дней в промежутке.
      */
     val days: Int = javaPeriod.days
+
+    companion object {
+        /**
+         * Пустой объект промежутка.
+         */
+        val Empty = DatePeriod(LocalDate.MIN, LocalDate.MIN)
+    }
 }

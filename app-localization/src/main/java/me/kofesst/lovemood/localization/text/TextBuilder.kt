@@ -173,7 +173,7 @@ abstract class TextBuilder {
      */
     protected abstract fun prepareText(): Pair<String, List<Any>>
 
-    private fun replacePlaceholders(string: String): String {
+    protected fun replacePlaceholders(string: String): String {
         return placeholders.entries.fold(initial = string) { folding, (name, value) ->
             folding.replace(name, value.toString())
         }
@@ -182,7 +182,7 @@ abstract class TextBuilder {
     /**
      * Возвращает готовый текст со стилями.
      */
-    fun buildAnnotated(
+    open fun buildAnnotated(
         textStyle: SpanStyle = SpanStyle(),
         argumentsStyle: SpanStyle = SpanStyle()
     ): AnnotatedString {
@@ -194,7 +194,7 @@ abstract class TextBuilder {
     /**
      * Возвращает готовый текст.
      */
-    fun build(): String {
+    open fun build(): String {
         var (text, arguments) = prepareText()
         text = replacePlaceholders(text)
         return format.buildString(text, arguments)
