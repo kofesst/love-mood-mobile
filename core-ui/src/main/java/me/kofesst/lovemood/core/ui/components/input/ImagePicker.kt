@@ -41,8 +41,8 @@ import me.kofesst.lovemood.core.ui.utils.SELECT_IMAGE_LAUNCHER_INPUT
 import me.kofesst.lovemood.core.ui.utils.rememberImagePickerLauncher
 import me.kofesst.lovemood.core.ui.utils.rotate
 
-internal const val DEFAULT_IMAGE_QUALITY = 80
-internal const val DEFAULT_IMAGE_HEIGHT = 1024
+internal const val DEFAULT_IMAGE_QUALITY = 90
+internal const val DEFAULT_IMAGE_HEIGHT = 800
 
 @Composable
 fun ImagePicker(
