@@ -27,7 +27,7 @@ import me.kofesst.lovemood.presentation.LocalLocalization
 import me.kofesst.lovemood.presentation.LocalMainViewModelStoreOwner
 import me.kofesst.lovemood.presentation.rememberAppState
 import me.kofesst.lovemood.ui.theme.LoveMoodMobileTheme
-import me.kofesst.lovemood.ui.theme.WithShimmerTheme
+import me.kofesst.lovemood.presentation.ui.WithShimmerTheme
 import javax.inject.Inject
 
 @AndroidEntryPoint

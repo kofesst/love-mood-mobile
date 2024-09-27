@@ -5,6 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import me.kofesst.lovemood.presentation.ui.WithShimmerTheme
 
 private val lightColorScheme = lightColorScheme(
     primary = primaryLight,

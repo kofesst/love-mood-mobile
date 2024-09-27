@@ -44,8 +44,16 @@ internal inline fun <reified T : ViewModel> NavBackStackEntry.parentViewModel(
     return hiltViewModel(parentBackStackEntry)
 }
 
+@Deprecated(
+    "Planned to remove.",
+    ReplaceWith("Use Modifier.shimmer(Color, ShimmerBounds) for each shimmer view")
+)
 val LocalShimmer = compositionLocalOf<Shimmer?> { null }
 
+@Deprecated(
+    "Planned to remove.",
+    ReplaceWith("Use Modifier.shimmer(Color, ShimmerBounds) for each shimmer view")
+)
 @Composable
 internal fun WithShimmerEffect(
     content: @Composable () -> Unit
