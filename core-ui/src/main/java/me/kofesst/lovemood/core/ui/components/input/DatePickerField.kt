@@ -12,8 +12,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -94,13 +92,8 @@ fun DatePickerField(
     val datePickerState = rememberDatePickerState(
         initialSelectedDateMillis = value.epochMillis
     )
-    val selectedDateMillis by remember {
-        derivedStateOf { datePickerState.selectedDateMillis }
-    }
-    LaunchedEffect(selectedDateMillis) {
-        if (selectedDateMillis != null) {
-            onValueChange(selectedDateMillis!!.localDate)
-        }
+    LaunchedEffect(value) {
+        datePickerState.selectedDateMillis = value.epochMillis
     }
     if (datePickerVisibleState.value) {
         DatePickerDialog(
@@ -108,14 +101,20 @@ fun DatePickerField(
             confirmButton = {
                 TextButton(
                     modifier = Modifier.fillMaxWidth(),
-                    onClick = { datePickerVisibleState.value = false }
+                    onClick = {
+                        datePickerVisibleState.value = false
+                        datePickerState.selectedDateMillis?.let {
+                            onValueChange(it.localDate)
+                        }
+                    }
                 ) {
                     Text("OK")
                 }
             }
         ) {
             DatePicker(
-                state = datePickerState
+                state = datePickerState,
+                showModeToggle = false
             )
         }
     }

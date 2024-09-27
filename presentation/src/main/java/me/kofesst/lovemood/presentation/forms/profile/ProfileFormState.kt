@@ -32,7 +32,7 @@ data class ProfileFormState(
         avatarContent = model.avatarContent,
         username = model.username,
         usernameError = null,
-        dateOfBirth = dateOfBirth,
+        dateOfBirth = model.dateOfBirth,
         dateOfBirthError = null
     )
 }
