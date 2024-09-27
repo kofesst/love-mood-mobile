@@ -37,6 +37,9 @@ android {
 }
 
 dependencies {
+    // Modules
+    implementation(project(":features-date"))
+
     // DI
     implementation(libs.di.hilt.android)
     ksp(libs.di.hilt.compiler.android)

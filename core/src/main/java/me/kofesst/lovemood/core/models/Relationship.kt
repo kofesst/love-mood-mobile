@@ -1,5 +1,6 @@
 package me.kofesst.lovemood.core.models
 
+import me.kofesst.lovemood.features.date.DatePeriod
 import java.time.LocalDate
 
 /**
@@ -18,4 +19,10 @@ data class Relationship(
     val userProfile: Profile,
     val partnerProfile: Profile,
     val startDate: LocalDate
-)
+) {
+    /**
+     * Период длительности отношений.
+     */
+    val lovePeriod: DatePeriod
+        get() = DatePeriod(startDate, LocalDate.now())
+}
