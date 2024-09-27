@@ -1,6 +1,6 @@
 [versions]
 # Core
-agp = "8.8.0-alpha03"
+agp = "8.8.0-alpha04"
 ksp = "2.0.20-1.0.25"
 kotlin = "2.0.20"
 coreKtx = "1.13.1"
@@ -16,9 +16,9 @@ junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 
 # Hilt DI
-di-hilt = "2.51.1"
+di-hilt = "2.52"
 di-hilt-navigation = "1.2.0"
-di-hilt-compiler-android = "2.51.1"
+di-hilt-compiler-android = "2.52"
 di-hilt-compiler-androidx = "1.2.0"
 di-hilt-worker = "1.2.0"
 
@@ -32,7 +32,7 @@ datastore-preferences = "1.1.1"
 googleFonts = "1.7.2"
 
 # Shimmer effects
-shimmer-compose = "1.3.0"
+shimmer-compose = "1.3.1"
 
 # Lottie compose
 lottie-compose = "6.4.1"
